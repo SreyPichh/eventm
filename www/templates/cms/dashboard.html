@@ -1,0 +1,179 @@
+{% extends "home/base_others.html" %}
+
+{% block header_title %}
+	<title>Dashboard</title>
+{% endblock %}
+
+{% block content %}
+<div class="container min-height">
+	<h3 class="mt50">{{ user_info.email }}'s Dashboard</h3>
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Playgrounds <a class="white fright" href="{{ uri_for('create-playground') }}">Add a New Playground <i class="fa fa-arrow-circle-o-right"></i></a></h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_playgrounds %}
+			<ul class="list-content list-unstyled">
+				{% for playground in owner_playgrounds %}
+				<li>
+					{{ playground.name|title }} |
+					<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" > View Playground </a> |
+					<a href="{{ uri_for('edit-playground', playground_id=playground.key.id()) }}" >Edit </a> |
+					<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}">{% for key, value in status %}{% if playground.status ==  value %}{{ key.replace("_", " ")|title }}{% endif %}{% endfor %}</a>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			 
+		</div>
+	</div>
+	{% if is_business_user %}
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Business <a class="white fright" href="{{ uri_for('create-business') }}">Create a New Business <i class="fa fa-arrow-circle-o-right"></i></a></h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_business %}
+			<ul class="list-content list-unstyled">
+				{% for business in owner_business %}
+				<li>
+					{{ business.name|title }} | 
+					<a href="{{ uri_for('edit-business', business_id=business.key.id()) }}" >Edit </a> | 
+					<a href="{{ uri_for('create-trainingcentre', business_id=business.key.id()) }}" >Add a Training Center </a> |
+					<a href="{{ uri_for('create-event', business_id=business.key.id()) }}" >Create an Event </a>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			 
+		</div>
+	</div>
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Training Centres</h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_trainingcentres %}
+			<ul class="list-content list-unstyled">
+				{% for tc in owner_trainingcentres %}
+				<li>
+					{{ tc.name|title }} |
+					<a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}" > View TC </a> | 
+					<a href="{{ uri_for('edit-trainingcentre', trainingcentre_id=tc.key.id(), business_id=tc.business_id.id()) }}" >Edit </a> |
+					<a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}">{% for key, value in status %}{% if tc.status ==  value %}{{ key.replace("_", " ")|title }}{% endif %}{% endfor %}</a>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+	</div>
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Events</h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_events %}
+			<ul class="list-content list-unstyled">
+				{% for event in owner_events %}
+					{% if event.business_id is not none %}
+					<li>
+						{{ event.name|title }} |
+						<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > View Event </a> |
+						<a href="{{ uri_for('edit-event', event_id=event.key.id(), business_id=event.business_id.id()) }}" >Edit</a> |
+						<a href="{{ uri_for('create-child-event', event_id=event.key.id()) }}" >Add a Child Event</a> |
+						<a href="{{ uri_for('create-match', event_id=event.key.id()) }}" >Add New Match</a> |
+						<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}">{% for key, value in status %}{% if event.status ==  value %}{{ key.replace("_", " ")|title }}{% endif %}{% endfor %}</a>
+					</li>
+					{% endif %}					
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+	</div>
+	<!--<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Child Events</h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_childevents %}
+			<ul class="list-content list-unstyled">
+				{% for child in owner_childevents %}
+					{% if child.parent_event_id is not none %}
+					<li>
+						{{ child.name|title }} |
+						<a href="{{ uri_for('edit-child-event', event_id=child.parent_event_id.id(), childevent_id=child.key.id()) }}" >Edit</a>						
+					</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+	</div>-->
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Matches</h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_matches %}
+			<ul class="list-content list-unstyled">
+				{% for match in owner_matches %}
+					{% if match.event_id is not none %}
+					<li>
+						{{ match.name|title }} |
+						<a href="{{ uri_for('edit-match', match_id=match.key.id(), event_id=match.event_id.id()) }}" >Edit</a>						
+					</li>
+					{% endif %}					
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+	</div>
+	
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Teams <a class="white fright" href="{{ uri_for('create-team') }}">Add a New Team <i class="fa fa-arrow-circle-o-right"></i></a></h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_teams %}
+			<ul class="list-content list-unstyled">
+				{% for team in owner_teams %}
+				<li>
+					{{ team.name|title }} |
+					<a href="{{ uri_for('edit-team', team_id=team.key.id()) }}" >Edit </a> |
+					<a href="{{ uri_for('view-team', team_id=team.key.id()) }}" >View </a>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}			 
+		</div>
+	</div>
+	
+	<div class="db-panel panel-info">
+		<div class="panel-heading">
+			<h4>Players <a class="white fright" href="{{ uri_for('create-player') }}">Add a New Player <i class="fa fa-arrow-circle-o-right"></i></a></h4>
+		</div>
+		<div class="panel-body scroller" style="max-height: 250px">
+			{% if owner_players %}
+			<ul class="list-content list-unstyled">
+				{% for player in owner_players %}
+				<li>
+					{{ player.name|title }} |
+					<a href="{{ uri_for('edit-player', player_id=player.key.id()) }}" >Edit </a>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}			 
+		</div>
+	</div>
+	
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDashboard();
+		}); 
+	</script>
+{% endblock %}

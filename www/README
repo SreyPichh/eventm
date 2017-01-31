@@ -1,0 +1,4 @@
+Test oauth2 access:
+-------------------
+
+curl -H "Authorization: Bearer MP8bieTrF5pCV3u7kvwuGBnGzKEhyo" -X POST http://162.243.40.237/api/index_user

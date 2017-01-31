@@ -1,0 +1,37 @@
+{% extends "home/base_home.html" %}
+
+{% block header_title %}
+    Delete Account
+{% endblock %}
+
+{% block content %}
+    <script>
+        var RecaptchaOptions = {
+            theme : 'white'
+        };
+    </script>
+
+    <form id="form_delete_account" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.field(form.password, label=("Password"), placeholder=("Enter your")+" "+("Password"), class="input-xlarge focused required", type="password") }}
+            <div class="control-group">
+                <div class="controls">
+                    <a href="{{ uri_for('password-reset') }}">Forgot your password?</a>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls" id="captcha">
+                    {{captchahtml | safe}}
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger">Confirm Delete Account</button>
+            </div>
+        </fieldset>
+    </form>
+
+{% endblock %}
+
+{% block mediaJS %}
+{% endblock %}

@@ -1,0 +1,140 @@
+<!-- BEGIN HEADER -->
+<div class="top-header navbar navbar-fixed-top">
+	<a href="/" class="navbar-brand"><img src="/assets/img/logo.png" alt="SportIndia"/></a>
+
+	<!-- Navigation-->
+	<div class="navbar-header">
+		<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>	
+	</div>
+	<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav" id="home-navbar">
+			<li>
+				<a href="/Phnom Penh">Phnom Penh </a>
+			</li>
+			<li class="dropdown">
+				{% if sport is not none and sport != 'None' and sport != '' %}
+					<a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="{{ uri_for('city-sports-home', city_name=city_name, sport=sport)  }}"> {{ sport|title }}  <i class="fa fa-chevron-circle-down"></i></a>					
+				{% else %}
+					<a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="true" href=""> Select a sport  <i class="fa fa-chevron-circle-down"></i></a>
+				{% endif %}
+				<ul class="sports dropdown-menu">
+					{% for key, value in sports %}
+					<li {% if key == sport %} class="active" {% endif %} >
+						<a href="{{ uri_for('city-sports-home', city_name=city_name, sport=key)  }}" >{{ value }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</li>
+		{% if not home %}
+			<li>
+				<form id="search" action="{{ uri_for('search') }}" method="post">
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">						
+					<input type="hidden" name="city-name" id="city-name" value="{{ city_name }}">
+					<input type="hidden" name="sport" id="sport" value="{{ sport }}">
+					<input type="hidden" name="nav-locality_id" id="nav-locality_id" />
+						<select class="form-control type" id="type" name="type">							
+							<option selected value="None">Search for...</option>
+							{% for key, value in alltypes %}
+								<option value="{{ key }}" {% if key == types %} selected="selected" {% endif %}>{{ value }}</option>
+							{% endfor %}							
+						</select>						
+						<input type="text" id="nav-locality" name="nav-locality" class="form-control locality" />
+						<button type="submit" class="btn blue" id="search"><i class="fa fa-search"></i></button>
+				</form>
+			</li>
+		{% endif %}
+		</ul>
+		
+		<ul class="nav navbar-nav pull-right">
+			{% if user_info %}
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="{{ uri_for('profile') }}"> Hi {% if user_info.email|length < 21 %}{{ user_info.email }}{% else %}{{ user_info.email[:20] }}...{% endif %} <i class="fa fa-angle-down"></i></a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="{{ uri_for('profile') }}">Profile</a>
+					</li>
+					{% if is_admin_user %}						
+						<li>
+							<a href="{{ uri_for('dashboard') }}">Dashboard</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('import') }}">Import</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('import-team') }}">Import Team</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('save-locality') }}">Save Locality</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('search-update') }}">Search Update</a>
+						</li>
+					{% elif is_business_user %}						
+						<li>
+							<a href="{{ uri_for('dashboard') }}">Dashboard</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('select-for-event') }}">Create Event</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('create-playground') }}">Create Playground</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('select-for-trainingcentre') }}">Create Training Center</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('import') }}">Import</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('import-team') }}">Import Team</a>
+						</li>
+					{% else %}						
+						<li>
+							<a href="{{ uri_for('create-event', business_id='user') }}">Add Event</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('create-playground') }}">Add Playground</a>
+						</li>
+						<li>
+							<a href="{{ uri_for('create-trainingcentre', business_id='user') }}">Add Training Center</a>
+						</li>					
+						<li>
+							<a href="{{ uri_for('invite-friends') }}">Invite Friends</a>
+						</li>
+					{% endif %}
+					<li>
+						<a href="{{ uri_for('create-bulk-data') }}">Bulk Data Entry</a>
+					</li>
+					<li>
+						<a href="{{ uri_for('logout') }}">Logout</a>
+					</li>
+				</ul>
+			</li>
+
+			{% else %}
+			<!--<li>
+				<a href="{{ uri_for("signup") }}">Sign Up</a>
+			</li>-->
+			<li>
+				<a href="{{ uri_for("login") }}">Login</a>
+			</li>
+			{% endif %}
+			{% if home and not user_info %}
+			<li>
+				<a class="btn theme" href="{{ uri_for("signup") }}">+Add <i class="fa fa-arrow-circle-o-right"></i></a>				
+			</li>
+			{% endif %}
+		</ul>
+		{% if user_type[0]=='facebook' %}
+		{% set fb_user_id = user_type[1] %}
+			<a href="{{ uri_for('profile') }}" title="{{ user_info.name|title }}"><img src="https://graph.facebook.com/{{ fb_user_id }}/picture?type=square" class="mt5 pull-right" style="width: 30px; max-width: 100%; height: auto;" /></a>
+		{% endif %}
+	</div>
+	<!-- /Navigation-->
+</div>
+<!-- /Top wrapper -->
+<!-- END HEADER -->

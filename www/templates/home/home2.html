@@ -1,0 +1,1099 @@
+{% extends "home/base_home.html" %}
+
+{% block title %}
+<title>{{ title }} - Sports Event Management</title>
+{% endblock %}
+
+{% block content %}
+<div class="home-scroll">
+
+	<div class="section home-search" style="position: relative !important;">
+		<div class="container">
+			<div class="navbar navbar-centered">
+				<ul class="nav navbar-nav main">
+					<li>
+						<a href="/search" class="active">Playgrounds</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/search">Sporting events</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/search">Training clubs</a>
+					</li>
+				</ul>
+			</div>
+			<div class="row search-options">
+				<div class="col-md-4">
+					<input type="text" class="form-control left" placeholder="Where do you want to play?">
+					</input>
+				</div>
+				<div class="col-md-4">
+					<select class="form-control mySelectBoxClass">
+						<option selected>which sport?</option>
+						<option>Cricket</option>
+						<option>Football</option>
+						<option>Hockey</option>
+						<option>Tennis</option>
+						<option>Badminton</option>
+						<option>Others</option>
+					</select>
+				</div>
+				<div class="col-md-3">
+					<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="when ?"/>
+				</div>
+				<div class="col-md-1">
+					<a class="btn blue" href="/search">Search <i class="fa fa-search"></i></a>
+				</div>
+			</div>
+			<div id="sportsbar" class="search-tab navbar navbar-centered">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="/"><i class="flaticon-bat1"></i> Cricket</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/"><i class="flaticon-soccer44"></i> Football</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/"><i class="flaticon-tennis18"></i> Tennis</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/"><i class="flaticon-badminton1"></i> Badminton</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/"><i class="flaticon-hockey"></i> Hockey</a>
+					</li>
+					<li>
+						<a href="">|</a>
+					</li>
+					<li>
+						<a href="/"><i class="flaticon-runner5"></i> more</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="section row">
+		<div class="section-header blue">
+			<h2>Playgrounds</h2>
+		</div>
+		<div class="col-md-8">
+			<div class="home-section pg filter-v1">
+				<div class="row mix-grid thumbnails">
+					<ul class="mix-filter">
+						<li class="filter active" data-filter="Featured">
+							Featured
+						</li>
+						<li class="filter" data-filter="category_1">
+							Recent
+						</li>
+						<li class="filter" data-filter="category_2">
+							Popular
+						</li>
+					</ul>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/tennis.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>MIT Tennis Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Chromepet, Chennai</h5>
+									<i>Sport: </i>Tennis
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/tennis.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>MIT Tennis Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Chromepet, Chennai</h5>
+								
+									<i>Sport: </i>Tennis
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/cricket.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Infosys Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>IIT Campus, Chennai</h5>
+								
+									<i>Sport: </i>Indoor
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/football.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>KV Football Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>IIT Campus, Chennai</h5>
+								
+									<i>Sport: </i>Football
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/slider4.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Vana Vani Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>IIT Campus, Chennai</h5>
+								
+									<i>Sport: </i>Cricket
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/cricket.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>MIT Tennis Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Chromepet, Chennai</h5>
+								
+									<i>Sport: </i>Tennis
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/tennis.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Chepauk Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Chepauk, Chennai</h5>
+								
+									<i>Sport: </i>Cricket
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/slider1.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Infosys Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Sholinganallur, Chennai</h5>
+								
+									<i>Sport: </i>Indoor
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					</ul>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/football.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Chepauk Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Chepauk, Chennai</h5>
+								
+									<i>Sport: </i>Cricket
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/cricket.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>MIT Tennis Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Chromepet, Chennai</h5>
+								
+									<i>Sport: </i>Tennis
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/slider1.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Infosys Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>Sholinganallur, Chennai</h5>
+								
+									<i>Sport: </i>Indoor
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-3 mix-inner pg-item">
+						<a href="/details">
+						<div class="pg-item-image">
+							<img src="/assets/img/slider2.jpg" class="fhimg">
+						</div>
+						<div class="pg-item-text">
+							<div class="title blue">
+								<h4>Vana Vani Ground</h4>
+							</div>
+							<div class="sub-title">
+								<h5>IIT Campus, Chennai</h5>
+								
+									<i>Sport: </i>Hockey
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									18 Reviews
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="home-section pgr">
+				<div class="subheader bg-yellow">
+					News
+				</div>
+				<div class="scroller" style="height: 475px">
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/tennis.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Kabadi Tournament</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Cricket League</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Chess Championship</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Kabadi Tournament</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/slider2.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Football Cup</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/slider3.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Badminton Tournament</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Kabadi Tournament</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+					<div class="news-item ">
+						<div class="news-item-image">
+							<a href="/details"><img src="/assets/img/slider4.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="news-item-text">
+							<div class="title blue">
+								<h4>Cricket Tournament</h4>
+							</div>
+							<div class="sub-title">
+								
+									Thank you for your interest in this theme. Please feel free to contact us.
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section row ">
+		<div class="section-header blue">
+			<h2>Events</h2>
+		</div>
+		<div class="col-md-6">
+			<div class="home-section pg filter-v1">
+				<div class="row mix-grid thumbnails">
+					<ul class="mix-filter">
+						<li class="filter active" data-filter="Featured">
+							Popular
+						</li>
+						<li class="filter" data-filter="category_1">
+							Recent
+						</li>
+						<li class="filter" data-filter="category_2">
+							Ongoing
+						</li>
+					</ul>
+					<div class="col-md-6 mix-inner event-gallery">
+						<a href="/details">
+						<div class="event-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+							<div class="event-item-text dblue">
+								<div class="title blue">
+									<h4>Chess Chanpionship</h4>
+								</div>
+								
+									Adyar, Chennai
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+					<div class="col-md-6 mix-inner event-gallery">
+						<a href="/details">
+						<div class="event-item" style="background: url(assets/img/slider2.jpg) 100% 100% / cover no-repeat;">
+							<div class="event-item-text dblue">
+								<div class="title blue">
+									<h4>India Football League</h4>
+								</div>
+								
+									IIT Campus, Chennai
+								
+							</div>
+						</div>
+						<div class="zoomix">
+							<i class="fa fa-chevron-right"></i>
+						</div> </a>
+					</div>
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="/details">
+							<div class="event-item" style="background: url(assets/img/slider3.jpg) 100% 100% / cover no-repeat;">
+								<div class="event-item-text dblue">
+									<div class="title blue">
+										<h4>Chennai Cricket Cup</h4>
+									</div>
+									
+										Velachery, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="/details">
+							<div class="event-item" style="background: url(assets/img/slider4.jpg) 100% 100% / cover no-repeat;">
+								<div class="event-item-text dblue">
+									<div class="title blue">
+										<h4>Kabadi Tournament</h4>
+									</div>
+									
+										IIT Campus, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="/details">
+							<div class="event-item" style="background: url(assets/img/slider3.jpg) 100% 100% / cover no-repeat;">
+								<div class="event-item-text dblue">
+									<div class="title blue">
+										<h4>Badminton Cup</h4>
+									</div>
+									
+										Guindy, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="/details">
+							<div class="event-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+								<div class="event-item-text dblue">
+									<div class="title blue">
+										<h4>Hockey Cup</h4>
+									</div>
+									
+										Navalur, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="/details">
+							<div class="event-item" style="background: url(assets/img/slider2.jpg) 100% 100% / cover no-repeat;">
+								<div class="event-item-text dblue">
+									<div class="title blue">
+										<h4>Tennis Trophy</h4>
+									</div>
+									
+										Vadapalani, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="/details">
+							<div class="event-item" style="background: url(assets/img/slider4.jpg) 100% 100% / cover no-repeat;">
+								<div class="event-item-text dblue">
+									<div class="title blue">
+										<h4>Swimming Competition</h4>
+									</div>
+									
+										Velachery, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="home-section eventr">
+				<div class="subheader bg-yellow">
+					Upcoming Events
+				</div>
+				<div class="scroller" style="height: 494px">
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/cricket.jpg"></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Radio Mirchi Cricket Cup</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>MIT Tennis League</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/tennis.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Vana Vani Football Cup</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Anand Chess Cup</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Adyar Hockey Tournament</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Boost Cricket League</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/tennis.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Radio Mirchi Cricket Cup</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Radio Mirchi Cricket Cup</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+					<div class="row enews-item bg-lwhite">
+						<div class="enews-item-image col-md-3">
+							<a href="/details"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+						</div>
+						<div class="enews-item-text col-md-3 blue">
+							<h4>Radio Mirchi Cricket Cup</h4>
+						</div>
+						<div class="enews-item-text col-md-3">
+							
+								For the first all India cricket tournament
+							
+						</div>
+						<div class="enews-item-text col-md-3">
+							<strong>starts 31 June 2014</strong>
+							<a class="btn tblue" href="/">Register <i class="fa fa-arrow-circle-o-right"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section row ">
+		<div class="section-header blue">
+			<h2>Training Clubs</h2>
+		</div>
+		<div class="home-section tc">
+			<div class="hframe">
+				<ul class="slidee">
+					<li  class="">
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Chennai Football Centre</h4>
+									</div>
+									
+										K K Nagar, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider2.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Sam Cricket Academy</h4>
+									</div>
+									
+										IIT Campus, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						</li>
+						<li>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider3.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Hari Coaching Centre</h4>
+									</div>
+									
+										Anna nagar, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider4.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Sam Cricket Academy</h4>
+									</div>
+									
+										IIT Campus, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						</li>
+						<li>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/cricket.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Anand Chess Training</h4>
+									</div>
+									
+										Adyar, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/football.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Sam Cricket Academy</h4>
+									</div>
+									
+										Navalur, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						</li>
+						<li>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/tennis.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Rack Training Club</h4>
+									</div>
+									
+										Vadapalani, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>India Football Academy</h4>
+									</div>
+									
+										Adyar, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						</li>
+						<li>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/cricket.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Rack Training Club</h4>
+									</div>
+									
+										chetpet, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Sam Cricket Academy</h4>
+									</div>
+									
+										IIT Campus, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						</li>
+						<li>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider2.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Rack Training Club</h4>
+									</div>
+									
+										Guindy, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider3.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Velachery Athletes</h4>
+									</div>
+									
+										Velachery, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						</li>
+						<li>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Rack Training Club</h4>
+									</div>
+									
+										Guindy, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+						<div class="event-gallery">
+							<a href="/details">
+							<div class="tc-item" style="background: url(assets/img/slider1.jpg) 100% 100% / cover no-repeat;">
+								<div class="tc-item-text dblue">
+									<div class="title blue">
+										<h4>Sam Cricket Academy</h4>
+									</div>
+									
+										OMR, Chennai
+									
+								</div>
+							</div>
+							<div class="zoomix">
+								<i class="fa fa-chevron-right"></i>
+							</div> </a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="hscrollbar">
+				<div class="handle bg-tblue"></div>
+			</div>
+		</div>
+		<div style="margin: 0 -20px">
+		{% include 'snippet/home/footer_home.html' %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+	$().ready(function() {
+		HomeApp.initHome();
+	}); 
+</script>
+{% endblock %}

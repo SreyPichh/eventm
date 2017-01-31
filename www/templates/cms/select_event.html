@@ -1,0 +1,40 @@
+{% extends "home/base_others.html" %}
+
+{% block header_title %}
+	<title>Select Event</title>
+{% endblock %}
+
+{% block content %}
+<div class="container min-height">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Select an Event to associate the {{ entity_name }}</h3>
+		</div>
+		<div class="panel-body">
+			{% if owner_event %}
+			<h4>Select an event from the list</h4>
+
+			<ul class="list-content list-unstyled">
+				{% for event in owner_event %}
+					{% if event.business_id is not none %}
+					<li>
+						<a href="{{ continue_url }}/{{ event.key.id() }}" >{{ event.name }}</a>
+					</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+			<h4>or</h4>
+			{% endif %}
+			<a class="btn blue" href="{{ uri_for('select-for-event') }}">Create a new Event<i class="fa fa-arrow-circle-o-right"></i></a>			
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDashboard();
+		}); 
+	</script>
+{% endblock %}

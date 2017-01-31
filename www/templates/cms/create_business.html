@@ -1,0 +1,63 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Create/Edit Business</h3>
+		</div>
+		<div class="panel-body">
+			<form id="form_business" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						{{ macros.field(form.name, label=("Name"), placeholder=("Name of the Business"), class="form-control focused required") }}
+						{{ macros.field(form.description, label=("Description"), placeholder=("Describe the business in a few lines"), class="form-control focused") }}
+						{% if current_logo %}
+						<img src="{{ current_logo }}">
+						{{ macros.field(form.logo, label=("Logo [replace]"), placeholder=("Change the logo"), class="form-control focused") }}
+						{% else %}
+						{{ macros.field(form.logo, label=("Logo"), placeholder=("Upload a logo"), class="form-control focused") }}
+						{% endif %}
+						{{ macros.field(form.contact_info.person_name, label=("Contact Person"), placeholder=("Enter one or more Contact person, seperated by comma"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.email, label=("Email"), placeholder=("Enter one or more Email, seperated by comma"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.phone, label=("Phone"), placeholder=("Enter one or more Phone number, seperated by comma"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.website, label=("Website"), placeholder=("Website URL"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.facebook, label=("Facebook Page"), placeholder=("Facebook page URL"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.twitter, label=("Twitter Page"), placeholder=("Twitter page URL"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.gplus, label=("Google Plus Page"), placeholder=("Google Plus page URL"), class="form-control focused") }}
+						{{ macros.field(form.contact_info.youtube, label=("Youtube Page"), placeholder=("Youtube channel URL"), class="form-control focused") }}
+						<div class="form-actions">
+               <div class="col-md-offset-3 col-md-9">
+                  <button type="submit" class="btn blue">Submit</button>
+               </div>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+	$(document).ready(function() {
+		HomeApp.initDashboard();
+		
+		$("#form_business").validate({
+			submitHandler : function(form) {
+				form.submit();
+			},
+			rules : {
+				name : 'required',
+			},
+			errorPlacement : function(error, element) {
+				element.parent().parent().addClass("error");
+				error.addClass("help-inline").appendTo(element.parent());
+			}
+		});
+	}); 
+</script>
+{% endblock %}

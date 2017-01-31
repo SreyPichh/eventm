@@ -1,0 +1,73 @@
+{% extends "home/base_others.html" %}
+
+{% block header_title %}
+<title>New Child Event Create</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Create/Update Child Event</h3>
+		</div>
+		<div class="panel-body">
+			<form id="form_childevent" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						{{ macros.field(form.name, placeholder=("Enter Event")+" "+("Name"), class="form-control") }}
+						{{ macros.field(form.description, placeholder=("Enter Event")+" "+("Description"), class="form-control") }}						
+						
+						<div class="form-group input-append date form_starttime">
+					    	<!--<input size="30" name="start_datetime" type="text" placeholder="Enter Start Time" readonly>-->
+					    	{{ macros.field(form.start_datetime, placeholder=("Enter Event")+" "+("Start Time"), class="form-control") }}						    	
+					    	<span class="add-on"><i class="icon-th"></i></span>
+					    </div>
+					    <div class="form-group input-append date form_endtime">
+					    	<!--<input size="30" name="end_datetime" type="text" placeholder="Enter End Time" readonly>-->
+					    	{{ macros.field(form.end_datetime, placeholder=("Enter Event")+" "+("End Time"), class="form-control") }}
+					    	<span class="add-on"><i class="icon-th"></i></span>						    
+					    </div>
+					     
+					    <script type="text/javascript">
+						    $(".form_starttime").datetimepicker({
+						    	format: "yyyy-mm-dd hh:ii:ss",	    	
+						    	autoclose: true,
+						    	todayBtn: true,
+						    	pickerPosition: "bottom-auto"
+						    });
+						    $(".form_endtime").datetimepicker({
+						    	format: "yyyy-mm-dd hh:ii:ss",
+						    	autoclose: true,
+						    	todayBtn: true,
+						    	pickerPosition: "bottom-auto"
+						    });
+					    </script> 
+					    
+						{{ macros.field(form.contact_info, placeholder=("Enter one or more Contact person, seperated by comma")) }}
+						{% if current_media %}
+						<ul class="nav nav-pills">
+							{% for photo in current_media %}
+							<li>
+								<img src="{{ photo.url }}" width="200">
+								Is Active : {{ photo.status }}, Is Primary : {{ photo.primary }}
+							</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+						{{ macros.field(form.media, placeholder=("Enter Event")+" "+("Photos")) }}
+						{{ macros.field(form.custom_info, placeholder=("Enter one or more Contact person, seperated by comma")) }}
+						<div class="form-actions fluid">
+							<div class="col-md-offset-3 col-md-9">
+								<button type="submit" class="btn blue">
+									Submit
+								</button>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

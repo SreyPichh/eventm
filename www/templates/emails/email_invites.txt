@@ -1,0 +1,11 @@
+<p>You have new invite from {{ first_name }}.</p>
+
+<p>please join {{ app_name }} by clicking this link::</p>
+
+{{confirmation_url}}
+
+<p>If you have contact {{ app_name }} support by clicking this link:</p>
+{{support_url}}
+
+<p>Sincerely,<br>
+{{ app_name }} Team

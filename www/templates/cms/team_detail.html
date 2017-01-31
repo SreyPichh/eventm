@@ -1,0 +1,459 @@
+{% extends "home/base_others.html" %}
+
+{% block page_css %}
+<style type="text/css">
+	.edit-button{
+		display: none;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-top">&nbsp;</div>
+<div class="container min-height">
+  <h3 class="mt50 strong yellow">&nbsp;</h3>
+  
+	<div class="col-md-3">
+		<div style="margin: 20px auto" id="image-upload-wrapper">
+			<form id="form_team_logo" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+				<input type="hidden" name="team_id" value="{{ team_info.key.id() }}">
+				<input type="file" name="file" id="file" />
+				{% if team_info.logo_url %}
+					<img src="{{ team_info.logo_url }}" style="width: 250px;height: 250px;" />
+				{% else %}
+					<img src="/assets/img/default_team_logo.jpg" style="width: 250px;height: 300px;" />
+				{% endif %}
+			</form>
+			<div class="overlay">Click to Change New Image<br />image dimention: 250x250</div>
+		</div>		
+		<ul class="nav nav-tabs nav-stacked">				
+			<li>
+				<a class="h5 strong grey" href="#tab-team-detail"><i class="fa fa-users">&nbsp;</i>&nbsp; Team Detail<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>
+			<li>
+				<a class="h5 strong grey" href="#tab-team-players"><i class="fa fa-users">&nbsp;</i>&nbsp; Team Players<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>				
+			<li>
+				<a class="h5 strong grey" href="#tab-gallery"><i class="fa fa-picture-o">&nbsp;</i>&nbsp; Image Gallery<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>					
+		</ul>		
+	</div>		
+	
+	<div class="fleft p20"><h3 class="yellow strong">{{ team_info.name|title }}</h3></div>
+	<div class="fright p20">
+		<h3 class="yellow strong">0 Events Attended</h3><br />
+		<h3 class="white">0 Events Created</h3>
+	</div>
+	<div class="col-md-9">
+		<div class="tab-content">				  
+		  <div class="tab-pane row fade in active" id="tab-team-detail">
+  			<div class="db-panel panel-info" style="min-height: 350px">					  	
+	  			<div class="panel-heading"><h3>Team Details <a class="h4 fright white pt10 cur-ptr" href="{{ uri_for('create-team') }}"><i class="fa fa-plus-circle">&nbsp;</i> Add New Team</a></h3></div>
+						<div class="p10 h6 grey btm-border">BASIC INFORMATION</div>
+						<ul class="list-content list-unstyled">
+							{% if team_info %}								
+								<li><strong><span class="col-md-offset-1 col-md-3">Team Name :</span><a href="#" id='teamName' name='teamName' data-type="text" data-url="/edit/team/name" data-pk="{{ team_info.key.id() }}">{% if team_info.name %}{{ team_info.name|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+								<li><strong><span class="col-md-offset-1 col-md-3">Team Sport :</span><a href="#" id="teamSport" name='teamSport' data-type="select2" data-url="/edit/team/sport" data-pk="{{ team_info.key.id() }}">{% if team_info.sport %}{{ team_info.sport|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+								<li><strong><span class="col-md-offset-1 col-md-3">Category :</span><a href="#" id="category" name='category' data-type="select2" data-url="/edit/team/category" data-pk="{{ team_info.key.id() }}"></a><a class="edit-button fright" href="#">Edit</a></strong></li>
+							{% endif %}
+						</ul>
+						<div class="p10 h6 grey btm-border">PREFERENCES</div>
+						<ul class="list-content list-unstyled">
+							{% if team_info %}
+								<li><strong><span class="col-md-offset-1 col-md-3">Prefered Match Days :</span><a href="#" id='preferDays' name='preferDays' data-type="select2" data-url="/edit/team/preferdays" data-pk="{{ team_info.key.id() }}">{% if team_info.prefer_days %}{{ team_info.prefer_days|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+								<li><strong><span class="col-md-offset-1 col-md-3">No of events/year :</span><a href="#" id="eventsNum" name='eventsNum' data-type="select2" data-url="/edit/team/eventsnum" data-pk="{{ team_info.key.id() }}">{% if team_info.events_num %}{% for key, value in num_list %}{% if value == team_info.events_num %}{{ value }}{% endif %}{% endfor %}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>							
+							{% endif %}
+						</ul>
+						<div class="p10 h6 grey btm-border">ADMIN DETAILS</div>
+						<ul class="list-content list-unstyled">
+							{% if team_info %}
+								{% if team_owners %}
+								  <li><strong><span class="col-md-offset-1 col-md-3">Created By:</span>
+									{% for owner in team_owners %}
+								 		{{ owner.name|title }}
+								 	{% endfor %}
+								 	</strong></li>
+								{% endif %}
+								<li><strong><span class="col-md-offset-1 col-md-3">Created On:</span> {{ team_info.created_on.strftime('%B %d, %Y') }}</strong></li>										
+							{% endif %}
+							<!--<li>
+								<a class="blue cur-ptr" data-toggle="modal" data-target="#add_players">Add New Players</a> | 
+								<a class="blue cur-ptr" href="{{ uri_for('edit-team', team_id=team_info.key.id()) }}">Edit Team</a>
+							</li>-->
+						</ul>						
+				</div>
+			</div>
+			
+			<div class="tab-pane row fade in active" id="tab-team-players">
+				<div class="db-panel panel-info" style="min-height: 350px">					  	
+					<div class="panel-heading"><h3>Team Players <a class="h4 fright white pt10 cur-ptr" data-toggle="modal" data-target="#add_players"><i class="fa fa-plus-circle">&nbsp;</i> Add New Players</a></h3></div>
+					<div class="home-section pg bg-white">
+						<div class="row mix-grid thumbnails">
+							{% if team_players %}							  
+								{% for player in team_players %}
+									<div class="col-md-3">
+										<div class="mix-inner pg-item">											
+											<div class="pg-item-image">													
+												{% set player_type = player.auth_ids[0].split(':') %}
+												{% if player.image_url %}
+													<img src="{{ player.image_url }}" class="fhimg" style="width: 196px;height: 140px; max-width: 100%; height: auto;">
+												{% elif player_type[0] == 'facebook' %}
+													{% set fb_user_id = player_type[1] %}
+														<img src="https://graph.facebook.com/{{ fb_user_id }}/picture?type=large" class="fhimg" style="width: 196px;height: 140px; max-width: 100%; height: auto;" />													
+												{% else %}
+													<img src="/assets/img/default_profile.jpg" class="fhimg" style="width: 196px;height: 140px;">
+												{% endif %}
+											</div>											
+											<div class="pg-item-text bg-white">
+												<div class="title black">													
+													<h4>{% if player.name | length < 21 %}{{ player.name|title }}{% else %}{{ player.name [:18] | title }}...{% endif %}</h4>													
+												</div>
+												<div class="sub-title">
+													<small>Sport:</small> {% if player.sport and player.sport !='None' %}{{ player.sport|title }}{% endif %}															
+												</div>
+											</div>
+										</div>										
+									</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+			 	</div>
+			</div>
+			
+			<div class="tab-pane row fade in active" id="tab-gallery">
+				<div class="db-panel panel-info" style="min-height: 350px">					  	
+					<div class="panel-heading">
+						<h3>Image Gallery
+							<div class="fileUpload btn btn-primary fright p5">
+								<form id="upload_gallery_images" action="{{ upload_gallery_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+									<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+									<input type="hidden" name="team_id" value="{{ team_info.key.id() }}">
+									<span>&nbsp;&nbsp;<i class="fa fa-cloud-upload fa-lg">&nbsp;</i> Upload Images&nbsp;&nbsp;</span>
+									<input type="file" name="gallery_images" id="gallery_images" multiple="multiple" class="upload" />
+								</form>
+							</div>
+						</h3>
+					</div>
+					<div class="home-section pg bg-white">
+						<div class="row mix-grid thumbnails">
+							{% if team_gallery %}
+								{% for images in team_gallery %}								
+									<div class="col-md-3">
+										<div class="mix-inner pg-item">											
+											<div class="pg-item-image" id="links">
+												{% if images.url %}
+													<a href="{{ images.url }}" title="{{ images.name }}" data-gallery ><img src="{{ images.url }}" class="fhimg" alt="{{ images.name }}" style="max-width: 100%;height: auto;" /></a>
+												{% else %}
+													<img src="/assets/img/default_profile.jpg" class="fhimg" style="max-width: 100%;height: auto;" />
+												{% endif %}
+											</div>									
+										</div>								
+									</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+			 	</div>
+			</div>
+			
+		</div>		
+					
+		<div class="section row p10">			  
+		  <div class="section-header bg-tblue">
+		  	<h3>Recommended Events
+		  		<a href="{{ uri_for('event-home') }}"><input type="button" class="btn-sm fright mlr10" value="> more" /></a>
+		  		{% if is_admin_user or is_business_user %}
+		  			<a href="{{ uri_for('select-for-event') }}"><input type="button" class="btn-sm fright" value="+ Add Event" /></a>
+		  		{% else %}
+		  			<a href="{{ uri_for('create-event', business_id='user') }}"><input type="button" class="btn-sm fright" value="+ Add Event" /></a>
+		  		{% endif %}
+		  	</h3>
+		  </div>
+		  <div class="navbar navbar-centered bg-white">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#tab-upcoming"  data-toggle="tab">Upcoming</a>
+					</li>
+					<li>
+						<a href="#tab-participated"  data-toggle="tab">Participated</a>
+					</li>
+					<li>
+						<a href="#tab-featured"  data-toggle="tab">Featured</a>
+					</li>													
+				</ul>
+			</div>
+			
+			<div class="home-section pg bg-white">
+				<div class="row mix-grid thumbnails">						
+					{% if recommend_events %}
+						{% for event in recommend_events %}
+							<div class="col-md-3">
+								<div class="mix-inner pg-item">											
+									<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+										<div class="pg-item-image">
+											{% if event_media %}
+												<img src="{{ event_media.get(event.key) }}" class="fhimg">
+											{% endif %}
+										</div>
+									</a>
+									<div class="pg-item-text bg-white">
+										<div class="title black">
+											<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+												 <h4>{% if event.name | length < 21 %}{{ event.name|title }}{% else %}{{ event.name [:18] | title }}...{% endif %}</h4> 
+											</a>
+										</div>
+										<div class="sub-title">
+												<small>Sport:</small> {{ event.sport|title }}<br>													
+												<i class="fa fa-calendar">&nbsp;</i>&nbsp; {{ event.start_datetime.strftime('%B %d, %Y') }}
+										</div>
+									</div>										  
+								</div>
+								<div class="div-overlay"><a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" class="mybutton sbtn h5"><i class="fa fa-plus">&nbsp;</i>Join</a></div>
+							</div>									
+						{% endfor %}								
+					{% else %}
+					  <h5>No more Recommendations...</h5>
+					{% endif %}
+				</div>						
+			</div>
+		</div>	
+	
+		<!-- for modal-dialog div -->
+		<div class="modal fade" id="add_players" tabindex="-1" role="dialog" aria-labelledby="addPlayersLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title">Add/Edit Players</h4>
+		      </div>
+		      <div class="modal-body">						        
+		        <form id="form_team_player" action="{{ uri_for('edit-team-player',  team_id = team_info.key.id()) }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+						<div class="form-body">											
+							<fieldset>
+								<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">										
+								<input type="hidden" name="sport" value="{{ team_info.sport }}">
+								
+								<div class="form-group">													
+						    	<div class="col-md-5 control-label">
+						    		<label class="plr10">Select&nbsp;Players</label>
+						    	</div>							    	
+						    	<div class="col-md-7">
+						        <select id="player" name="player" multiple="multiple">
+						            {% for player in players %}					            	
+													<option value="{{ player.key.id() }}" {% if player.key.id() in sel_players %} selected="selected" {% endif %} >{{ player.name|title }}</option>
+												{% endfor %}											
+						        </select>
+						      </div>
+						  	</div>
+							  <div class="col-md-offset-1 pb20"><h4 class="blue">New Player Detail</h4></div>
+						  	<div class="form-group" id="items">
+							    <input type="hidden" id="itemCounter" name="itemCounter" value="0">
+							    <div class="form-group item">
+										{{ macros.field(form.new_player, label_visible=false) }}																				              
+									</div>
+								</div>
+								
+								<div class="col-md-offset-10 col-md-1">
+										<input type="button" id="add" value="+" class="btn btn-info" title="Add New Player" />									
+								</div>
+								<br />	
+								<div class="form-actions fluid">
+									<div class="col-md-offset-4 col-md-8">
+										<button type="submit" class="btn blue">Submit</button>
+										<button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
+									</div>
+								</div>
+							</fieldset>					
+						</div>
+						</form>									
+		      </div>						      
+		    </div>
+		  </div>
+		</div>
+		<!-- modal dialog ends -->
+		
+		{% include 'snippet/home/gallery_modal_dialog.html' %}
+		
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">
+  
+  var $file = $('#file');
+  var $form = $('#image-upload-wrapper').find('form');
+  $file.on('change', function() { 
+  		$form.submit();
+  });
+	
+	var $upload_file = $('#gallery_images');
+  var $upload_form = $('#tab-gallery').find('form');
+  $upload_file.on('change', function() { 
+  		$upload_form.submit();
+  });
+  
+	$(function() {
+		HomeApp.initDashboard();
+		
+		$.fn.editable.defaults.mode = 'inline';
+    $.fn.editableform.buttons = 
+  		'<button type="submit" class="btn btn-primary editable-submit">save</i></button>' +
+ 			'<button type="button" class="btn btn-default editable-cancel">cancel</i></button>';
+    $('#teamName').editable({
+        send: 'always',
+        title: 'Change Team Name',
+	      emptytext: '+ Add Team Name',
+	      placement: 'top',	      
+	      inputclass: 'autosave',
+	      placeholder: 'Team Name',
+	      showbuttons: false,
+	      validate: function(value) {
+            if($.trim(value) == '')
+                return 'Required field!';
+            if($.trim(value).length > 27)
+                return 'Not Allowed! More than 27 characters.';
+	      },
+        ajaxOptions: {
+	      	success: function(status, index) {
+	      		location.reload();
+          },
+          error: function(status, index) {
+              alert(index);
+          }
+	      }
+	  });
+	  
+	  var sports = [
+      {% for key, value in sports_list %} {
+      	value: "{{ key }}", text: "{{ value }}"
+      },
+      {% endfor %}
+    ];
+    
+    $('#teamSport').editable({	   	  
+	   	  send: 'always',
+	   	  title: 'Select Sport',
+	   	  value: '{{ team_info.sport }}',
+	   	  source: sports,
+	   	  emptytext: '+ Add Team Sport',
+	   	  placement: 'top',
+	   	  placeholder: 'Team Sport',	   	  
+        showbuttons: false,
+        select2: {
+        	 width: "150px",
+           multiple: false
+        },
+        ajaxOptions: {
+	      	success: function(status, index) {
+	      		location.reload();
+          },
+          error: function(status, index) {
+              alert(index);
+          }
+	      }
+    });
+    
+    var category = [
+      {% for key, value in category_dict %} {
+        value: "{{ key }}", text: "{{ value }}"
+      },
+      {% endfor %}
+    ];
+    
+    $('#category').editable({	   	  
+	   	  send: 'always',
+	  		title: 'Select Team Category',
+	   	  value: '{{ team_info.category }}',
+	   	  source: category,
+	   	  emptytext: '+ Add Team Category',
+	   	  placement: 'top',
+	   	  placeholder: 'Team Category',
+        showbuttons: false,
+        select2: {
+        	 width: "150px",
+           multiple: false
+        }
+    });
+    
+    var prefer_days = [
+      {% for key, value in days_list %} {
+      	value: "{{ key }}", text: "{{ value }}"
+      },
+      {% endfor %}
+    ];
+    
+    $('#preferDays').editable({	   	  
+	   	  send: 'always',
+	   	  title: 'Select Prefer Days',
+	   	  value: '{{ team_info.prefer_days }}',
+	   	  source: prefer_days,
+	   	  emptytext: '+ Add prefer days',
+	   	  placement: 'top',
+	   	  placeholder: 'Prefer Days',	   	  
+        select2: {
+        	 width: "250px",
+           multiple: true
+        }
+    });
+    
+    var events_num = [
+      {% for key, value in num_list %} {
+      	value: "{{ key }}", text: "{{ value }}"
+      },
+      {% endfor %}
+    ];
+    
+    $('#eventsNum').editable({	   	  
+	   	  send: 'always',
+	  		title: 'Select No of events',
+	   	  value: '{{ team_info.events_num }}',
+	   	  source: events_num,
+	   	  emptytext: '+ Add no of events',
+	   	  placement: 'top',
+	   	  placeholder: 'No of events',
+        showbuttons: false,
+        select2: {
+        	 width: "150px",
+           multiple: false
+        }
+    });
+    
+	  $("#player").multipleSelect({
+	  		width: 230,
+	  		placeholder: "Select Player(s)",
+	      filter: true,
+	      multiple: true,
+	      multipleWidth: 200
+	  });	  
+	  $('#new_player').attr('type', 'none');
+	  $('label[for=new_player-0]').remove();
+	});	
+	
+	$(document).on('change','.autosave',function(){
+	   $(this).trigger("submit");
+	});
+	
+	$('.pg-item').contenthover({    
+    overlay_background:'#000',
+    overlay_opacity:0.6
+	});
+	
+	$('.edit-button').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $field = $(this).closest('li').find('.editable');
+      $field.editable('toggle');
+      $(this).hide();       
+  });
+  
+	$(document).on('mouseenter', 'ul li', function () {
+      $(this).find(".edit-button").show();
+  }).on('mouseleave', 'ul li', function () {
+      $(this).find(".edit-button").hide();
+  });
+  	
+</script>
+{% endblock %}

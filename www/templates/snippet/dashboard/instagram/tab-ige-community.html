@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+    	<div ng-include="widget_line_chart_html" ng-controller="IgCommunityGrowthController"></div>
+    	<div ng-include="widget_line_chart_html" ng-controller="IgCommunityReachController"></div>
+    	<div ng-include="widget_map_html" ng-controller="IgCommunityMapController"></div>
+    	<div ng-include="widget_horizontal_barchart_html" ng-controller="IgFollowersCountBarController"></div>
+    	<div ng-include="widget_horizontal_barchart_html" ng-controller="IgFollowersRatioBarController"></div>
+    	<div ng-include="widget_horizontal_barchart_html" ng-controller="IgLastActivityDateController"></div>
+    	<div ng-include="widget_wordcloud_html" ng-controller="IgGroupDescriptionWordCloudController"></div>
+		<div ng-include="widget_truefalse_html" ng-controller="IgHasWebsiteBarController"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_active_people_html" id="sticker"></div>
+    </div>
+</div> 

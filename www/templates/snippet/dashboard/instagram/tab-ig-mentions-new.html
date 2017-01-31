@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_line_chart_html" ng-controller="EngagementTrendController" ng-init="init('Impressions - Trends', '(43 likes per media)', 'likes')"></div>
+		<div ng-include="widget_line_chart_html" ng-controller="EngagementTrendController" ng-init="init('Likes - Trends', '(8 comments per media)', 'comments')"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_popular_content_html" ng-controller="MediaGridController"  id="sticker"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_line_chart_html" ng-controller="EngagementTrendController" ng-init="init('Contributors - Trends', '(43 likes per media)', 'likes')"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_influencers_html"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_line_chart_html" ng-controller="HashtagsCountController"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_hashtag_table_html" ng-controller="HashtagTableController" ng-init="init('Associated Hashtags')"></div>
+    </div>
+</div>

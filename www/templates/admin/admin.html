@@ -1,0 +1,53 @@
+{% extends "dashboard/common/base_dashboard.html" %}
+
+{% block content %}
+<div class="page-container">
+    <div class="page-content">
+
+        <div ng-app="adminApp">
+            <div class="row" ng-controller="AdminMainController">
+                <div ng-include="widget_admin_dashboard_html"></div>
+            </div>
+        </div>
+    </div>
+</div>        
+{% endblock %}
+{% block more_js %}
+
+<!--
+% if original:
+-->
+    <script src="/assets/js/app/directives/angular-highcharts-directive.js"></script>
+    <script src="/assets/js/app/twitter/angular-twitteruser-popover.js"></script>
+    <script src="/assets/js/app/directives/angular-d3.js"></script>
+    <script src="/assets/js/app/common/highcharts-common.js"></script>
+    <script src="/assets/js/app/common/app-common.js"></script>
+    <script src="/assets/js/app/admin/admin-main-controller.js"></script>
+    <script src="/assets/js/app/admin/admin-app.js"></script>
+
+<!--
+    % else:
+-->
+    <script src="${packed_uberscream_dashboard}"></script>
+<!--
+    % endif
+-->
+
+
+<!-- END PAGE LEVEL SCRIPTS -->
+	<script>
+		jQuery(document).ready(function() {
+		   App.init(); // initlayout and core plugins
+		   Index.init();
+		   //Index.initJQVMAP(); // init index page's custom scripts
+		   Index.initCalendar(); // init index page's custom scripts
+		   Index.initCharts(); // init index page's custom scripts
+		   Index.initChat();
+		   Index.initMiniCharts();
+		   Index.initDashboardDaterange();
+		   Index.initIntro();
+		   Tasks.initDashboardWidget();
+		});
+	</script>
+	<!-- END JAVASCRIPTS -->
+{% endblock %}

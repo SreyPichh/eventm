@@ -1,0 +1,77 @@
+{% extends "home/base_others.html" %}
+
+{% block header_title %}
+	<title>Create a new user</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Create/Edit User Profile</h3>
+		</div>
+		<div class="panel-body">
+			<form id="form_user" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						{{ form.locality_id }}
+						{{ macros.field(form.name, label=("Name"), placeholder=("User Name"), class="form-control focused required") }}						
+						{{ macros.field(form.email, label=("Email"), placeholder=("User Email"), class="form-control focused required") }}
+						{% if current_image %}
+							<div class="col-md-offset-3 col-md-9">
+								<img src="{{ current_image }}" width="100" height="100">
+							</div>
+							{{ macros.field(form.image, label=("Image [replace]"), placeholder=("Change the Image"), class="form-control focused") }}
+						{% else %}
+							{{ macros.field(form.image, label=("Image"), placeholder=("Upload an Image"), class="form-control focused") }}
+						{% endif %}
+						
+						{{ macros.field(form.phone, placeholder=("Enter Phone Number"), class="form-control focused") }}						
+						{{ macros.field(form.locality, placeholder=("Enter locality"), class="form-control focused") }}						
+						{{ macros.field(form.i_want, placeholder=("I want to"), class="form-control focused") }}
+						
+						{# macros.field(form.sport, placeholder=("Select Favorite Sport"), class="form-control focused") #}
+						<div class="form-group">
+					    	<div class="col-md-3 control-label">
+					    		<label>Sport</label>
+					    	</div>
+					    	<div class="col-md-6">
+					        <select id="sports_list" name="sports_list" multiple="multiple">
+					            {% for key, value in sports_list %}					            	
+												<option value="{{ key }}" {% if key in sel_sport %} selected="selected" {% endif %} >{{ value|title }}</option>
+											{% endfor %}
+					        </select>
+					      </div>					      
+					 </div>
+					  	
+						<div class="form-actions">
+               <div class="col-md-offset-3 col-md-9">
+                  <button type="submit" class="btn blue">Submit</button>
+               </div>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">	
+	$(function() {
+		HomeApp.initDashboard();
+		$('#email').prop('readonly', true);
+		// for multi sport support
+	  $("#sports_list").multipleSelect({
+	  		width: 620,
+	  		placeholder: "Select Favorite Sport(s)",
+	      filter: true,
+	      multiple: true,
+	      multipleWidth: 150
+	  });	 
+	});	
+</script>
+{% endblock %}

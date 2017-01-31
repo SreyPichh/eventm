@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block custom_css %}
+	<link href="/assets/thirdparty/admin/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/thirdparty/admin/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/thirdparty/admin/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/thirdparty/admin/css/plugins.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/thirdparty/admin/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/thirdparty/admin/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="/assets/thirdparty/admin/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/thirdparty/admin/css/pages/login.css" rel="stylesheet" type="text/css"/>   
+	<link href="/assets/css/app/common/uberstyle.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/css/app/twitter/dashboard.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block navbar %}
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-default navbar-static-top">
+	<div class="container">
+		<div class="navbar-header">
+			<!-- BEGIN LOGO (you can use logo image instead of text)-->
+			<a class="navbar-brand logo-v1" href="#">
+				<img src="/assets/img/logo.png" id="logoimg" alt="Wootstream">
+			</a>
+			<!-- END LOGO -->
+		</div> 
+	</div>
+</div>   
+<!-- END HEADER -->
+{% endblock %}
+
+{% block footer %}
+      {% include 'snippet/copyright.html' %}
+{% endblock %}

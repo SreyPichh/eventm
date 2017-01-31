@@ -1,0 +1,598 @@
+{% extends "home/base_home.html" %}
+
+{% block page_css %}
+<style type="text/css">
+	
+	.dt-col {
+		padding: 10px 0 10px 10px !important;
+		width: 54px;
+	}
+
+	.date-bg {
+		background: none repeat scroll 0 0 #00AAFF;
+		color: #FFFFFF;
+		display: block;		
+		height: 60px;
+		text-align: center;
+		width: 80px;
+	}
+
+	.dt-num {
+		border-bottom: 1px solid #999999;
+		display: inline-block;
+		font-size: 16px;
+		height: 30px;
+		line-height: 32px;
+	}
+
+	.dt-time {
+		display: inline-block;		
+		font-size: 14px;
+		padding-top: 5px;
+	}
+	
+	.tms-col > div {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.scr-mtch {
+		display: block !important;		
+		font-size: 12px;
+		line-height: 18px;
+		text-transform: capitalize;
+		text-align: center;
+	}
+
+	.scr-tm1 {
+		text-align: right;
+	}
+	.scr-tm {
+		color: #666666;		
+		font-size: 14px;
+		line-height: 18px;
+		width: 95px;
+	}
+
+	.scr-score {
+		border-radius: 4px 4px 4px 4px;
+		color: #333333;		
+		font-size: 16px;
+		height: 30px;
+		line-height: 30px;
+		margin: 5px 10px;
+		text-align: center;
+		width: 55px;
+	}
+
+	.scr-tm2 {
+		text-align: left;
+	}
+	
+	.loc-col{
+		border-bottom: 2px solid #FFFFFF;
+		color: #333333;		
+		text-align: center;
+		vertical-align: top;
+	}
+	
+	.scr-loc {
+		color: #666666;
+		font-size: 14px;
+		line-height: 18px;
+		padding-bottom: 5px;
+		text-align: center;
+		width: 225px;
+	}
+
+	.scr-btn-grp a:first-child {
+		margin-left: 0;
+	}
+	.scr-btn-grp > a, .scr-btn-grp span.add-cal-btn {
+		background: none repeat scroll 0 0 #00AAFF;
+		/*border-bottom: 2px solid #BEBEC9;*/
+		border-radius: 3px 3px 3px 3px;
+		color: #FFFFFF;
+		cursor: pointer;
+		display: inline-block;		
+		font-size: 14px;
+		height: 32px;
+		line-height: 32px;
+		margin-left: 10px;
+		position: relative;
+		text-align: center;
+		width: 106px;
+	}	
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="details-page">
+	<div style="background: url(/assets/img/bg_event_dark.jpg) 100% 100%  no-repeat;background-size: cover;">
+		{% include 'snippet/home/breadcrumb.html' %}
+		{% if is_admin_user or (user_info.key in event.owners) %}
+		<div class="actions-bar fixed-top-right pull-right white">
+			<ul>
+				{% if is_admin_user %}
+					<li>
+						Status:{% if event.status == 2 %} Approved {% elif event.status == 1 %} Pending {% else %} Creation {% endif %}<a href="{{ uri_for('edit-event', business_id=event.business_id.id(), event_id=event.key.id(), status=event.status, **{'continue': continue_url}) }}" >{% if event.status == 2 %} Deactivate {% elif event.status == 1 %} Activate {% else %} Don't Changed {% endif %}</a>
+					</li>
+				{% elif user_info.key in event.owners %}
+					<li>
+						Status:{% if event.status == 2 %} Active {% elif event.status == 1 %} Pending {% else %} Inactive {% endif %}<a href="{{ uri_for('edit-event', business_id=event.business_id.id(), event_id=event.key.id(), status=event.status, **{'continue': continue_url}) }}" >{% if event.status == 0 %} Enabled {% else %} Disabled {% endif %}</a>
+					</li>
+				{% endif %}
+				<li>
+					<a href="{{ uri_for('edit-event', business_id=event.business_id.id(), event_id=event.key.id(), **{'continue': continue_url}) }}" >Edit Event</a>
+				</li>
+				{% if is_business_user %}
+					<li>
+						<a href="{{ uri_for('create-match', event_id=event.key.id(), **{'continue': continue_url}) }}" >Add Match</a>
+					</li>
+					<li>
+						<a href="{{ uri_for('create-team', **{'continue': continue_url}) }}" >Add Team</a>
+					</li>
+					<li>
+						<a href="{{ uri_for('create-player', **{'continue': continue_url}) }}" >Add Player</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+		{% endif %}
+		<div class="container">
+			<div class="page-title">
+				{{ event.name | title }}
+				{% if event.caption %}
+				<h3>{{ event.caption|title }}</h3>
+				{% endif %}
+			</div>
+			<div class="page-subtitle white">
+				{% if event.address.latlong %}
+				<div class="formap hide">
+					<div class="name">
+						{{ event.name|title }}
+					</div>
+					<div class="latlong">
+						{{ event.address.latlong }}
+					</div>
+				</div>
+				{% endif %}
+				
+				<h4><i class="fa fa-map-marker yellow"></i>
+				{% if event.address.line1 %}
+					{{ event.address.line1|title }},
+				{% endif %}
+				{% if event.address.line2 %}
+					{{ event.address.line2|title }},
+				{% endif %}
+				{% if event.address.locality %}
+					{{ event.address.locality|title }},
+				{% endif %}
+				{{ event.address.city|title }} </h4>
+			</div>
+			<div class="page-subtitle white">
+				<h4><i class="fa fa-calendar yellow"></i> {{ event.start_datetime.strftime('%b %d') }} To {{ event.end_datetime.strftime('%b %d, %Y') }}</h4>
+			</div>
+			<div class="row white mb100">
+				<div class="col-md-4 col-md-offset-4">
+					{% if event_state == 'future' or event_state == 'present' %}
+						{% if user_id %}					
+							<a class="btn btn-lg btn-block theme" data-toggle="modal" data-target="#reg_event">Register now <i class="fa fa-arrow-circle-o-right"></i></a>
+						{% else %}
+							<a href="{{ uri_for('login', **{'continue': continue_url}) }}" class="btn btn-lg btn-block theme">Register now <i class="fa fa-arrow-circle-o-right"></i></a>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+			<div class="row white">
+				<div class="col-md-6">
+					<h4>{% if event.contact_info.website %} {{ event.contact_info.website }}
+					<br>
+					{% endif %} </h4>
+				</div>
+				<div class="col-md-3">
+					<!--
+					<div>
+					{% set avg_rating = 0 %}
+					{% if event.review_stats and event.review_stats.avg_rating %}
+					{% set avg_rating = event.review_stats.avg_rating | round | int %}
+					{% endif %}
+					<img src="/assets/img/bigrating-{{ avg_rating }}.png" width="60" alt=""><br>
+					{{ event.review_stats.reviews_count }} Reviews
+					</div>
+					-->
+				</div>
+				<div class="col-md-2 social-details pull-right">
+					<ul>
+						{% if event.contact_info.facebook %}
+						<li>
+							<a href="{{ event.contact_info.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
+						</li>
+						{% endif %}
+						{% if event.contact_info.gplus %}
+						<li>
+							<a href="{{ event.contact_info.gplus }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+						</li>
+						{% endif %}
+						{% if event.contact_info.twitter %}
+						<li>
+							<a href="{{ event.contact_info.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+						</li>
+						{% endif %}
+						{% if event.contact_info.youtube %}
+						<li>
+							<a href="{{ event.contact_info.youtube }}" target="_blank"><i class="fa fa-youtube"></i></a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+			<div class="row page-subtitle bg-lgrey white">
+				<h4>Sponsors</h4>
+				<div class="sponsors">
+					<img src="/assets/img/sponsors_sprite.jpg"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				{% if event_state == 'past' and media %}
+				<div id="myCarousel" class="carousel slide mt20">
+					<!-- Carousel items -->
+					<div class="carousel-inner">
+						{% for pic in media %}
+						<div class="item {% if loop.index == 1 %} active {% endif %}">
+							<img src="{{ pic.url }}" alt="">
+							<div class="carousel-caption">
+								<p>
+									{{ pic.name }}
+								</p>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<!-- Carousel nav -->
+					{% if media|length > 1 %}
+					<a class="carousel-control left" href="#myCarousel" data-slide="prev"> <i class="fa fa-angle-left"></i> </a>
+					<a class="carousel-control right" href="#myCarousel" data-slide="next"> <i class="fa fa-angle-right"></i> </a>
+					{% endif %}
+				</div>
+
+				{% endif %}
+				<div class="inner-header bg-blue">
+					<h3>Event Details</h3>
+				</div>
+				<div class="home-tile desc">
+					{{ event.description | safe }}
+				</div>
+
+				<div class="inner-header bg-blue">
+					<h3>Matches</h3>
+				</div>
+				<!--
+				refer http://www.iplt20.com/results
+				-->
+				<div class="home-tile scr-cont">
+					{% if matches %}
+					{% for match_dto in matches %}
+					{% set match = match_dto.match %}
+					<div class="row match-item">
+						<div class="col-md-2">
+							<div class="dt-col">								
+								<div class="date-bg">	                
+						        <div class="dt-num">{{ match.start_datetime.strftime('%d %b') }}</div>
+						        <div class="dt-time">{{ match.start_datetime.strftime('%H:%I') }} IST</div>
+						    </div>
+					    </div>
+						</div>
+						<div class="col-md-5">
+							<div class="tms-col">								
+									<div class="scr-mtch"><h5>{% if match.name | length < 44 %}{{ match.name|title }}{% else %}{{ match.name [:41] | title }}...{% endif %}</h5></div>
+									{% if match_dto.teams|length == 2 %}
+										<div class="scr-tm scr-tm1"><!--<img src="/assets/img/csk.jpg" height="20px"><br />-->{% if match_dto.teams[0].name | length < 15 %}{{ match_dto.teams[0].name | title }}{% else %}{{ match_dto.teams[0].name [:12] | title }}...{% endif %}</div>
+										<div class="scr-score" itemprop="eventStatus">vs</div>
+										<div class="scr-tm scr-tm2"><!--<img src="/assets/img/rcb.jpg" height="20px"><br />-->{% if match_dto.teams[1].name | length < 15 %}{{ match_dto.teams[1].name | title }}{% else %}{{ match_dto.teams[1].name [:12] | title }}...{% endif %}</div>
+									{% endif %}									
+									{% if match.summary %}
+										<div class="scr-mtch"><h5>{{ match.summary | safe }}</h5></div>
+									{% endif %}
+							</div>
+							
+						</div>
+						<div class="col-md-5">
+							<div class="loc-col">								
+								{% if match.result %}
+								<div class="match-result">
+									Result: <strong>{{ match.result }}</strong>
+								</div>
+								{% endif %}								
+		            <div class="scr-btn-grp">			
+		               <a href="#">Match Centre</a>
+		               <a href="#">Match Report</a>
+		            </div>		            
+							</div>
+	            {% if is_admin_user or (user_info.key in event.owners) %}
+							<div class="actions-bar">
+								<ul>
+									<li>
+										Status : {% if match.status == 2 %} Active {% else %} Inactive {% endif %} <a href="{{ uri_for('edit-match', event_id=match.event_id.id(), match_id=match.key.id(), status=match.status, **{'continue': continue_url}) }}">{% if match.status == 2 %} Deativate {% else %} Activate {% endif %}</a>
+									</li>
+									<li>
+										<a href="{{ uri_for('edit-match', match_id=match.key.id(), event_id=match.event_id.id(), **{'continue': continue_url}) }}">Edit</a>
+									</li>
+								</ul>
+							</div>
+							{% endif %}				      
+						</div>
+					</div>						    
+					
+					{% endfor %}
+					{% else %}
+						<h4>No matches yet...</h4>
+					{% endif %}
+				</div>
+				
+				<div class="inner-header bg-blue">
+					<h3>Teams</h3>
+				</div>
+				<div class="home-tile">
+				</div>
+
+				<!--
+				<div class="inner-header bg-blue"><h3>Availability</h3></div>
+				<div class="home-tile">
+				<div id="calendar"></div>
+				</div>
+				-->
+			</div>
+			<!-- RIGHT INFO -->
+			<div class="col-md-4">
+				{% if future_events %}
+				<div class="inner-header right bg-blue">
+					<h3>Upcoming Events</h3>
+				</div>
+				<div class="home-tile right right-div ">
+					{% for event in future_events %}
+						<div class="row enews-item bg-lwhite">
+							<div class="enews-item-image col-md-4">
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > {% if event_media  %} <img src="{{ event_media.get(event.key) }}"> {% endif %} </a>
+							</div>
+							<div class="enews-item-text col-md-8">
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+									<h4>{% if event.name | length < 20 %}{{ event.name|title }}{% else %}{{ event.name [:17] | title }}...{% endif %}</h4>
+								</a>
+								<strong>Starts: {{ event.start_datetime.strftime('%m-%d-%Y') }}</strong><br>
+								<strong>Ends: {{ event.end_datetime.strftime('%m-%d-%Y') }}</strong>
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" class="btn btn-sm blue">
+									Register now  <i class="fa fa-arrow-circle-o-right"></i>
+								</a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				{% endif %}
+				{% if past_events %}
+				<div class="inner-header right bg-blue">
+					<h3>Past Events</h3>
+				</div>
+				<div class="home-tile right right-div ">
+					{% for event in past_events %}
+						<div class="row enews-item bg-lwhite">
+							<div class="enews-item-image col-md-4">
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > {% if event_media  %} <img src="{{ event_media.get(event.key) }}"> {% endif %} </a>
+							</div>
+							<div class="enews-item-text col-md-8">
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+									<h4>{% if event.name | length < 20 %}{{ event.name|title }}{% else %}{{ event.name [:17] | title }}...{% endif %}</h4>
+								</a>
+								Sport: {{ event.sport|title }}<br>
+								<strong>Starts: {{ event.start_datetime.strftime('%m-%d-%Y') }}</strong><br>
+								<strong>Ends: {{ event.end_datetime.strftime('%m-%d-%Y') }}</strong>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				{% endif %}
+
+				<div class="inner-header right bg-blue"><h3>Map</h3></div>
+				<div class="home-tile right right-div ">
+					<div id="details-map"></div>
+				</div>
+
+				<div class="inner-header right bg-blue">
+					<h3>Reviews</h3>
+				</div>
+				<div class="home-tile right">
+					<div>
+						No reviews yet.
+					</div>
+					<!--
+					<div>
+					<i class="fa fa-quote-left"></i>
+					<p class="opensans size16 grey2">It was very comfortable to stay and staff were pleasant and welcoming.<br/>
+					<span class="lato lblue bold size13"><i>by Ellison from United Kingdom</i></span></p>
+					</div>
+					<div>
+					<i class="fa fa-quote-left"></i>
+					<p class="opensans size16 grey2">It was very comfortable to stay and staff were pleasant and welcoming.<br/>
+					<span class="lato lblue bold size13"><i>by Ellison from United Kingdom</i></span></p>
+					</div>
+					-->
+				</div>
+
+				<!--
+				<div class="inner-header right bg-blue "><h3>Nearby events</h3></div>
+				<div class="home-tile right">
+				<p>to fill</p>
+				</div>
+				-->
+				
+				<!-- modal-dialog for event registration -->
+				<div class="modal fade" id="reg_event" tabindex="-1" role="dialog" aria-labelledby="regEventLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				        <h4 class="modal-title">Event Registration</h4>
+				      </div>
+				      <div class="modal-body">						        
+				        <form id="form_event_register" action="{{ register_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+								<div class="form-body">											
+									<fieldset>
+										<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+										<input type="hidden" name="event_id" value="{{ event.key.id() }}">										
+										<div class="form-group">
+											<div class="col-md-offset-1">
+												<h4>Details</h4><br />
+											</div>
+											<div class="col-md-offset-1 col-md-5">													
+									      	<h5>Event: {{ event.name|title }}</h5><br />
+									      	<h5>Sport: {{ event.sport|title }}</h5><br />									      	
+									    </div>
+									    <div class="col-md-offset-1 col-md-5">
+									    	<h5>Venue: 
+									      		{% if event.address.line1 %}
+															{{ event.address.line1|title }},
+														{% endif %}
+														{% if event.address.line2 %}
+															{{ event.address.line2|title }},
+														{% endif %}
+														{% if event.address.locality %}
+															{{ event.address.locality|title }},
+														{% endif %}
+														{{ event.address.city|title }}
+									      	</h5><br />
+									      	<h5>Date: {{ event.start_datetime.strftime('%b %d') }} to {{ event.end_datetime.strftime('%b %d, %Y') }}</h5><br />
+									     </div>
+									     	<div class="col-md-offset-1">
+											 		<h4>Your Contact Details</h4><br />
+											 	</div>
+											 	<div class="col-md-offset-1 col-md-5">													
+									      	{% if user_info.email %}
+									      		<h5>Email: {{ user_info.email }}</h5><br />									      										      	
+									    		{% endif %}
+									    	</div>
+									    	<div class="col-md-offset-1 col-md-5">													
+									      	{% if user_info.phone %}
+									      		<h5>Mobile: {{ user_info.phone }}</h5><br />									      										      	
+									    		{% endif %}
+									    	</div>
+								    </div>
+										<div class="form-group" id="typediv">
+				            	<div class="col-md-offset-3 col-md-2">
+								      	<label>Participants</label>
+								      </div>					      
+								      <div class="col-md-7">
+								        <select id="participant_type" name="participant_type" multiple="multiple">
+								        	<option value="team"  {% if reg_type == 'team' %} selected="selected" {% endif %}>Team</option>
+								        	<option value="player" {% if reg_type == 'player' %} selected="selected" {% endif %}>Individual</option>													
+								        </select>
+								      </div>
+								    </div>
+								    
+										<div class="form-group" id="teamdiv">
+				            	<div class="col-md-offset-3 col-md-2">
+								      	<label>Teams</label>
+								      </div>					      
+								      <div class="col-md-7">
+								        <select id="team" name="team" multiple="multiple">
+								        	{% if teams %}
+								        		{% for team in teams %}
+															<option value="{{ team.key.id() }}" {% if team.key.id() in reg_teams %} selected="selected" {% endif %} >{{ team.name|title }}</option>
+														{% endfor %}				            
+													{% endif %}
+								        </select>
+								        </div>
+								    </div>
+								    
+								    <div class="form-group" id="playerdiv">
+								    	<div class="col-md-offset-3 col-md-2">
+								    		<label>Individual</label>
+								    	</div>
+								    	<div class="col-md-7">
+								        <select id="player" name="player" multiple="multiple">
+								        	{% if user_info %}
+														<option value="{{ user_info.key.id() }}" {% if user_info.key.id() in reg_players %} selected="selected" {% endif %} >{{ user_info.name|title }}</option>
+													{% endif %}																									
+								        </select>
+								      </div>
+								    </div>
+					    			
+					    			<div class="form-group">
+											<div class="col-md-offset-5 col-md-6">
+												<input type="checkbox" name="terms" value="false">&nbsp;&nbsp;I hereby agree to the terms and conditions of event manager 												
+											</div>
+										</div><br />										
+										
+										<div class="form-actions fluid">
+											<div class="col-md-offset-4 col-md-8">
+												<button type="submit" class="btn blue">Submit</button>
+												<button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
+											</div>
+										</div>
+									</fieldset>					
+								</div>
+								</form>									
+				      </div>						      
+				    </div>
+				  </div>
+				</div>
+				<!-- modal dialog ends -->
+		
+		
+			</div>
+		</div>
+		<!-- END OF container-->
+	</div>
+</div>
+<!-- END OF CONTENT -->
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDetails();
+			
+			$("#participant_type").multipleSelect({
+	    		width: 100,
+	    		placeholder: "Select Type",
+	        single: true
+	    });
+    
+	    $("#team").multipleSelect({
+	    		width: 230,
+	    		placeholder: "Select Team(s)",
+	        filter: true,
+	        multiple: true,
+	        multipleWidth: 200
+	    });
+	    
+	    $("#player").multipleSelect({
+	    		width: 230,
+	    		placeholder: "Select Individual",
+	        filter: true,
+	        multiple: true,
+	        multipleWidth: 200
+	    });      
+	    
+	    $('#participant_type').change(function(){
+		    if ($(this).val() == "team") {				        
+	        $('#teamdiv').show();
+	        $('#playerdiv').hide();
+	        //$("#player").multipleSelect("uncheckAll");
+		    } else if ($(this).val() == "player") {				        
+	        $('#teamdiv').hide();
+	        $('#playerdiv').show();
+	        //$("#team").multipleSelect("uncheckAll");
+		    } else {
+		    	$('#teamdiv').hide();
+	        $('#playerdiv').hide();
+		    }
+			}).change();
+		
+		}); 
+	</script>
+{% endblock %}

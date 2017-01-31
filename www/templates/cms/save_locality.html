@@ -1,0 +1,56 @@
+{% extends "home/base_others.html" %}
+
+{% block header_title %}
+	<title>Create a New Localities</title>
+{% endblock %}
+
+{% block content %}
+<div class="container min-height">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Save Locality</h3>
+		</div>
+		<div class="panel-body">
+			<form id="form_locality" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						{{ macros.field(form.lat, label=("Latitude"), placeholder=("Enter Latitude"), class="form-control focused required") }}
+						{{ macros.field(form.long, label=("Longitude"), placeholder=("Enter Longitude"), class="form-control focused required") }}						
+						{{ macros.field(form.radius, label=("Radius"), placeholder=("Enter Nearby Radius"), class="form-control focused required") }}
+						{{ macros.field(form.limit, label=("Limit"), placeholder=("Enter Limits"), class="form-control focused required") }}						
+						{{ macros.field(form.key, label=("Api Key"), placeholder=("Enter Api key"), class="form-control focused required") }}
+						<div class="form-actions">
+               <div class="col-md-offset-3 col-md-9">
+                  <button type="submit" class="btn blue">Submit</button>
+               </div>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">
+	$(document).ready(function() {
+		HomeApp.initDashboard();
+		
+		$("#form_locality").validate({
+			submitHandler : function(form) {
+				form.submit();
+			},
+			rules : {
+				name : 'required',
+			},
+			errorPlacement : function(error, element) {
+				element.parent().parent().addClass("error");
+				error.addClass("help-inline").appendTo(element.parent());
+			}
+		});
+	}); 
+</script>
+{% endblock %}

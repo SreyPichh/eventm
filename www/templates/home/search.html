@@ -1,0 +1,371 @@
+{% extends "home/base_others.html" %}
+
+{% block title %}
+<title>{{ title }} - Sports Event Management</title>
+{% endblock %}
+
+{% block content %}
+<div class="search-bar">
+	<div class="container">
+		<div class="navbar navbar-centered">
+			<ul class="nav navbar-nav search">
+				<li>
+					<a href="/" class="active">Playgrounds</a>
+				</li>
+				<li>
+					<a href="">|</a>
+				</li>
+				<li>
+					<a href="/">Sporting events</a>
+				</li>
+				<li>
+					<a href="">|</a>
+				</li>
+				<li>
+					<a href="/">Training clubs</a>
+				</li>
+			</ul>
+		</div>
+		<div class="row search-options">
+			<div class="col-md-4">
+				<input type="text" class="form-control left" placeholder="Where do you want to play?">
+				</input>
+			</div>
+			<div class="col-md-4">
+				<select class="form-control mySelectBoxClass">
+					<option selected>which sport?</option>
+					<option>Cricket</option>
+					<option>Football</option>
+					<option>Hockey</option>
+					<option>Tennis</option>
+					<option>Badminton</option>
+					<option>Others</option>
+				</select>
+			</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="when ?"/>
+			</div>
+			<div class="col-md-1">
+				<a class="btn blue" href="/search">Search <i class="fa fa-search"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="search-results">
+	<div class="row">
+		<div class="col-md-6">
+			<div id="map-canvas"></div>
+		</div>
+		<div class="col-md-6">
+			<div class="grid-view">
+				<div class="mt10 pr10 text-right">
+					<h5><strong> Sort by : <a href="">Name</a> | <a href="">Time</a> | <a href="">Popularity</a></strong></h5>
+				</div>
+				<div class="row scroller"  style="height: 470px;">
+						<div class="col-md-4 ">
+							<div class="gallery-item">
+								<a  href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/tennis.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>MIT Tennis Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Chromepet, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/cricket.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>Chepauk Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Chepauk, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/tennis.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>KV Football Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>IIT Campus, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/football.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>Infosys Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Sholinganallur, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/slider1.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>MIT Tennis Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Chrompet, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/slider2.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>Chepauk Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Chepauk, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/slider3.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>KV Football Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>IIT Campus, Chennai</h5>
+										<p>
+											<small>Sport: </small>Football
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/slider4.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>Vana vani school</h4>
+									</div>
+									<div class="sub-title">
+										<h5>IIT Campus, Chennai</h5>
+										<p>
+											<small>Sport: </small>Hockey
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/tennis.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>KV Football Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>IIT Campus, Chennai</h5>
+										<p>
+											<small>Sport: </small>Football
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/football.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>Chepauk Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Chepauk, Chennai</h5>
+										<p>
+											<small>Sport: </small>Cricket
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/cricket.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>MIT Tennis Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Chromepet, Chennai</h5>
+										<p>
+											<small>Sport: </small>Tennis
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="gallery-item">
+								<a href="/details">
+								<div class="pg-item-image">
+									<img src="/assets/img/tennis.jpg" class="fhimg" alt="">
+								</div>
+								<div class="pg-item-text">
+									<div class="title orange">
+										<h4>Infosys Ground</h4>
+									</div>
+									<div class="sub-title">
+										<h5>Sholinganallur, Chennai</h5>
+										<p>
+											<small>Sport: </small>Indoor
+											<br>
+											<img src="/assets/img/bigrating-4.png" width="60" alt="">
+											18 Reviews
+										</p>
+									</div>
+								</div>
+								<div class="zoomix"><i class="fa fa-chevron-right"></i></div>
+								</a>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?sensor=FALSE"></script>
+
+    <script type="text/javascript">
+			$(document).ready(function() {
+				HomeApp.initSearch();
+			});      
+    </script>
+
+{% endblock %}
+

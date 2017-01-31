@@ -1,0 +1,79 @@
+{% extends "home/base_others.html" %}
+
+{% block header_title %}
+        Sign Up
+{% endblock %}
+
+{% block content %}
+<div class="container min-height">
+	<div class="login-panel panel-info">
+		<div class="panel-heading">
+			<h3>Signup</h3>
+		</div>
+		<div class="panel-body">
+    <form id="form_register" action="{{ url|safe }}" method="post" class="form-horizontal">
+				<div class="form-body">
+        	<fieldset>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+							<div class="form-actions fluid">
+								<div class="col-md-8 col-md-offset-4">
+									<a href="{{ uri_for('social-login', provider_name = 'facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i>&nbsp;|&nbsp;Log In with Facebook</a>
+								</div>
+							</div>
+						</div>
+            {{ macros.field(form.name, label=("Name"), placeholder=("Enter your")+" "+("Name"), class="form-control focused") }}
+            {{ macros.field(form.email, label=("Email"), placeholder=("Enter your")+" "+("Email"), class="form-control focused required email", type="email") }}
+            {{ macros.field(form.password, label=("Password"), placeholder=("Enter your")+" "+("Password"), class="form-control focused required", type="password") }}
+            {{ macros.field(form.c_password, label=("Confirm Password"), placeholder=("Confirm Password"), class="form-control focused required", type="password") }}            
+            <div class="form-group">
+	            <div class="form-actions fluid">
+								<div class="col-md-8 col-md-offset-4">
+	                <button type="submit" class="btn btn-primary">Sign Up</button>
+	               </div>
+	            </div>
+	          </div>            
+            <div id="login" class="form-actions fluid">
+            	<div class="col-md-8 col-md-offset-4">
+								<label>Already a user?&nbsp;<a href="{{ uri_for('login') }}">Login.</a></label>								
+							</div>
+						</div>						
+        	</fieldset>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+    $(document).ready(function() {
+    		HomeApp.initDashboard();
+        /*$("#form_register").validate({
+            submitHandler: function(form) {
+                    form.submit();
+            },
+            rules: {
+                password: 'required',
+                c_password: {
+                    required: true,
+                    equalTo: '#password'
+                }
+            },
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });*/
+
+        /*$("#password").passStrength({
+            shortPassText: 'Short Password',
+            badPassText: 'Insecure Password',
+            goodPassText: 'Good Password',
+            strongPassText: 'Secure Password'
+        });*/
+    });
+</script>
+{% endblock %}
+

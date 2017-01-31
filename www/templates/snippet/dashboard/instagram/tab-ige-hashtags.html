@@ -1,0 +1,11 @@
+<div ng-include="widget_clipboard_html"></div>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+		<!--<div ng-include="widget_summary_and_trend" ng-controller="EngagingTagsController" ng-init="init('Related Hashtags', 'Related Hashtags based on popularity and correlation - use wind rose chart')"></div>-->
+		<!--<div ng-include="widget_summary_and_trend" ng-controller="EngagingTagsController" ng-init="init('Recently Popular', 'Popular Hashtags among the most recently used - use bubble chart')"></div>-->
+		<div ng-include="widget_summary_and_trend" ng-controller="EngagingTagsController" ng-init="init('Popular Hashtags - by Interactions', 'Popular Hashtags filtered based on the interactions received on the fans\' media with these hashtags')"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_summary_and_trend" ng-controller="DiscoverableTagsController" ng-init="init('Popular Hashtags - by Discovery', 'Popular Hashtags filtered based on how users discovered their most interacted media - identified by slicing the interactions on following media vs non-following media')"></div>
+    </div>
+</div>

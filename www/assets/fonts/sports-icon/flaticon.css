@@ -1,0 +1,46 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-badminton1:before {
+	content: "\e000";
+}
+.flaticon-basketball3:before {
+	content: "\e001";
+}
+.flaticon-bat1:before {
+	content: "\e002";
+}
+.flaticon-football102:before {
+	content: "\e003";
+}
+.flaticon-football28:before {
+	content: "\e004";
+}
+.flaticon-hockey:before {
+	content: "\e005";
+}
+.flaticon-ping3:before {
+	content: "\e006";
+}
+.flaticon-runner5:before {
+	content: "\e007";
+}
+.flaticon-soccer44:before {
+	content: "\e008";
+}
+.flaticon-tennis18:before {
+	content: "\e009";
+}

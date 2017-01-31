@@ -1,0 +1,433 @@
+{% extends "home/base_others.html" %}
+
+{% block page_css %}
+<style type="text/css">
+	
+	/* new design css */
+	
+	.view-container{width: 1170px;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+	.view-header{top:40px; position:relative}	
+	.view-header-bg{height:220px;overflow:hidden;position:relative}
+	.gradient{background:url("/assets/img/gradient-1600.png") repeat-x scroll 0 0 rgba(0,0,0,0);bottom:0;height:150px;position:absolute;width:100%}
+		
+	.subnav-links{margin-left:200px}
+	.subnav-links li{margin-right:15px}	
+	.stickysubheader{background:#f5f5f5;height:50px;width:100%;z-index:95}	
+	.list-inline a{color:#575757;font-size:17px;line-height:50px}	
+	
+	.caption{/*padding:9px;*/color:#333}
+	ul, ol { /*margin-bottom: 10px;*/margin-top: 0;	}
+	img.headshot{width:160px;height:160px;border-radius:4px}
+	.profile-img{position:absolute;border:1px solid #d2d2d2;border-radius:4px !important;background:#FFF;padding:3px;bottom:-35px}
+	.profile-img{bottom:15px}
+	
+	.user-profile-img{bottom:5px}
+	
+	.heading{bottom:45px;color:#fff;margin-left:200px;position:absolute}
+	.heading a{color:#fff;font-size: 20px;}
+	.heading h1{font-size:36px;line-height:1.3em;margin:0;font-weight: bolder;}
+	.heading h2{font-size:17px;line-height:1.3em;font-weight:400;margin:0}
+	
+	.view-share{position:absolute;right:5px;bottom:135px}
+	
+	.sharrre .right{float:left;padding-right:10px;text-align:center;line-height:23px;color:#333;width:55px;display:none}
+	.sharrre .middle{float:left;height:22px}
+	.sharrre .middle a{color:#fff!important;font-weight:bold;padding:0 10px 0 10px;text-align:center;float:left;line-height:22px!important;width:50px}
+	.sharrre .middle a.facebook{background:#4965b3}
+	.sharrre .middle a.twitter{background:#2ca8d2}
+	.sharrre .middle a.googleplus{background:#ce4c38}
+	.sharrre .middle a.pinterest{background:#df363e}
+	.sharrre i{line-height:22px}
+	
+	.list-unstyled{padding-left:0;list-style:none}
+	.bullet-separated>*{float:left}
+	.bullet-separated>*+*:before{content:"\0000B7";float:left;font-size:45px;padding:0 5px;line-height:22px}
+	.bullet-separated:after{content:"";display:block;clear:both}
+	
+	.view-actions{margin:0 20px}
+	.view-actions a{font-size:16px;display:inline-block;}
+	
+	.view-box {background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #D5DAE0;margin-bottom: 25px;margin-top: 5px;padding: 15px;position: relative;}
+
+	h1.web-heading{color:#656d78;font-size:26px;line-height:100%;margin:20px 0 20px}
+	h1.web-heading-small{font-size:24px;line-height:100%;color:#656d78;margin:15px 0}
+	
+	.view-stats li{padding-top:2px;font-size:14px}
+	.view-stats .icon-xs{font-size:12px;height:26px;padding:7px 0;width:26px}
+	
+	.thumbnail{display:block;padding:4px;margin-bottom:20px;line-height:1.42857143;background-color:#fff;border:1px solid #ddd;border-radius:4px;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;transition:all .2s ease-in-out}
+	.thumbnail>img,.thumbnail a>img{margin-right:auto;margin-left:auto}
+	a.thumbnail:hover,a.thumbnail:focus,a.thumbnail.active{border-color:#428bca}
+	.thumbnail .caption{padding:9px;color:#333}
+	
+	.img-collection{background:url('/assets/images/img-collection.png') no-repeat;padding:4%;background-size:100%}
+	
+	.test{color: #656D78;font-family: 'Open Sans',sans-serif;font-size: 14px;line-height: 1.4em;padding-left: 20px;}
+	
+	#details-map{margin: 10px;height: 200px;}
+	
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="view-header relative">
+	{#{% include 'snippet/home/breadcrumb.html' %}#}
+	{% if is_admin_user or (user_info.key in tc.owners) %}
+		<div class="actions-bar fixed-top-right pull-right white">
+			<ul>
+				{% if is_admin_user %}
+					<li>
+						Status:{% if tc.status == 2 %} Approved {% elif tc.status == 1 %} Pending {% else %} Creation {% endif %}<a href="{{ uri_for('edit-trainingcentre', business_id=tc.business_id.id(), trainingcentre_id=tc.key.id(), status=tc.status, **{'continue': continue_url}) }}" >{% if tc.status == 2 %} Deactivate {% elif tc.status == 1 %} Activate {% else %} Don't Changed {% endif %}</a>
+					</li>
+				{% elif user_info.key in tc.owners %}
+					<li>
+						Status:{% if tc.status == 2 %} Active {% elif tc.status == 1 %} Pending {% else %} Inactive {% endif %}<a href="{{ uri_for('edit-trainingcentre', business_id=tc.business_id.id(), trainingcentre_id=tc.key.id(), status=tc.status, **{'continue': continue_url}) }}" >{% if tc.status == 0 %} Enabled {% else %} Disabled {% endif %}</a>
+					</li>
+				{% endif %}
+				<li>
+					<a href="{{ uri_for('edit-trainingcentre', business_id=tc.business_id.id(), trainingcentre_id=tc.key.id(), **{'continue': continue_url}) }}" >Edit Training Centre</a>
+				</li>
+			</ul>
+		</div>
+	{% endif %}
+	
+	<div class="view-header-bg">
+	    <div class="bg">
+	    	<img alt="" src="/assets/img/bg_training_new.jpg">	    	
+	    </div>
+	    <!--<div class="gradient"></div>-->
+	</div>
+	
+	
+	<div class="caption">
+		<div class="view-container relative">
+      	<div class="view-share hidden-xs">
+      		<div data-text="nbc technology" data-url="" class="socialButtons sharrre"><div class="box"><div class="right"><i class="fa icon-thumbs-up"></i>0</div><div class="middle"><a class="facebook" href="#"><i class="fa fa-facebook"></i></a><a class="googleplus" href="#"><i class="fa fa-google-plus"></i></a><a class="twitter" href="#"><i class="fa fa-twitter"></i></a><a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a></div></div></div>
+      		<!--<div class="col-md-2 social-details pull-right">
+						<ul>
+							
+							<li>
+								<a href="{{ tc.contact_info.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
+							</li>
+							
+							<li>
+								<a href="{{ tc.contact_info.gplus }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+							</li>
+							
+							<li>
+								<a href="{{ tc.contact_info.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+							</li>
+							
+							<li>
+								<a href="{{ tc.contact_info.youtube }}" target="_blank"><i class="fa fa-youtube"></i></a>
+							</li>
+							
+						</ul>
+					</div>-->
+					
+		    </div>
+        <div class="profile-img">	                
+					<img alt="tc logo" src="//d27gdzccc5fb3b.cloudfront.net/assets/images/pro_1.png" itemprop="logo" class="headshot">					
+					<input type="file" class="hide" data-url="/api/profilepic" name="profilepic" id="fileupload">			 
+			    <!--<div class="change-picture"><a data-id="3211" data-name="nbc-technology" data-ref=".profile-pic" class="hz-change-picture" href="javascript:void(0);">Change picture</a></div>--> 
+				</div>
+              <div class="heading">
+                  <h1 itemprop="name">{{ tc.name | title }}</h1>
+                  <h2>
+                      <ul class="list-unstyled bullet-separated">
+                          <li itemtype="#" itemscope="" itemprop="sport">
+														<a href="" title="Team Sport" itemprop="url">
+															<span itemprop="name">{{ tc.sport | title }}</span>
+														</a>
+													</li>
+													
+                          <li itemtype="#" itemscope="" itemprop="location">
+                          	<a href="" title="Team Location" class="inverse-link" itemprop="url">
+															<span itemprop="name">
+																{% if tc.address.line1 %}
+																	{{ tc.address.line1 | title }},
+																{% endif %}
+																{% if tc.address.line2 %}
+																	{{ tc.address.line2 | title }},
+																{% endif %}
+																{% if tc.address.locality %}
+																	{{ tc.address.locality | title }},
+																{% endif %}
+																{{ tc.address.city | title }}
+															</span>
+														</a>
+													</li>                            
+                      </ul>
+                  </h2>
+              </div>
+              <!--<div class="user-actions hidden-xs">					
+								<a href="/business" class="btn btn btn-default pull-right"> <i class="fa fa-dashboard"></i> My Dashboard</a>
+								<div class="btn-group pull-right">
+									<a href="#" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+						              Update Page <i class="fa fa-gear"></i>
+						              <span class="caret"></span>
+						            </a>
+										<ul class="dropdown-menu">
+										  
+										  	<li><a href="/business/account/details">Edit Profile</a></li>
+										  	<li><a href="/business/project">Upload Photos</a></li>
+										  	<li><a href="/business/askreviews">Get Reviews</a></li>
+										  
+										  
+					      		</ul>
+		      			</div>
+				
+				
+							</div>-->
+      </div>
+  </div>
+    
+	<div class="subnav">
+      <div style="position: static; top: 90px;" class="stickysubheader">
+          <div class="view-container">
+              <ul class="list-inline subnav-links">
+	        		 	 <li><a href="#" itemprop="url">About</a></li>
+	               <li><a href="#">Facility</a></li>
+	               <li><a href="#">Teams</a></li>
+	               <li><a href="#">Gallery</a></li>
+	               <li><a href="#">Review</a></li>
+              </ul>
+           </div>
+      </div>
+	</div>	
+</div>
+
+<div class="clearfix"></div>
+
+<div class="view-container mt50">
+	<div class="row">
+
+		<div class="col-sm-4 col-md-3">
+		  			
+			<div class="view-box">
+				<div class="view-actions">
+	 				<a href="javascript:void(0);" data-pronumber="+91 99944 88793" data-proname="nbc technology" data-prouname="nbc-technology" data-proid="3211" data-json="{&quot;email&quot;:&quot;senthilkumar_nbc@yahoo.co.in&quot;,&quot;picture&quot;:null,&quot;fullName&quot;:&quot;nbc technology&quot;,&quot;lastName&quot;:null,&quot;lastLogin&quot;:1426833379000,&quot;profession&quot;:{&quot;id&quot;:24,&quot;name&quot;:&quot;Computer Professionals&quot;,&quot;urlifiedName&quot;:&quot;computer-professionals&quot;,&quot;status&quot;:&quot;ACTIVE&quot;},&quot;userType&quot;:2,&quot;id&quot;:3211,&quot;userName&quot;:&quot;nbc-technology&quot;,&quot;displayName&quot;:null,&quot;phoneNumber&quot;:9994488793,&quot;mobileNumber&quot;:9994488793,&quot;city&quot;:{&quot;id&quot;:603,&quot;name&quot;:&quot;Chennai&quot;,&quot;displayName&quot;:&quot;Chennai&quot;,&quot;urlifiedName&quot;:&quot;chennai&quot;,&quot;parentId&quot;:24,&quot;status&quot;:null},&quot;proProfile&quot;:{&quot;id&quot;:3211,&quot;aboutMe&quot;:null,&quot;website&quot;:null,&quot;businssDescription&quot;:&quot;website development&quot;,&quot;shortDescription&quot;:&quot;website development&quot;,&quot;serviceProvided&quot;:null,&quot;areasServed&quot;:null,&quot;address&quot;:&quot;Tambaram&quot;,&quot;country&quot;:null,&quot;state&quot;:null,&quot;city&quot;:{&quot;id&quot;:603,&quot;name&quot;:&quot;Chennai&quot;,&quot;displayName&quot;:&quot;Chennai&quot;,&quot;urlifiedName&quot;:&quot;chennai&quot;,&quot;parentId&quot;:24,&quot;status&quot;:null},&quot;zipCode&quot;:&quot;600019&quot;,&quot;faxNumber&quot;:null,&quot;licenseeNumber&quot;:null,&quot;trusted&quot;:false,&quot;claimed&quot;:true,&quot;verified&quot;:false,&quot;featured&quot;:false,&quot;minBudget&quot;:3000.0,&quot;profileCompleted&quot;:true,&quot;proLocations&quot;:[{&quot;id&quot;:1146,&quot;proId&quot;:3211,&quot;lat&quot;:12.9229153,&quot;lng&quot;:80.1274558,&quot;range&quot;:4,&quot;location&quot;:&quot;Tambaram, Chennai, Tamil Nadu, India&quot;,&quot;locality&quot;:&quot;Chennai&quot;,&quot;subLocality&quot;:&quot;Tambaram&quot;,&quot;state&quot;:&quot;Tamil Nadu&quot;,&quot;country&quot;:&quot;India&quot;}],&quot;proServices&quot;:[{&quot;id&quot;:1,&quot;name&quot;:&quot;Architecture Designs for home&quot;,&quot;keywords&quot;:&quot;Floor plans, House Design, Drawing, Residential&quot;,&quot;urlifiedName&quot;:&quot;architecture-designs-for-home&quot;,&quot;status&quot;:&quot;ACTIVE&quot;},{&quot;id&quot;:2,&quot;name&quot;:&quot;Architectural Services&quot;,&quot;keywords&quot;:&quot;Architect, Drawing, Site, Remodel, House, Home&quot;,&quot;urlifiedName&quot;:&quot;architectural-services&quot;,&quot;status&quot;:&quot;ACTIVE&quot;}],&quot;serviceIdArray&quot;:&quot;[1,2]&quot;,&quot;proType&quot;:&quot;SERVICE_PROVIDER&quot;,&quot;startYear&quot;:2011,&quot;status&quot;:&quot;ACTIVE&quot;},&quot;emailValidated&quot;:true,&quot;mobileValidated&quot;:false,&quot;enableSms&quot;:true,&quot;enableEmail&quot;:true,&quot;proSummary&quot;:{&quot;id&quot;:3211,&quot;ratingCount&quot;:0,&quot;ratingNumber&quot;:0,&quot;viewsCount&quot;:5,&quot;photosCount&quot;:3,&quot;followersCount&quot;:0,&quot;homebooksCount&quot;:1,&quot;bookingCount&quot;:0,&quot;enquiryCount&quot;:0,&quot;avgRating&quot;:2.5},&quot;isPro&quot;:true,&quot;fPhoneNumber&quot;:&quot;+91 99944 88793&quot;,&quot;fphoneNumber&quot;:&quot;+91 99944 88793&quot;}" class="btn btn-success btn-perspective btn-block hz-contact-pro" title="Contact nbc technology" rel="nofollow">
+	 					<i class="fa fa-envelope"></i> Contact Club</a>
+	 																				
+		 			<div class="pt10">
+						<div id="follow-user-3211" class="follow">					
+							<a data-href="/api/users/3211/follow" href="javascript:void(0)" class="btn btn-primary btn-perspective btn-block btn-follow " title="Follow nbc technology" rel="nofollow">
+								<span><i class="fa fa-bookmark in-block"></i> Save Club</span>
+							</a>
+							
+							<a data-href="/api/users/3211/unfollow" href="javascript:void(0)" class="btn btn-warning btn-perspective btn-block btn-unfollow hide" title="UnFollow nbc technology" rel="nofollow">
+								<span><i class="fa fa-bookmark in-block"></i> UnFollow</span>
+							</a>					
+						</div>
+					</div>
+				
+		 			<div class="pt10">
+		 				<a href="/pro/nbc-technology/writereview" class="btn btn-primary btn-perspective btn-block" title="Write a review for nbc technology" rel="nofollow"><i class="fa fa-star"></i> Write Review</a>
+	 				</div>
+				</div>
+			</div>
+		 			
+		 	<div class="view-box">
+		 		<h4>Map</h4>				
+				<div id="details-map"></div>
+		 	</div>
+		 			
+			<div class="view-box">
+				<h4>Summary</h4>
+				<ul class="view-stats list-unstyled">
+					
+						<li itemprop="interactionCount"><i class="fa fa-photo icon-circle icon-bordered icon-xs icon-success"></i> 3 Show case photos</li>
+						<li itemprop="interactionCount"><i class="fa fa-star icon-circle icon-bordered icon-xs icon-success"></i> <a href="/pro/nbc-technology#proreviews"> 0 people </a> reviewed this pro</li>
+						<div style="display: none;" itemtype="http://schema.org/AggregateRating" itemscope="" itemprop="aggregateRating">
+		    			<span itemprop="ratingValue">2.5</span>
+		    			<meta content="0" itemprop="reviewCount">
+		    		</div>
+						<li itemprop="interactionCount"><i class="fa fa-laptop icon-circle icon-bordered icon-xs icon-success"></i> viewed by 5 people</li>
+						<li itemprop="interactionCount"><i class="fa fa-bookmark icon-circle icon-bordered icon-xs icon-success"></i> Saved by 0 home owners</li>					
+				  	<li itemprop="interactionCount"><i class="fa fa-calendar icon-circle icon-bordered icon-xs icon-success"></i> In business since <a href="/pro/nbc-technology"> 2011 </a></li>
+			  						
+				</ul>
+			</div>
+					
+			<div class="view-box hidden-xs">
+				<h4>Address</h4>
+		  	<div itemtype="http://schema.org/PostalAddress" itemscope="" itemprop="address" class="p5">
+			  		<span itemprop="streetAddress"> 
+			  			{% if tc.address.line1 %}
+								{{ tc.address.line1 | title }},
+							{% endif %}
+							{% if tc.address.line2 %}
+								{{ tc.address.line2 | title }},
+							{% endif %}
+							{% if tc.address.locality %}
+								{{ tc.address.locality | title }},
+							{% endif %}							
+			  		</span>
+			  		<div>			  		
+							<span itemprop="addressLocality">{{ tc.address.city | title }}</span>{% if tc.address.pin %} - <span itemprop="postalCode">{{ tc.address.pin }}</span>{% endif %}			
+						</div>	  	
+				</div>
+			</div>
+		
+		</div>
+		  		
+		<div class="col-xs-12 col-sm-12 col-md-9">		
+			<div class="row">
+				<div class="col-md-12">			
+					<div class="inner-header bg-blue"><h3>About our Training Club</h3></div>
+					<div class="home-tile scroller" style="min-height: 200px; max-height: 500px">
+						<p class="test">{{ tc.description | safe }}</p>
+					</div>					
+					
+					<div class="inner-header bg-blue"><h3>Facilities</h3></div>
+					<div class="home-tile scroller test" style="min-height: 200px; max-height: 500px">
+						<ul>
+							<li>ground 1</li>
+							<li>ground 2</li>
+							<li>ground 3</li>
+						</ul>
+					</div>
+					
+					<div class="inner-header bg-blue"><h3>Our Team</h3></div>
+					<div class="home-tile scroller" style="min-height: 200px; max-height: 500px">
+						<p class="test">{{ tc.description | safe }}</p>
+					</div>
+					
+					<div class="inner-header bg-blue">
+						<h3>Gallery / Videos</h3>
+					</div>
+					<div class="home-tile row" style="min-height: 200px;">
+						{% if current_media %}
+							{% for photo in current_media %}
+							<div class="col-md-3">
+								<div class="mix-inner pg-item">							
+									<div class="pg-item-image" id="links">									
+										<a href="{{ photo.url }}" title="{% if photo.name %}{{ photo.name }}{% endif %}" data-gallery><img src="{{ photo.url }}" class="fhimg" style="max-width: 100%;height: auto;" /></a>										
+									</div>
+									{% if photo.name %}
+										<div class="pg-item-text bg-white">
+											<div class="title black">{{ photo.name }}</div>
+										</div>
+									{% endif %}
+								</div>
+							</div>
+							{% endfor %}
+						{% endif %}
+					</div>
+					{% include 'snippet/home/gallery_modal_dialog.html' %}
+										
+				</div>
+			</div>
+			
+		<!--
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="web-heading-small">Profile Overview</h1>
+				<div class="profile">
+					
+						<h4>Business Description</h4>
+						<div class="hz-read-more" itemprop="description">
+							
+								<p class="justify">website development</p>
+																		
+						</div>
+			        
+				 	
+						<h4>Services Provided</h4>
+						<div class="hz-read-more">
+		          <ul class="row">
+		             
+		                 <li itemtype="http://schema.org/Offer" itemscope="" itemprop="makesOffer" class="col-md-6">
+		             		
+
+
+
+
+<a title="Architecture Designs for home in Chennai" href="" itemprop="url" class="inverse-link"><span itemprop="name">Architecture Designs for home</span>
+</a>
+		                 </li>  
+		              
+		                 <li itemtype="http://schema.org/Offer" itemscope="" itemprop="makesOffer" class="col-md-6">
+		             		
+
+
+
+
+<a title="Architectural Services in Chennai" href="" itemprop="url" class="inverse-link"><span itemprop="name">Architectural Services</span>
+</a>
+		                 </li>  
+		              
+	              </ul>
+		        </div>					
+		 		</div>
+	 		</div>
+		</div>
+ 		
+ 		
+ 			
+ 			
+ 		
+  	<div class="pt25">
+	  		<h4><span>Project Photos</span> <span class="pull-right"><a title="view all projects by nbc technology" href="/pro/nbc-technology/homebooks" class="hlink"> View all projects </a></span></h4>
+				<div class="row">
+				
+					<div class="col-sm-6 col-md-4">
+						<!-- Begin assets item ->
+						<div data-id="1175" class="thumbnail homebook hz-homebook-photos">
+							<div class="img-collection ">
+						 		<div class="thumbnail media-lib-item">
+								 	<a href="/homebook/1175/website-creation" title="website creation by nbc technology">
+									 	
+									 		
+									 		<img alt="website creation by nbc technology" src="//d27gdzccc5fb3b.cloudfront.net/imagecache/media/7657/htr-image-website-creation-1175-7657.jpg?size=400x300-3" class="lazy img-responsive" style="display: block;">
+									 	
+									 	<div class="homebook-name">
+						                    <h5 class="one-line"><span>website creation</span> <span>(3 Photos)</span></h5>
+						                </div>
+								 	</a>
+						 		</div>
+							</div> 
+						</div>					
+					</div>
+				
+				</div>
+		</div>
+		
+		
+		<hr>
+					
+		<span class="anchor-hack" id="proreviews"></span>
+		<h3 class="pad-reset">Rating &amp; Reviews</h3>
+		
+			<div class="view-box bg-grey pad-10">
+			    <div class="marginleft10">
+				    <p> Are you a customer of this Company? Share your experience! </p>
+				    <div class="">
+				    	<a href="/pro/nbc-technology/writereview" class="btn btn-success btn-perspective btn-lg" rel="nofollow"><i class="fa fa-star"></i> Write Review</a>
+				    </div>
+			    </div>
+			</div>
+		
+	-->
+	
+		</div>
+	
+	</div>
+</div>
+
+{% endblock %}
+
+{% block page_js %}    
+  <script type="text/javascript">
+  	var $upload_file = $('#cover_image');
+	  var $upload_form = $('#tc_cover').find('form');
+	  $upload_file.on('change', function() { 
+	  		$upload_form.submit();
+	  });
+	  
+		$(document).ready(function() {
+			HomeApp.initDetails();
+		});      
+  </script>
+{% endblock %}

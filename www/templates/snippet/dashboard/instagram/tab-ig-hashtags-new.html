@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<div class="white">
+			<h3><small>Recommendations for </small>#instagram</h3>
+			<h5><small>Spelling Variants:</small> #instagram (75%), #Instagram (20%), #INSTAGRAM (5%)</h5>
+			<div ng-include="widget_line_chart_html" ng-controller="HashtagsCountController"></div>
+		</div>
+	</div>
+	<div class="col-md-4 col-sm-12">
+		<div ng-include="widget_hashtag_grid_html" ng-controller="HashtagsClipboardController"></div>
+		<div class="form-actions">                           
+			<button type="submit" class="btn yellow">Copy to clipboard</button>                            
+			<button type="button" class="btn default">clear</button>  
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<div ng-include="widget_hashtag_table_html" ng-controller="HashtagTableController"></div>
+	</div>
+	<div class="col-md-6 col-sm-12">
+		<div ng-include="widget_hashtag_table_html" ng-controller="HashtagTableController" ng-init="init('Related Tags - All Media')"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<div ng-include="widget_hashtag_table_html" ng-controller="HashtagTableController"  ng-init="init('Popular Tags - Your Media')"></div>
+	</div>
+	<div class="col-md-6 col-sm-12">
+		<div ng-include="widget_hashtag_table_html" ng-controller="HashtagTableController" ng-init="init('Popular Tags - All Media')"></div>
+	</div>
+</div>

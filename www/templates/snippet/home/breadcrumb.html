@@ -1,0 +1,17 @@
+<ol class="breadcrumb">
+	<li><a href="/"><i class="fa fa-home"></i></a></li>
+	{% for key, value in alltypes %}
+		{% if key == types %}
+			<li><a href="/{{ value|lower|replace(" ", "-") }}/">{{ value|title }}</a></li>
+			{% if sport is not none and sport != 'None' and sport != '' %}
+				<li><a href="/{{ value|lower|replace(" ", "-") }}/">{{ sport|title }}</a></li>
+			{% endif %}				
+			{% if city_name is not none and city_name != 'None' and city_name != '' %}
+				<li><a href="/{{ value|lower|replace(" ", "-") }}/{{ city_name|lower }}">{{ city_name|title }}</a></li>
+			{% endif %}
+			{% if locality_name is not none and locality_name != 'None' and locality_name != '' %}
+				<li><a href="/{{ value|lower|replace(" ", "-") }}/{{ city_name|lower }}/{{ locality_name|title }}">{{ locality_name|title }}</a></li>
+			{% endif %}			
+		{% endif %}
+	{% endfor %}	
+</ol>

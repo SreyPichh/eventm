@@ -1,0 +1,151 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Create/Update Match</h3>		
+			{% if is_admin_user or is_business_user %}
+			<div class="right-div">
+					<form id="form_import" action="{{ import_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						<input type="hidden" name="continue" value="{{ continue_url }}">
+						<input type="hidden" name="event_id" value="{{ event_id }}">
+						{{ macros.field(form.importfile, placeholder=("Select Import file")) }}
+						<div class="col-md-offset-4"><span class="h5">[ Excel format: Type*|Name*|Sport|StartDate*|EndDate*|Result|EventName|ParticipantType ] <br /> Note: doesn't change the format and not empty the mandatory (*) fields</span></div>
+						<div class="col-md-offset-4"><button type="submit" class="btn blue">Submit</button></div>          
+					</form>
+			</div>
+			{% endif %}			
+		</div>
+		<div class="panel-body">
+			<form id="form_event" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						<input type="hidden" name="continue" value="{{ continue_url }}">						
+						{{ macros.field(form.name, placeholder=("Enter Match")+" "+("Name"), class="form-control") }}
+						{{ macros.field(form.sport, placeholder=("Select a Sport"), class="form-control") }}           
+						{{ macros.field(form.start_datetime, placeholder=("Enter Match")+" "+("Start Date Time"), class="form-control", autocomplete="off") }}					  
+						{{ macros.field(form.end_datetime, placeholder=("Enter Match")+" "+("End Date Time"), class="form-control", autocomplete="off") }}
+						    
+							<script type="text/javascript">						    
+								$("#start_datetime").datetimepicker({						        
+						        format: "yyyy-mm-dd hh:ii:ss",
+						        showMeridian: true,
+						        todayHighlight: true,
+						        autoclose: true
+						    });
+						    
+						    $("#end_datetime").datetimepicker({						        
+						        format: "yyyy-mm-dd hh:ii:ss",
+						        showMeridian: true,
+						        todayHighlight: true,
+						        autoclose: true
+						    });										
+							</script>
+						
+            {{ macros.field(form.result, placeholder=("Enter Match")+" "+("Result"), class="form-control") }}
+            {{ macros.field(form.summary, placeholder=("Enter Match")+" "+("Summary"), class="form-control ckeditor") }}
+            {{ macros.field(form.participant_type, class="form-group") }}            
+           
+	            <div class="form-group" id="teamdiv" style="display: none">
+	            	<div class="col-md-offset-2 col-md-2">
+					      	<label>Teams</label>
+					      </div>					      
+					      <div class="col-md-8">
+					        <select id="team" name="team" multiple="multiple">
+					        	{% for team in teams %}
+											<option value="{{ team.key.id() }}" {% if team.key.id() in participants %} selected="selected" {% endif %} >{{ team.name|title }}</option>
+										{% endfor %}				            
+					        </select>
+					        </div>
+					    </div>
+					    
+					    <div class="form-group" id="playerdiv" style="display: none">
+					    	<div class="col-md-offset-2 col-md-2">
+					    		<label>Players</label>
+					    	</div>
+					    	<div class="col-md-8">
+					        <select id="player" name="player" multiple="multiple">
+					            {% for player in players %}					            	
+												<option value="{{ player.key.id() }}" {% if player.key.id() in participants %} selected="selected" {% endif %} >{{ player.name|title }}</option>
+											{% endfor %}											
+					        </select>
+					      </div>
+					    </div>					   
+				    				    
+						<div class="form-actions fluid">
+							<div class="col-md-offset-4 col-md-8">
+								<button type="submit" class="btn blue">
+									Submit
+								</button>
+							</div>
+						</div>
+					</fieldset>
+					
+				</div>		    
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">		
+  $(function() {
+  	HomeApp.initDashboard();
+		//$(document).find('.dropdown-menu').css({'background-color' : '#FFFFFF'});
+  	
+  	$("#participant_type").multipleSelect({
+    		width: 100,
+    		placeholder: "Select Type",
+        single: true
+    });
+    
+    $("#team").multipleSelect({
+    		width: 230,
+    		placeholder: "Select Team(s)",
+        filter: true,
+        multiple: true,
+        multipleWidth: 200
+    });
+    
+    $("#player").multipleSelect({
+    		width: 230,
+    		placeholder: "Select Player(s)",
+        filter: true,
+        multiple: true,
+        multipleWidth: 200
+    });      
+    
+    $('#participant_type').change(function(){      		
+    		/*var success = confirm('Are you sure want to change the Dropdown ????');
+        if (success == true) {
+        	alert('Changed');*/
+			    if ($(this).val() == "team") {				        
+		        $('#teamdiv').show();
+		        $('#playerdiv').hide();
+		        $("#player").multipleSelect("uncheckAll");
+			    } else if ($(this).val() == "player") {				        
+		        $('#teamdiv').hide();
+		        $('#playerdiv').show();
+		        $("#team").multipleSelect("uncheckAll");
+			    } else {
+			    	$('#teamdiv').hide();
+		        $('#playerdiv').hide();
+			    }				    
+			  /*}
+			  else {
+          alert('Not changed');
+        }*/
+		}).change();
+  });
+  
+  CKEDITOR.replace('summary',
+	{
+		toolbar : Custom
+	});
+
+</script>
+{% endblock %}

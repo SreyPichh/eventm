@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_bubble_chart_html" ng-controller="MediaBubbleChartController"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_bubble_chart_html" ng-controller="InteractionBubbleChartController"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_hashtag_table_html" ng-controller="HashtagTableController"  ng-init="init('Popular Tags - Your Media')"></div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+		<div ng-include="widget_horizontal_barchart_html" ng-controller="EngagingFiltersController"></div>
+    </div>
+</div>
+<div ng-include="widget_popular_content_html" ng-controller="MediaGridController"  id="sticker"></div>

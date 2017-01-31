@@ -1,0 +1,59 @@
+application: localapp
+version: uno
+runtime: python27
+api_version: 1
+module: default
+threadsafe: true
+
+instance_class: F2
+
+# Serve static files using appengine
+# http://stackoverflow.com/questions/5609000/serve-static-file-using-app-engine
+
+handlers:
+- url: /admin/.*
+  script: google.appengine.ext.admin.application
+  login: admin
+
+- url: /assets
+  static_dir: assets
+
+- url: /(.*\.txt)
+  mime_type: text/plain
+  static_files: rootassets/\1
+  upload: rootassets/(.*\.txt)
+
+- url: /(.*\.xml)
+  mime_type: text/plain
+  static_files: rootassets/\1
+  upload: rootassets/(.*\.xml)
+
+- url: /(.*\.ico)
+  mime_type: text/plain
+  static_files: rootassets/\1
+  upload: rootassets/(.*\.ico)
+
+- url: /tasks/.*
+  script: task_main.application
+  login: admin
+
+- url: /cron/.*
+  script: cronmain.application
+  login: admin
+
+- url: /api/.*
+  script: apimain.application
+  
+- url: /.*
+  script: app.app
+
+#inbound_services:
+#- warmup
+
+
+
+libraries:                                                                      
+- name: jinja2                                                                  
+  version: 2.6                                                               
+- name: markupsafe                                                              
+  version: 0.15

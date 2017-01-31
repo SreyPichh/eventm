@@ -1,0 +1,362 @@
+{% extends "home/base_home.html" %}
+
+{% block title %}
+	<title>{{ title|title }} - find Sporting Events | Playgrounds | Training Centres across India</title>
+{% endblock %}
+
+{% block content %}
+<div class="homebg">
+	<div class="home">	
+		<div class="section home-search mt50">
+			<div class="tagline white">
+				<h2 class="strong"><span class="yellow">Sport with Pride.</span>&nbsp;<span class="blue">Enjoy the Game</span></h2>
+				<!--<h1>Stop Gaming. Start Playing.</h1>-->
+				<!--<h4>Everything you need to take your competitive sporting to the next level.</h3>-->
+				<h4 style="padding: 8px;"><i class="fa fa-futbol-o fa-lg" style="color: #99D6FF;"></i>&nbsp;&nbsp;Team up with friends&nbsp;&nbsp;<i class="fa fa-map-marker fa-lg" style="color: #99D6FF;"></i>&nbsp;&nbsp;Find 'NOW' play your sport&nbsp;&nbsp;<i class="fa fa-trophy fa-lg" style="color: #99D6FF;"></i>&nbsp;&nbsp;Share your moments</h4>
+			</div>
+			{% if not user_info %}
+				<div class="connect">
+					<a href="{{ uri_for('social-login', provider_name = 'facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i>&nbsp;|&nbsp;Connect with Facebook</a>
+				</div>
+			{% else %}
+				<div class="mb50">&nbsp;</div>
+			{% endif %}
+			<div class="container">
+			<div class="navbar navbar-centered">
+				<ul class="nav navbar-nav main">
+					<li  class="active">
+						<a href="#tab-3"  data-toggle="tab">Sporting Events</a>
+					</li>
+					<li>
+						<a href="#tab-1"  data-toggle="tab">Playgrounds</a>
+					</li>
+					<li>
+						<a href="#tab-2"  data-toggle="tab">Training Centres</a>
+					</li>
+				</ul>
+			</div>
+				
+				<div class="tab-content">
+					<div class="tab-pane row fade in" id="tab-1">
+						<form id="pg-search" action="{{ uri_for('pg-search') }}" method="post">
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+							<input type="hidden" name="city-name" id="city-name" value="{{ city_name }}">
+							<input type="hidden" name="sport" id="sport" value="{{ sport }}">
+							<input type="hidden" name="pg-locality_id" id="pg-locality_id" />
+							
+						{% if sport %}
+						<div class="col-sm-10">							
+							<input type="text" id="pg-locality" name="pg-locality" class="form-control" />							
+						</div>
+						{% else %}
+						<div class="col-sm-6">							
+							<input type="text" id="pg-locality" name="pg-locality" class="form-control" />							
+						</div>
+						<div class="col-sm-4">							
+							<input type="text" id="pg-sport" name="pg-sport" class="form-control" placeholder="Select a sport" />							
+						</div>
+						{% endif %}
+						<div class="col-sm-2">
+							<button type="submit" class="btn blue" id="pg-search">Find playgrounds<i class="fa fa-search"></i></button>
+						</div>
+						</form>
+					</div>
+					<div class="tab-pane row fade in" id="tab-2">
+						<form id="tc-search" action="{{ uri_for('tc-search') }}" method="post">
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+							<input type="hidden" name="city-name" id="city-name" value="{{ city_name }}">
+							<input type="hidden" name="sport" id="sport" value="{{ sport }}">
+							<input type="hidden" name="tc-locality_id" id="tc-locality_id" />
+							
+						{% if sport %}
+						<div class="col-sm-10">							
+							<input type="text" id="tc-locality" name="tc-locality" class="form-control" />							
+						</div>
+						{% else %}
+						<div class="col-sm-6">							
+							<input type="text" id="tc-locality" name="tc-locality" class="form-control" />														
+						</div>
+						<div class="col-sm-4">							
+							<input type="text" id="tc-sport" name="tc-sport" class="form-control" placeholder="Select a sport" />
+						</div>
+						{% endif %}						
+
+						<div class="col-sm-2">							
+							<button type="submit" class="btn blue" id="tc-search">Find Training Centres <i class="fa fa-search"></i></button>
+						</div>
+						</form>
+					</div>
+					<div class="tab-pane row fade in active" id="tab-3">
+						<form id="se-search" action="{{ uri_for('event-search') }}" method="post">
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+							<input type="hidden" name="city-name" id="city-name" value="{{ city_name }}">
+							<input type="hidden" name="sport" id="sport" value="{{ sport }}">
+							<input type="hidden" name="se-locality_id" id="se-locality_id" />
+							
+						{% if sport %}
+						<div class="col-sm-10">							
+							<input type="text" id="se-locality" name="se-locality" class="form-control" />							
+						</div>
+						{% else %}
+						<div class="col-sm-6">							
+							<input type="text" id="se-locality" name="se-locality" class="form-control" />							
+						</div>
+						<div class="col-sm-4">							
+							<input type="text" id="se-sport" name="se-sport" class="form-control" placeholder="Select a sport" />
+						</div>
+						{% endif %}
+						<div class="col-sm-2">							
+							<button type="submit" class="btn blue" id="se-search">Find Sporting Events<i class="fa fa-search"></i></button>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="section row">
+			<div class="col-md-6">
+				<div class="section-header bg-lwhite">
+					<h3>Featured Events<a href="{{ uri_for('event-home') }}" > <small>more...</small></a></h3>
+				</div>
+				<div class="home-section pg bg-white">
+					<div class="row mix-grid thumbnails">
+						<!-- Featured Events -->
+						{% for event in featured_events %}
+						<div class="col-md-6 mix-inner event-gallery">
+							<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > 
+								{% if event_media  %}
+								<div class="event-item" style="background: url({{ event_media.get(event.key) }}) 100% 100% no-repeat;background-size: cover;">
+									{% endif %}
+									<div class="event-item-text white">
+										<div class="title">
+											<h4>{% if event.name | length < 30 %}{{ event.name|title }}{% else %}{{ event.name[:27] | title }}...{% endif %}</h4>
+										</div>
+										<small>Sport:</small> {{ event.sport|title }}<br>
+										<i class="fa fa-calendar"></i>&nbsp;{{ event.start_datetime.strftime('%B %d, %Y') }}
+									</div>
+								</div> 
+							</a>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+	
+			<!-- Upcoming events -->
+			<div class="col-md-6 right">
+				<div class="section-header bg-lwhite">
+					<h3>Upcoming Events<a href="{{ uri_for('event-home') }}" ><small>more...</small></a></h3>
+				</div>
+				<div class="home-section eventr bg-white">
+					<div id="upcoming_events" class="scroller" style="height: 450px">
+						{% if upcoming_events %}
+							{% for event in upcoming_events %}
+								<div class="row enews-item bg-lwhite">
+									<div class="enews-item-image col-md-4">
+										<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > {% if event_media  %} <img src="{{ event_media.get(event.key) }}"> {% endif %} </a>
+									</div>
+									<div class="enews-item-text col-md-5">
+										<h4>{% if event.name | length < 25 %}{{ event.name|title }}{% else %}{{ event.name [:22] | title }}...{% endif %}</h4>
+										{# if event.description | length < 105 %}{{ event.description|safe|title }}{% else %}{{ event.description [:102] |safe|title }}...{% endif #}
+										Sport: {{ event.sport|title }}</br>
+										<i class="fa fa-calendar"></i>&nbsp;{{ event.start_datetime.strftime('%b %d') }} to {{ event.end_datetime.strftime('%b %d, %Y') }} </br>
+										<i class="fa fa-map-marker"></i>&nbsp;{{ event.address.city | title }}
+									</div>
+									<div class="enews-item-button col-md-3">
+										<!--Sport: {{ event.sport|title }}<br>
+										<strong>Starts: {{ event.start_datetime.strftime('%b %d, %Y') }}</strong><br>
+										<strong>Ends: {{ event.end_datetime.strftime('%b %d, %Y') }}</strong>-->
+										<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" class="btn btn-sm blue">
+											Register now  <i class="fa fa-arrow-circle-o-right"></i>
+										</a>
+									</div>
+								</div>
+							{% endfor %}
+						{% else %}
+					  		<h5>No new events yet...</h5>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="section row">
+			<div class="col-md-8">
+				<div class="section-header bg-lwhite">
+					<h3>Recent Events<a href="{{ uri_for('event-home') }}" ><small>more...</small></a></h3>
+				</div>
+				<div class="home-section pg bg-white">
+					<div class="row mix-grid thumbnails">
+						<!-- Featured Events -->
+						{% if recent_events %}
+							{% for event in recent_events %}
+							<div class="col-md-3">
+								<div class="mix-inner pg-item">
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+									<div class="pg-item-image">
+										{% if event_media %}
+											<img src="{{ event_media.get(event.key) }}" class="fhimg">
+										{% endif %}
+									</div>
+								</a>
+								<div class="pg-item-text bg-white">
+									<div class="title black">
+										<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+											 <h4>{% if event.name | length < 20 %}{{ event.name|title }}{% else %}{{ event.name [:17] | title }}...{% endif %}</h4> 
+										</a>
+									</div>
+									<div class="sub-title">
+											<small>Sport:</small> {{ event.sport|title }}<br>
+											<i class="fa fa-calendar"></i>&nbsp;{{ event.start_datetime.strftime('%B %d, %Y') }}
+									</div>
+								</div>
+								</div>
+							</div>
+							{% endfor %}
+						{% else %}
+							<h5>No past events.</h5>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 right">
+				<div class="section-header bg-lwhite">
+					<h3>News<a href="" ><small>more...</small></a></h3>
+				</div>
+				<div class="home-section pgr bg-white">
+					<div class="scroller" style="max-height: 245px">
+						<div class="news-item ">
+							<div class="news-item-text">
+								<div class="title black">
+									<h4>Sea Festival </h4>
+								</div>
+								<div class="sub-title">
+									Sea Festival is coming soon. Keep watching this space for updates.
+								</div>
+							</div>
+						</div>
+						<div class="news-item  black">
+							<div class="news-item-text">
+								<div class="title">
+									<h4>Cricket League</h4>
+								</div>
+								<div class="sub-title">
+									Cricket League coming soon. Keep watching this space for updates.
+								</div>
+							</div>
+						</div>
+						<div class="news-item black">
+							<div class="news-item-text">
+								<div class="title">
+									<h4>Chess Championship</h4>
+								</div>
+								<div class="sub-title">
+									Chess championship coming soon in Cambodia. Keep watching this space for updates.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="section row">
+			<div class="col-md-6">
+				<div class="section-header bg-lwhite">
+					<h3>Featured Playgrounds<a href="{{ uri_for('pg-city-home', city_name=city_name) }}" ><small>more...</small></a></h3>
+				</div>
+				<div class="home-section pg bg-white">
+					<div class="row mix-grid thumbnails">
+						<!-- featured playgrounds -->
+						{% for playground in featured_playgrounds %}
+							<div class="col-md-4">
+								<div class="mix-inner pg-item">
+								<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >
+								<div class="pg-item-image">
+									{% if playground_media %}
+										<img src="{{ playground_media.get(playground.key) }}" class="fhimg">
+									{% endif %}
+								</div> </a>
+								<div class="pg-item-text bg-white">
+									<div class="title black">
+										<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >
+											 <h4>{% if playground.name | length < 20 %}{{ playground.name|title }}{% else %}{{ playground.name [:17] | title }}...{% endif %}</h4> </a>
+									</div>
+									<div class="sub-title">
+										<i>Sport: </i>{{ playground.sport|title }}									
+										<h5><i class="fa fa-map-marker"></i>
+											{% set address = playground.address.locality + ', ' + playground.address.city %}
+											{% if address | length < 20 %}
+												{{  address | title }}
+											{% else %}
+												{{ address [:17] | title }}...
+											{% endif %}
+										</h5>										
+<!--
+										<br>
+										<img src="/assets/img/bigrating-4.png" width="60" alt="">
+										{{ playground.review_stats.reviews_count }} Reviews, {{ playground.review_stats.ratings_count }} Ratings										
+-->
+									</div>
+								</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+	
+			<div class="col-md-6 right">
+				<div class="section-header bg-lwhite">
+					<h3>Featured Training Centres<a href="{{ uri_for('tc-city-home', city_name=city_name) }}" ><small>more...</small></a></h3>
+				</div>
+				<div class="home-section pgr bg-white">
+					<div class="row mix-grid thumbnails">
+						<!-- Featured Training Centres -->
+						{% for tc in featured_trainingcentres %}
+							<div class="col-md-6 mix-inner event-gallery">
+								<a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}" > {% if trainingcentre_media  %}
+								<div class="event-item" style="background: url({{ trainingcentre_media.get(tc.key) }}) 100% 100% no-repeat;background-size: cover;">
+									{% endif %}
+									<div class="event-item-text white">
+										<div class="title">
+											<h4>{% if tc.name | length < 30 %}{{ tc.name|title }}{% else %}{{ tc.name [:27] | title }}...{% endif %}</h4>
+										</div>
+										Sport: {{ tc.sport|title }}
+										<br>
+										<i class="fa fa-map-marker yellow"></i>&nbsp;{{ tc.address.locality|title }}, {{ tc.address.city|title }}
+									</div>
+								</div> </a>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+	$(document).ready(function() {
+		HomeApp.initHome();
+		        
+    var sports = [
+        {% for key, value in sports_list %} {
+        	val: "{{ key }}", label: "{{ value }}"
+        },
+        {% endfor %}
+    ];
+    $( "#pg-sport,#tc-sport,#se-sport" ).autocomplete({
+        delay: 0,
+        source: sports,
+        select: function(event, ui){
+            $( "#sport" ).val(ui.item.val);
+        }
+    });
+
+	});
+</script>
+{% endblock %}

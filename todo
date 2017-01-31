@@ -1,0 +1,25 @@
+TODO Items:
+
+P0
+
+breadcrumbs in details page
+sport others to be handled in queries.
+camel case for display, lower case for storing sport type.
+add locality and city for events.
+detail page integration for all entities.
+schema for events.
+style changes in all pages.
+check for broken urls.
+Make sure all partial urls work.
+
+change navbar to have 2 rows... 1 for user login, other for city, sport selection and search 
+adjust the size of map to window size
+
+P1
+responsiveness - handle standard window sizes
+better caching and caching during startup
+
+P2
+Auto select city based on user's IP
+
+

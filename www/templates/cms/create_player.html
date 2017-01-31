@@ -1,0 +1,101 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Create/Update Player</h3>
+			{% if is_admin_user or is_business_user %}
+			<div class="right-div">
+				<form id="form_import" action="{{ import_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+					<input type="hidden" name="continue" value="{{ continue_url }}">
+					{{ macros.field(form.importfile, placeholder=("Select Import file")) }}
+					<div class="col-md-offset-4"><span class="h5">[ Excel format: Type*|Name*|Sport|Email*|Phone*|TeamName ]<br /> Note: doesn't change the format and not empty the mandatory (*) fields</span></div>
+					<div class="col-md-offset-4"><button type="submit" class="btn blue">Import</button></div>
+				</form>
+			</div>
+			{% endif %}
+		</div>
+		<div class="panel-body">
+			<form id="form_event" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						<input type="hidden" name="continue" value="{{ continue_url }}">
+						{{ macros.field(form.name, placeholder=("Enter Player")+" "+("Name"), class="form-control") }}
+						{{ macros.field(form.email, placeholder=("Enter Player")+" "+("Email"), class="form-control") }}
+						{{ macros.field(form.phone, placeholder=("Enter Player")+" "+("Phone"), class="form-control") }}
+						{{ macros.field(form.sport, placeholder=("Select a Sport"), class="form-control") }}
+						{# macros.field(form.teamName[], placeholder=("Enter Team")+" "+("Name"), class="form-control") #}
+						<div class="input_fields_wrap">
+							<div class="form-group">						  
+									<div class="col-md-2 col-md-offset-2"><label>New Team</label></div>
+									<div class="col-md-6"><input type="text" name="newteam[]" placeholder="Enter New Team Name", class="form-control"/></diV>
+									<div class="col-md-2"><a href="#" class="btn btn-info add_field_button">+</a></div>
+							</div>
+						</div>
+						
+							<div class="form-group" id="teamdiv">
+					    	<div class="col-md-2 col-md-offset-2">
+					    		<label>Teams</label>
+					    	</div>
+					    	<div class="col-md-6">
+					        <select id="team" name="team" multiple="multiple">
+					            {% for team in teams %}					            	
+												<option value="{{ team.key.id() }}" {% if team.key.id() in sel_teams %} selected="selected" {% endif %} >{{ team.name|title }}</option>
+											{% endfor %}											
+					        </select>
+					      </div>
+					      <!--<div class="col-md-3 control-label"><a href="{{ uri_for('create-team', **{'continue': continue_url}) }}">Add New Team</a></div>-->
+					  	</div>
+					    						
+						<div class="form-actions fluid">
+							<div class="col-md-offset-4 col-md-8">
+								<button type="submit" class="btn blue">
+									Submit
+								</button>
+							</div>
+						</div>
+					</fieldset>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+	$(document).ready(function() {
+		HomeApp.initDashboard();
+		
+    var max_fields      = 10; //maximum input boxes allowed
+    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+    var add_button      = $(".add_field_button"); //Add button ID
+   
+    var x = 1; //initlal text box count
+    $(add_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper).append('<div class="form-group"><div class="col-md-3 control-label"><label>New Team</label></div><div class="col-md-6"><input type="text" name="newteam[]" placeholder="Enter New Team Name", class="form-control"/></div><a href="#" class="btn btn-danger remove_field">-</a></div>'); //add input box
+        }
+    });
+   
+    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+    });
+    
+    $("#team").multipleSelect({
+	  		width: 230,
+	  		placeholder: "Select Team(s)",
+	      filter: true,
+	      multiple: true,
+	      multipleWidth: 200
+	  });
+	});
+	
+</script>
+{% endblock %}

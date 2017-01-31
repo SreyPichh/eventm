@@ -1,0 +1,44 @@
+{% extends "home/base_home.html" %}
+
+{% block title %}
+        Contact - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        Contact
+{% endblock %}
+
+{% block content %}
+    <form id="form_contact" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception|e }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.field(form.name, label=("Name"), placeholder=("Enter your")+" "+("Name"), class="input-xlarge focused required") }}
+            {{ macros.field(form.email, label=("Email"), placeholder=("Enter your")+" "+("Email"), class="input-xlarge focused required email", type="email") }}
+            {{ macros.field(form.message, label=("Message"), class="input-xlarge required", cols="40", rows="8") }}
+            {% if captchahtml %}
+            <div class="control-group">
+                <div class="controls" id="captcha">
+                    {{captchahtml | safe}}
+                </div>
+            </div>
+            {% endif %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
+
+{% block mediaJS %}
+<script>
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+</script>
+{% endblock %}
+

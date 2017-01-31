@@ -1,0 +1,191 @@
+{% extends "home/base_others.html" %}
+
+{% block title %}
+<title>{{ title }} - Sports Event Management</title>
+{% endblock %}
+
+{% block content %}
+<div>
+	<div style="background: url(/assets/img/bg1.jpg) 100% 100% / cover no-repeat;">
+	{% include 'snippet/home/breadcrumb.html' %}
+	<div class="container">	
+		<div class="page-title">
+			Kendra Vidyala Cricket Ground
+		</div>
+		<div class="page-subtitle bg-lblue">
+			<div class="row">
+				<div class="col-md-6">
+					<h3>Kendra Vidyala School, IIT Madras<br><small>No:43, Velachery Main Road, Velachery</small></h3>		
+				</div>
+				<div class="col-md-4">
+					<div>
+						<img src="/assets/img/bigrating-4.png" width="60" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<img src="/assets/img/filter-rating-5.png" width="60" alt=""><br>
+						18 Reviews
+					</div>
+				</div>
+				<div class="col-md-2 social-footer pull-right">
+					<ul>
+						<li>
+							<a href="https://twitter.com/eventm" target="_blank"><i class="fa fa-twitter"></i></a>
+						</li>
+						<li>
+							<a href="https://facebook.com/eventm" target="_blank"><i class="fa fa-facebook"></i></a>
+						</li>
+						<li>
+							<a href="https://www.google.com/+eventm" target="_blank"><i class="fa fa-google-plus"></i></a>
+						</li>
+						<li>
+							<a href="https://youtube.com/eventm" target="_blank"><i class="fa fa-youtube"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row details-form">
+			<div class="col-md-4"> 
+					<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="Select a date"/>
+			</div>
+			<div class="col-md-4">
+					<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="Select time"/>
+			</div>
+			<div class="col-md-4">
+					<a href="#" class="btn theme btn-block">Book now <i class="fa fa-arrow-circle-o-right"></i></a>
+			</div>
+		</div>
+		<div class="row">	
+				<div class="col-md-8">
+					<div id="myCarousel" class="carousel slide mt20">
+						<!-- Carousel items -->
+						<div class="carousel-inner">
+							<div class="item">
+								<img src="/assets/img/slider1.jpg" alt="">
+								<div class="carousel-caption">
+									<p>
+										Excepturi sint occaecati cupiditate non provident
+									</p>
+								</div>
+							</div>
+							<div class="item active">
+								<img src="/assets/img/slider2.jpg" alt="">
+								<div class="carousel-caption">
+									<p>
+										Ducimus qui blanditiis praesentium voluptatum
+									</p>
+								</div>
+							</div>
+							<div class="item">
+								<img src="/assets/img/slider3.jpg" alt="">
+								<div class="carousel-caption">
+									<p>
+										Ut non libero consectetur adipiscing elit magna
+									</p>
+								</div>
+							</div>
+							<div class="item">
+								<img src="/assets/img/slider4.jpg" alt="">
+								<div class="carousel-caption">
+									<p>
+										Ut non libero consectetur adipiscing elit magna
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- Carousel nav -->
+						<a class="carousel-control left" href="#myCarousel" data-slide="prev"> <i class="fa fa-angle-left"></i> </a>
+						<a class="carousel-control right" href="#myCarousel" data-slide="next"> <i class="fa fa-angle-right"></i> </a>
+					</div>				
+	
+					<div class="inner-header bg-blue"><h3>Description</h3></div>
+					<div class="home-tile scroller" style="height: 400px">
+						<div class="row">
+							<div class="col-md-8">
+								<p>
+									About the property 
+									Ours is a duplex flat in a centrally located, quiet residential neighborhood. Downstairs is the guest bedroom, a living room, kitchen and balcony. Upstairs is our bedroom - lots of privacy for you.					</p>
+								<p>
+									Attractions and distance 
+									Ours (email hidden)ly neighborhood. We are walking distance from uptown UB city. Pubs/restaurants nearby with a range of cuisines include Bangalore's old favorites Koshy's, Pecos or RR and international favorites Toscano, Biere Club & Hard Rock Cafe. We can help you with finding the right place and guide you to some quaint, small joints not mentioned in the guide books that we enjoy eating at. 
+									We are strolling distance from Cubbon Park, The Lungs of Bangalore, which is great for morning walks.
+								</p>
+								<p>
+									Sites of tourist interest 
+									Parks/Lakes: Cubbon Park (350m), Lal Bagh (3.5 kms), Ulsoor Lake (4 kms), Sankey Tank (6 kms) 
+									Places of worship: St. Marks Cathedral (250m), Bull Temple (6 kms), ISKCON Temple (10 kms), Ulsoor Gurudwara (3.5 kms) 
+									Museums: Visvesvaraya Museum (400m), National Gallery of Modern Art (2.5 kms) 
+									Govt/Historic buildings: High Court (1.5 km), Vidhana Soudha (1.5 km) 
+									Shopping: Brigade road (1 km), MG Road (500m), UB City (800m), Commercial street (2 kms)						
+								</p>
+							</div>
+							<div class="col-md-4 bg-lgrey">
+								<h4>Facilities</h4>
+									<ul>
+									 <li>Pool</li> 
+									 <li>Kitchen </li>
+									 <li>Free parking on premises</li>
+									 <li>Doorman</li>
+									 <li>Gym </li>
+									 <li>Hot Tub</li>
+									 <li>Shampoo</li>
+									 <li>Indoor Fireplace</li>
+									 <li>Buzzer/Wireless Intercom</li>
+									 <li>Breakfast </li>
+									 <li>Family/Kid Friendly</li> 
+	 								</ul> 							
+							</div>
+						</div>
+					</div>
+	
+					<div class="inner-header bg-blue"><h3>Availability</h3></div>
+					<div class="home-tile">
+						<div id="calendar"></div>
+					</div>
+				</div>
+				<!-- RIGHT INFO -->
+				<div class="col-md-4">
+				<!-- END OF RIGHT INFO -->
+					<div class="inner-header right bg-blue"><h3>Map</h3></div>
+					<div class="home-tile right right-div ">
+						<div id="map-canvas"></div>
+					</div>
+	
+					<div class="inner-header right bg-blue"><h3>Reviews</h3></div>
+					<div class="home-tile right">
+						<div>
+							<i class="fa fa-quote-left"></i>
+							<p class="opensans size16 grey2">It was very comfortable to stay and staff were pleasant and welcoming.<br/>
+							<span class="lato lblue bold size13"><i>by Ellison from United Kingdom</i></span></p> 
+						</div>
+						<div>
+							<i class="fa fa-quote-left"></i>
+							<p class="opensans size16 grey2">It was very comfortable to stay and staff were pleasant and welcoming.<br/>
+							<span class="lato lblue bold size13"><i>by Ellison from United Kingdom</i></span></p> 
+						</div>
+					</div>
+					
+					<div class="inner-header right bg-blue "><h3>Nearby Playgrounds</h3></div>
+					<div class="home-tile right">
+						<p>to fill</p>
+					</div>
+				</div>
+			</div>
+			<!-- END OF container-->
+	</div>	
+</div>
+<!-- END OF CONTENT -->
+{% endblock %}
+
+{% block page_js %}
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?sensor=FALSE">
+    </script>
+    <script type="text/javascript">
+			$(document).ready(function() {
+				HomeApp.initDetails();
+			});      
+    </script>
+
+{% endblock %}

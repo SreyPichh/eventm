@@ -1,0 +1,167 @@
+{% extends "home/base_home.html" %}
+
+{% block title %}
+<title>{{ title }} - Sports Event Management</title>
+{% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="home-search">
+		<div class="row search-tab">
+			<ul class="nav navbar-nav main">
+				<li>
+					<a href="/" class="active">Find a playground</a>
+				</li>
+				<li>
+					<a href="/">Find an event</a>
+				</li>
+				<li>
+					<a href="/">Find a training club</a>
+				</li>
+			</ul>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<input type="text" class="form-control left" placeholder="Select a Locality">
+				</input>
+			</div>
+			<div class="col-md-4">
+				<select class="form-control mySelectBoxClass">
+					<option selected>Pick a Sport Type</option>
+					<option>Cricket</option>
+					<option>Football</option>
+					<option>Hockey</option>
+					<option>Tennis</option>
+					<option>Badminton</option>
+					<option>Others</option>
+				</select>
+			</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="Select a date"/>
+			</div>
+			<div class="col-md-1">
+				<a class="btn blue" href="/search">Search <i class="fa fa-search"></i></a>
+			</div>
+		</div>
+		<div class="search-adv">
+			<h4><a href="">+ Advanced</a></h4>
+		</div>
+	</div>
+</div>
+
+<div class="home-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="home-tile">
+					<h2>Popular Playgrounds</h2>
+					<div class="item row">
+						<div class="col-md-6">
+							<a href="#"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+							<p class="msctext padding20">
+								<h4><a href="#">The Experts in African Safari Travel</a></h4><br/>
+								Sed auctor erat sit amet lorem venenatis, in feugiat nisl fermentum. Nam luctus adipiscing dapibus. 
+							</p>
+						</div>
+						<div class="col-md-6">
+							<a href="#"><img src="/assets/img/tennis.jpg" class="fhimg" alt=""></a>
+							<p class="msctext padding20">
+								<h4><a href="#">The Experts in African Safari Travel</a></h4><br/>
+								Nunc leo felis, ornare non commodo a, elementum a risus. 
+							</p>
+						</div>
+					</div>
+					<h4 class="right"><a href="">more...</a></h4>
+				</div>
+				<div class="home-tile">
+					<h2>Popular Training Clubs</h2>
+					<div class="item row">
+						<div class="col-md-6">
+							<a href="#"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+							<p class="msctext padding20">
+								<h4><a href="#">The Experts in African Safari Travel</a></h4><br/>
+								Sed auctor erat sit amet lorem venenatis, in feugiat nisl fermentum. Nam luctus adipiscing dapibus. 
+							</p>
+						</div>
+						<div class="col-md-6">
+							<a href="#"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+							<p class="msctext padding20">
+								<h4><a href="#">The Experts in African Safari Travel</a></h4><br/>
+								Nunc leo felis, ornare non commodo a, elementum a risus. 
+							</p>
+						</div>
+					</div>
+					<h4 class="right"><a href="">more...</a></h4>
+				</div>				
+			</div>
+			<div class="col-md-6 home-tile white">
+				<h2>Upcoming Events</h2>
+				<div class="item row">
+					<div class="col-md-3">
+						<a href="#"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+					</div>
+					<div class="col-md-3">
+						<h4><a href="#">Radio Mirchi Cricket Cup</a></h4><br/>
+					</div>
+					<div class="col-md-3">
+						<p>Nunc leo felis, ornare non commodo a, elementum a risus.</p> 
+					</div>
+					<div class="col-md-3">
+						<strong>Ongoing. Ends tomorrow</strong>
+						<a class="btn blue" href="/">Participate <i class="fa fa-arrow-circle-o-right"></i></a>
+					</div>
+				</div>
+				<div class="item row">
+					<div class="col-md-3">
+						<a href="#"><img src="/assets/img/football.jpg" class="fhimg" alt=""></a>
+					</div>
+					<div class="col-md-3">
+						<h4><a href="#">Chennai Kabadi League</a></h4><br/>
+					</div>
+					<div class="col-md-3">
+						<p>Nam luctus adipiscing dapibus. Nunc leo felis, ornare non commodo a, elementum a risus.</p> 
+					</div>
+					<div class="col-md-3">
+						<strong>Ongoing. Ends on 8 June 2014.</strong>						
+						<a class="btn blue" href="/">Participate <i class="fa fa-arrow-circle-o-right"></i></a>
+					</div>
+				</div>
+				<div class="item row">
+					<div class="col-md-3">
+						<a href="#"><img src="/assets/img/tennis.jpg" class="fhimg" alt=""></a>
+					</div>
+					<div class="col-md-3">
+						<h4><a href="#">Anna University Football Championship</a></h4><br/>
+					</div>
+					<div class="col-md-3">
+						<p>Sed auctor erat sit amet lorem venenatis, in feugiat nisl fermentum. </p> 
+					</div>
+					<div class="col-md-3">
+						<strong>starts on 20 June 2014</strong>
+						<a class="btn blue" href="/">Participate <i class="fa fa-arrow-circle-o-right"></i></a>
+					</div>
+				</div>
+				<div class="item row">
+					<div class="col-md-3">
+						<a href="#"><img src="/assets/img/cricket.jpg" class="fhimg" alt=""></a>
+					</div>
+					<div class="col-md-3">
+						<h4><a href="#">Radio Mirchi Cricket Cup</a></h4><br/>
+					</div>
+					<div class="col-md-3">
+						<p>Sed auctor erat sit amet lorem venenatis, in feugiat nisl fermentum. Nam luctus adipiscing dapibus. </p> 
+					</div>
+					<div class="col-md-3">
+						<strong>starts on 31 June 2014</strong>
+						<a class="btn blue" href="/">Participate <i class="fa fa-arrow-circle-o-right"></i></a>
+					</div>
+				</div>
+				<h4 class="right"><a href="">more...</a></h4>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+{% endblock %}

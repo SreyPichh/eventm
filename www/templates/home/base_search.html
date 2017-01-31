@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block custom_css %}
+  <!-- Updates -->
+	<link href="/assets/thirdparty/plugins/onepage-scroll/onepage-scroll.css" rel="stylesheet" media="screen">
+  <link href="/assets/fonts/sports-icon/flaticon.css" rel="stylesheet" type="text/css"/>
+  <link href="/assets/css/login.css" rel="stylesheet" type="text/css"/>
+  <link href="/assets/css/eventm.css" rel="stylesheet" type="text/css"/>
+	{% block page_css %}{% endblock %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'snippet/home/navbar_home.html' %}
+  {% if messages|safe %}
+      {% for message in messages %}
+          <p class="alert alert-{{ message[1]|safe }} mt50">
+              <a class="close" data-dismiss="alert">×</a>
+              {{ message[0]|safe }}
+          </p>
+      {% endfor %}
+  {% endif %}
+{% endblock %}
+
+<div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 10px; right: 10px; opacity: 1; cursor: pointer;">
+	<img src="/assets/img/up.png" style="width:30px; height:30px">
+</div>
+
+{% block custom_js %}
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.0/fullcalendar.min.js"></script>
+	<script src="/assets/thirdparty/plugins/onepage-scroll/jquery.onepage-scroll.min.js"></script>
+	<script src="/assets/thirdparty/plugins/sly/sly-scroll.min.js"></script>
+	<script src="/assets/js/home_utils.js"></script>	
+  {% block page_js %}{% endblock %}
+{% endblock %}

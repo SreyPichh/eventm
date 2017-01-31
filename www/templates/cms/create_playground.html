@@ -1,0 +1,115 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container">
+<div class="cms-panel panel-info">
+	<div class="panel-heading"><h3>Create/Update Playground</h3></div>
+    <div class="panel-body">
+    	<div class="navbar navbar-centered">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#tab-1"  data-toggle="tab">Basic Info</a>
+					</li>
+					<li>
+						<a href="#tab-2"  data-toggle="tab">Address & Contact Info</a>
+					</li>
+					<li>
+						<a href="#tab-3"  data-toggle="tab">Media</a>
+					</li>
+					<li>
+						<a href="#tab-4"  data-toggle="tab">Sponsors</a>
+					</li>
+				</ul>
+			</div>
+			
+    	<form id="form_ground_save" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+    		<div class="form-body">
+        	<fieldset>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">            
+            <div class="tab-content">
+							<div class="tab-pane row fade in active" id="tab-1">
+								<div class="col-md-offset-1 ptb20"><h3 class="blue">Basic Info</h3></div>
+								{{ form.locality_id }}
+	            	{{ macros.field(form.name, placeholder=("Enter Ground")+" "+("Name"), class="form-control") }}
+								{{ macros.field(form.sport, placeholder=("Select a Sport"), class="form-control") }}
+								{{ macros.field(form.locality, placeholder=("Enter Locality")+" "+("Name"), class="form-control") }}
+								{{ macros.field(form.city, placeholder=("Enter City")+" "+("Name"), class="form-control") }}
+	            	{{ macros.field(form.description, placeholder=("Enter Ground")+" "+("Description"), class="form-control summernote") }}
+	            	{% if is_admin_user %}
+	            		{{ macros.field(form.featured, placeholder=("Is Featured"), class="form-control") }}
+	            	{% endif %}
+	            	<div class="col-md-offset-6 col-md-6">								
+									<button type="submit" name="save" value="save" class="btn blue">Save</button>
+									<button type="submit" name="next" value="#tab-2" class="btn blue">Next</button>
+								</div>
+	            </div>
+	            <div class="tab-pane row fade in" id="tab-2">
+	            	<div class="col-md-offset-1 ptb20"><h3 class="blue">Address Info</h3></div>
+	            	{{ macros.field(form.address, label_visible=false) }}
+	            	<div class="col-md-offset-1 ptb20"><h3 class="blue">Contact Info</h3></div>
+	            	{{ macros.field(form.contact_info, label_visible=false) }}
+	            	<div class="col-md-offset-6 col-md-6">
+									<a href="#tab-1" data-toggle="tab" class="btn blue">Back</a>
+									<button type="submit" name="save" value="save" class="btn blue">Save</button>
+									<button type="submit" name="next" value="#tab-3" class="btn blue">Next</button>
+								</div>
+	            </div>
+	            <div class="tab-pane row fade in" id="tab-3">
+	            	<div class="col-md-offset-2 ptb20"><h3 class="blue">Media Info</h3></div>
+								{% if current_media %}
+								<ul class="nav nav-pills">
+									{% for photo in current_media %}
+										<li>
+											<img src="{{ photo.url }}" width="200"><br>
+											Is Active : {{ photo.status }}, Is Primary : {{ photo.primary }}
+										</li>
+									{% endfor %}
+									</ul>
+								{% endif %}		            
+		            <div class="form-group" id="items">
+							    <input type="hidden" id="itemCounter" name="itemCounter" value="0">
+							    <div class="item">
+		            		{{ macros.field(form.media, label_visible=false) }}
+			            </div>
+								</div>			
+								
+								<div class="col-md-offset-10 col-md-1">									
+										<input type="button" id="add" value="+" class="btn btn-info" title="Add New Media" />									
+								</div><br />
+		            {# macros.field(form.custom_info, placeholder=("Enter one or more Contact person, seperated by comma")) #}
+		            <div class="col-md-offset-6 col-md-6">
+		            	<div class="form-actions fluid">
+										<a href="#tab-2" data-toggle="tab" class="btn blue">Back</a>
+										<button type="submit" name="save" value="save" class="btn blue">Finish</button>
+									</div>
+								</div>
+		          </div>
+	          	<div class="tab-pane row fade in" id="tab-4">
+	          		<div class="row page-subtitle bg-lgrey white mtb20">
+									<h4>Sponsors</h4>
+									<div class="sponsors">
+										<img src="/assets/img/sponsors_sprite.jpg"/>
+									</div>
+								</div>
+								<div class="mt50">&nbsp;</div>
+								<div class="mt50">&nbsp;</div>
+	          	</div>
+	        	</div>
+        	</fieldset>
+        	
+        </div>
+    	</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDashboard();
+			$('#address-locality').prop('readonly', true);
+			$('#address-city').prop('readonly', true);
+		});
+  </script>    
+{% endblock %}

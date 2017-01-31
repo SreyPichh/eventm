@@ -1,0 +1,76 @@
+{% extends "home/base_home.html" %}
+
+{% block content %}
+<div class="event-home">
+	{% include 'snippet/home/breadcrumb.html' %}
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#tab-1" data-toggle="tab">Ongoing and Upcoming Events</a>
+		</li>
+		<li>
+			<a href="#tab-2" data-toggle="tab">Past Events</a>
+		</li>
+	</ul>
+	<div class="tab-content bg-white">
+		<div class="tab-pane row fade in active" id="tab-1">
+			<div id="future_events">
+				{% if future_events %}
+				{% for event in future_events %}
+				<div class="row event-row">
+					<div class="col-md-3 event-text">
+						<h5><strong>{{ event.start_datetime.strftime('%m-%d-%Y') }} - {{ event.end_datetime.strftime('%m-%d-%Y') }}</strong></h5><br><br>
+						Sport: {{ event.sport|title }}
+					</div>
+					<div class="col-md-2 event-img">
+						<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > {% if event_media  %} <img src="{{ event_media.get(event.key) }}"> {% endif %} </a>
+					</div>
+					<div class="col-md-7 event-text">
+						<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" ><h4>{{ event.name|title }}</h4></a>
+						{{ event.description | safe }}
+					</div>
+				</div>
+				{% endfor %}
+				{% else %}
+				<h4>No current events...</h4>
+				{% endif %}
+			</div>
+		</div>
+		<div class="tab-pane row fade in" id="tab-2">
+<!--
+			<div class="mt10 pr10 text-right">
+				<h5>Sort by : Time <a href="">asc</a><a href="">desc</a></h5>
+			</div>
+-->
+			<div id="recent_events">
+				{% if recent_events %}
+				{% for event in recent_events %}
+				<div class="row event-row">
+					<div class="col-md-3 event-text">
+						<h5><strong>{{ event.start_datetime.strftime('%m-%d-%Y') }} - {{ event.end_datetime.strftime('%m-%d-%Y') }}</strong></h5><br><br>
+						Sport: {{ event.sport|title }}
+					</div>
+					<div class="col-md-2 event-img">
+						<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" > {% if event_media  %} <img src="{{ event_media.get(event.key) }}"> {% endif %} </a>
+					</div>
+					<div class="col-md-7 event-text">
+						<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" ><h4>{{ event.name|title }}</h4></a>
+						{{ event.description | safe }}
+					</div>
+				</div>
+				{% endfor %}
+				{% else %}
+				<h4>No past events...</h4>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}	
+  <script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initSearch();
+		});      
+  </script>
+{% endblock %}

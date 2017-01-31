@@ -1,0 +1,121 @@
+{% extends "home/base_others.html" %}
+
+{% block title %}
+<title>{{ title }} - Sports Event Management</title>
+{% endblock %}
+
+{% block content %}
+<div class="search-bar">
+	<div class="container">
+		<div class="navbar navbar-centered">
+			<ul class="nav navbar-nav search">
+				<li>
+					<a href="/">Playgrounds</a>
+				</li>
+				<li>
+					<a href="">|</a>
+				</li>
+				<li>
+					<a href="/">Sporting events</a>
+				</li>
+				<li>
+					<a href="">|</a>
+				</li>
+				<li>
+					<a href="/" class="active">Training clubs</a>
+				</li>
+			</ul>
+		</div>
+		<div class="row search-options">
+			<form id="tc-search" action="{{ uri_for('tc-search') }}" method="post">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+				<input type="hidden" name="city-name" id="city-name" value="{{ city_name }}" />
+				<input type="hidden" name="sport" id="sport" value="{{ sport }}" />
+				
+				<div class="col-md-4">
+					<select class="form-control mySelectBoxClass" id="tc-locality" name="tc-locality">
+						<option selected value="None">Where do you want to play?</option>
+						{% for locality in localities %}
+							<option value="{{ locality }}">{{ locality }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-md-4">
+					<select class="form-control mySelectBoxClass" id="tc-sport" name="tc-sport">
+						<option value="None">which sport?</option>
+						{% for key, value in sports %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-md-3">
+					<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="when ?"/>
+				</div>
+				<div class="col-md-1">
+					<button type="submit" class="btn blue" id="tc-search">Search<i class="fa fa-search"></i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="search-results">
+	<div class="row">
+		<div class="col-md-6">
+			<div id="map-canvas"></div>
+		</div>
+		<div class="col-md-6">
+			<div class="grid-view">
+				<div class="mt10 pr10 text-right">
+					<h5><strong> Sort by : <a href="">Name</a> | <a href="">Time</a> | <a href="">Popularity</a></strong></h5>
+				</div>
+				<div class="row scroller"  style="height: 470px;">
+					{% if trainingcenters %}
+					{% for trainingcenter in trainingcenters %}
+						<div class="col-md-4 ">
+							<div class="gallery-item">
+						<a href="{{ uri_for('tc-details', city_name=trainingcenter.address.city, locality_name=trainingcenter.address.locality, entity_id=trainingcenter.key.id(), entity_alias=trainingcenter.alias) }}" >
+						<div class="pg-item-image">
+							{% if trainingcenters_media %}
+							<img src="{{ trainingcenters_media.get(trainingcenter.key) }}" class="fhimg">
+							{% endif %}
+						</div> </a>
+						<div class="pg-item-text bg-white">
+							<div class="title blue">
+								<a href="{{ uri_for('tc-details', city_name=trainingcenter.address.city, locality_name=trainingcenter.address.locality, entity_id=trainingcenter.key.id(), entity_alias=trainingcenter.alias) }}" > <h4>{{ trainingcenter.name }}</h4> </a>
+							</div>
+							<div class="sub-title">
+								{% if trainingcenter.address.latlong %}
+									<div class="formap hide"><div class="name">{{ trainingcenter.name }}</div><div class="latlong">{{ trainingcenter.address.latlong }}</div></div>
+								{% endif %}
+								<h5>{{ trainingcenter.address.locality }}, {{ trainingcenter.address.city }}</h5>
+								<i>Sport: </i>{{ trainingcenter.sport }}
+								<br>
+								<img src="/assets/img/bigrating-4.png" width="60" alt="">
+								{{ trainingcenter.review_stats.reviews_count }} Reviews, {{ trainingcenter.review_stats.ratings_count }} Ratings
+							</div>
+						</div>
+						</div>
+						</div>
+					{% endfor %}
+					{% else %}
+						No Training Center found.
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?sensor=FALSE"></script>
+
+    <script type="text/javascript">
+			$(document).ready(function() {
+				HomeApp.initSearch();
+			});      
+    </script>
+
+{% endblock %}
+

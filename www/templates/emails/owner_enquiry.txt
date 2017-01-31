@@ -1,0 +1,9 @@
+<p>Hi {{ user_name }},</p>
+		<p>the following person showed interest in booking facility of your {{ type }} {{ type_name }} at {{ date_time }}.  
+	<p>kindly confirm the enquiry at {{ email }}</p>
+
+<p>If you have contact {{ app_name }} support by clicking this link:</p>
+{{ support_url }}
+
+<p>Sincerely,<br>
+{{ app_name }} Team

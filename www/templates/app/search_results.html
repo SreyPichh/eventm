@@ -1,0 +1,184 @@
+{% extends "home/base_search.html" %}
+
+{% block content %}
+<div class="search-results mt80">
+	{% include 'snippet/home/breadcrumb.html' %}
+	<div class="map">
+		<div id="map-canvas"></div>
+	</div>
+	<div class="search-grid">
+		<div class="grid-view">
+				<!--<div class="prevnext">
+					{% if prev_more == True %}<a href="?type={{ types }}&nav=prev&&page={{ prev_url }}">Prev</a>{% endif %}
+					{% if next_more == True %}<a href="?type={{ types }}&nav=next&&page={{ next_url }}">Next</a>{% endif %}
+				</div>-->
+				{% if page_range %}
+					<div class="text-center">
+							<ul class="pagination pagination-sm">
+					    {% for page in page_range %}
+					       <li><a href="?type={{ types }}&page={{ page }}">{{ page }}</a></li>
+					    {% endfor %}
+					    </ul>
+					</div>
+				{% endif %}
+			<div class="row">
+				<div class="col-md-4">
+					<!-- <h1>{{ city_name }}</h1> -->
+				</div>
+				{% if playgrounds is defined %}
+					{% if playgrounds %}
+
+						{% for playground in playgrounds %}
+							<div class="col-md-4 ">
+								<div class="gallery-item">
+							<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >
+							<div class="pg-item-image">
+								{% if playground_media %}
+								<img src="{{ playground_media.get(playground.key) }}" class="fhimg">
+								{% endif %}
+							</div> </a>
+							<div class="pg-item-text bg-white">
+								<div class="title black">
+									<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" > <h4>{% if playground.name | length < 21 %}{{ playground.name|title }}{% else %}{{ playground.name [:20] | title }}...{% endif %}</h4> </a>
+								</div>
+								<div class="sub-title">
+									{% if playground.address.latlong %}
+										<div class="formap hide"><div class="name">{% if playground.name | length < 21 %}{{ playground.name|title }}{% else %}{{ playground.name [:20] | title }}...{% endif %}</div><div class="latlong">{{ playground.address.latlong }}</div></div>
+									{% endif %}
+									<h5>{{ playground.address.locality|title }}, {{ playground.address.city|title }}</h5>
+									<i>Sport: </i>{{ playground.sport|title }}
+<!--
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									{{ playground.review_stats.reviews_count }} Reviews, {{ playground.review_stats.ratings_count }} Ratings
+-->
+								</div>
+							</div>
+							</div>
+							</div>
+						{% endfor %}													
+					{% else %}
+						<h5 class="mt10">&nbsp;&nbsp;No {% if sport is not none and sport != 'None' and sport != '' %}{{ sport|title }}{% endif %} Playground found for {% if locality_name is not none and locality_name != 'None' and locality_name != '' %}{{ locality_name|title }}, {% endif %}{% if city_name is not none and city_name != 'None' and city_name != '' %}{{ city_name|title }}{% endif %}.</h5>
+					{% endif %}				
+				{% endif %}
+			</div>
+			
+			<div class="row">								
+				{% if suggest_playgrounds is defined %}
+					{% if suggest_playgrounds %}
+						<h5 class="mt10">Suggested Nearby Playgrounds</h5>
+						{% for playground in suggest_playgrounds %}
+							<div class="col-md-4 ">
+								<div class="gallery-item">
+							<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >
+							<div class="pg-item-image">
+								{% if playground_media %}
+								<img src="{{ playground_media.get(playground.key) }}" class="fhimg">
+								{% endif %}
+							</div> </a>
+							<div class="pg-item-text bg-white">
+								<div class="title black">
+									<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" > <h4>{% if playground.name | length < 21 %}{{ playground.name|title }}{% else %}{{ playground.name [:20] | title }}...{% endif %}</h4> </a>
+								</div>
+								<div class="sub-title">
+									{% if playground.address.latlong %}
+										<div class="formap hide"><div class="name">{% if playground.name | length < 21 %}{{ playground.name|title }}{% else %}{{ playground.name [:20] | title }}...{% endif %}</div><div class="latlong">{{ playground.address.latlong }}</div></div>
+									{% endif %}
+									<h5>{{ playground.address.locality|title }}, {{ playground.address.city|title }}</h5>
+									<i>Sport: </i>{{ playground.sport|title }}
+								</div>
+							</div>
+							</div>
+							</div>
+						{% endfor %}				
+					{% endif %}
+				{% endif %}
+			</div>			
+				
+			<div class="row">
+				{% if trainingcenters is defined %}
+					{% if trainingcenters %}
+						{% for trainingcenter in trainingcenters %}
+							<div class="col-md-4 ">
+								<div class="gallery-item">
+							<a href="{{ uri_for('tc-details', city_name=trainingcenter.address.city, locality_name=trainingcenter.address.locality, entity_id=trainingcenter.key.id(), entity_alias=trainingcenter.alias) }}" >
+							<div class="pg-item-image">
+								{% if trainingcenters_media %}
+								<img src="{{ trainingcenters_media.get(trainingcenter.key) }}" class="fhimg">
+								{% endif %}
+							</div> </a>
+							<div class="pg-item-text bg-white">
+								<div class="title black">
+									<a href="{{ uri_for('tc-details', city_name=trainingcenter.address.city, locality_name=trainingcenter.address.locality, entity_id=trainingcenter.key.id(), entity_alias=trainingcenter.alias) }}" > <h4>{% if trainingcenter.name | length < 21 %}{{ trainingcenter.name|title }}{% else %}{{ trainingcenter.name [:20] | title }}...{% endif %}</h4> </a>
+								</div>
+								<div class="sub-title">
+									{% if trainingcenter.address.latlong %}
+										<div class="formap hide"><div class="name">{% if trainingcenter.name | length < 21 %}{{ trainingcenter.name|title }}{% else %}{{ trainingcenter.name [:20] | title }}...{% endif %}</div><div class="latlong">{{ trainingcenter.address.latlong }}</div></div>
+									{% endif %}
+									<h5>{{ trainingcenter.address.locality|title }}, {{ trainingcenter.address.city|title }}</h5>
+									<i>Sport: </i>{{ trainingcenter.sport|title }}
+<!--
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									{{ trainingcenter.review_stats.reviews_count }} Reviews, {{ trainingcenter.review_stats.ratings_count }} Ratings
+-->
+								</div>
+							</div>
+							</div>
+							</div>
+						{% endfor %}							
+					{% else %}
+						<h5 class="mt10">&nbsp;&nbsp;No {% if sport is not none and sport != 'None' and sport != '' %}{{ sport|title }}{% endif %} Training Centre found for {% if locality_name is not none and locality_name != 'None' and locality_name != '' %}{{ locality_name|title }}, {% endif %}{% if city_name is not none and city_name != 'None' and city_name != '' %}{{ city_name|title }}{% endif %}.</h5>
+					{% endif %}
+				{% endif %}				
+			</div>
+			
+			<div class="row">
+				{% if suggest_trainingcenters is defined %}
+					{% if suggest_trainingcenters %}
+						<h5 class="mt10">Suggested Nearby Training Centers</h5>
+						{% for trainingcenter in suggest_trainingcenters %}
+							<div class="col-md-4 ">
+								<div class="gallery-item">
+							<a href="{{ uri_for('tc-details', city_name=trainingcenter.address.city, locality_name=trainingcenter.address.locality, entity_id=trainingcenter.key.id(), entity_alias=trainingcenter.alias) }}" >
+							<div class="pg-item-image">
+								{% if trainingcenters_media %}
+								<img src="{{ trainingcenters_media.get(trainingcenter.key) }}" class="fhimg">
+								{% endif %}
+							</div> </a>
+							<div class="pg-item-text bg-white">
+								<div class="title black">
+									<a href="{{ uri_for('tc-details', city_name=trainingcenter.address.city, locality_name=trainingcenter.address.locality, entity_id=trainingcenter.key.id(), entity_alias=trainingcenter.alias) }}" > <h4>{% if trainingcenter.name | length < 21 %}{{ trainingcenter.name|title }}{% else %}{{ trainingcenter.name [:20] | title }}...{% endif %}</h4> </a>
+								</div>
+								<div class="sub-title">
+									{% if trainingcenter.address.latlong %}
+										<div class="formap hide"><div class="name">{% if trainingcenter.name | length < 21 %}{{ trainingcenter.name|title }}{% else %}{{ trainingcenter.name [:20] | title }}...{% endif %}</div><div class="latlong">{{ trainingcenter.address.latlong }}</div></div>
+									{% endif %}
+									<h5>{{ trainingcenter.address.locality|title }}, {{ trainingcenter.address.city|title }}</h5>
+									<i>Sport: </i>{{ trainingcenter.sport|title }}
+<!--
+									<br>
+									<img src="/assets/img/bigrating-4.png" width="60" alt="">
+									{{ trainingcenter.review_stats.reviews_count }} Reviews, {{ trainingcenter.review_stats.ratings_count }} Ratings
+-->
+								</div>
+							</div>
+							</div>
+							</div>
+						{% endfor %}					
+					{% endif %}
+				{% endif %}				
+			</div>
+		
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}	
+  <script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initSearch();
+		});      
+  </script>
+{% endblock %}

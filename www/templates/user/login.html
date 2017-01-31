@@ -1,0 +1,51 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container min-height">
+	<div class="login-panel panel-info">
+		<div class="panel-heading">
+			<h3>Login</h3>
+		</div>
+		<div class="panel-body">
+			<form id="form_login_user" action="{{ url|safe }}" method="post" class="form-horizontal">
+				<div class="form-body">
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						<div class="form-group">
+							<div class="form-actions fluid">
+								<div class="col-md-8 col-md-offset-4">
+									<a href="{{ uri_for('social-login', provider_name = 'facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i>&nbsp;|&nbsp;Log In with Facebook</a>
+								</div>
+							</div>
+						</div>
+						{{ macros.field(form.email, label=("Email"), placeholder=("Enter your")+" "+("Email"), class="form-control focused required") }}
+						{{ macros.field(form.password, label=("Password"), placeholder=("Enter your")+" "+("Password"), class="form-control focused required", type="password") }}
+						<div class="form-group">
+							<div class="form-actions fluid">
+								<div class="col-md-8 col-md-offset-4">
+									<button type="submit" class="btn btn-primary btn-login">Login</button>
+									<label class="remember"><input type="checkbox" name="remember_me" id="remember_me" value="on">Remember me?</label>
+									<label><a href="{{ uri_for('password-reset') }}">Forgot your password?</a></label>
+								</div>
+							</div>
+						</div>
+						<div id="register" class="form-actions fluid">
+							<div class="col-md-8 col-md-offset-4">
+								<label>Don't have an account?&nbsp;<a href="{{ uri_for('signup') }}">Sign Up</a></label>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDashboard();
+		}); 
+	</script>
+{% endblock %}

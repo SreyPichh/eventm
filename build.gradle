@@ -1,0 +1,33 @@
+apply plugin:'application'
+apply plugin: 'java'
+
+repositories { mavenCentral() }
+
+configurations {
+    tool
+    yui
+}
+
+dependencies {
+    tool "com.google.javascript:closure-compiler:v20131014"
+    yui  'com.yahoo.platform.yui:yuicompressor:2.4.7'
+
+}
+
+task runTool(type: JavaExec) {
+    main = "com.google.javascript.jscomp.CommandLineRunner"
+    classpath configurations.tool
+    enableAssertions
+    if (project.hasProperty('myargs')) {
+        args(myargs.split())
+    }
+}
+
+task runYui(type: JavaExec) {
+    main = "com.yahoo.platform.yui.compressor.Bootstrap"
+    classpath configurations.yui
+    enableAssertions
+    if (project.hasProperty('myargs')) {
+        args(myargs.split())
+    }
+}

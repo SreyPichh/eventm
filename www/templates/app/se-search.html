@@ -1,0 +1,111 @@
+{% extends "home/base_others.html" %}
+
+{% block title %}
+<title>{{ title }} - Sports Event Management</title>
+{% endblock %}
+
+{% block content %}
+<div class="search-bar">
+	<div class="container">
+		<div class="navbar navbar-centered">
+			<ul class="nav navbar-nav search">
+				<li>
+					<a href="/">Playgrounds</a>
+				</li>
+				<li>
+					<a href="">|</a>
+				</li>
+				<li>
+					<a href="/" class="active">Sporting events</a>
+				</li>
+				<li>
+					<a href="">|</a>
+				</li>
+				<li>
+					<a href="/">Training clubs</a>
+				</li>
+			</ul>
+		</div>
+		<div class="row search-options">
+			<div class="col-md-4">
+				<input type="text" class="form-control left" placeholder="Where do you want to play?">
+				</input>
+			</div>
+			<div class="col-md-4">
+				<select class="form-control mySelectBoxClass">
+					<option selected>which sport?</option>
+					<option>Cricket</option>
+					<option>Football</option>
+					<option>Hockey</option>
+					<option>Tennis</option>
+					<option>Badminton</option>
+					<option>Others</option>
+				</select>
+			</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control mySelectCalendar" id="datepicker1" placeholder="when ?"/>
+			</div>
+			<div class="col-md-1">
+				<a class="btn blue" href="/search">Search <i class="fa fa-search"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="search-results">
+	<div class="row">
+		<div class="col-md-6">
+			<div id="map-canvas"></div>
+		</div>
+		<div class="col-md-6">
+			<div class="grid-view">
+				<div class="mt10 pr10 text-right">
+					<h5><strong> Sort by : <a href="">Name</a> | <a href="">Time</a> | <a href="">Popularity</a></strong></h5>
+				</div>
+				<div class="row scroller"  style="height: 470px;">
+					{% if sportevents %}
+					{% for event in sportevents %}
+						<div class="col-md-4 ">
+							<div class="gallery-item">
+						<a href="{{ uri_for('se-details', entity_id=event.key.id(), entity_alias=event.alias) }}" >
+						<div class="pg-item-image">
+							{% if event_media %}
+							<img src="{{ event_media.get(event.key) }}" class="fhimg">
+							{% endif %}
+						</div> </a>
+						<div class="pg-item-text bg-white">
+							<div class="title blue">
+								<a href="{{ uri_for('se-details', entity_id=event.key.id(), entity_alias=event.alias) }}" > <h4>{{ event.name }}</h4> </a>
+							</div>
+							<div class="sub-title">
+								<h5></h5>
+								<i>Sport: </i>{{ event.sport }}
+								<br>
+								<img src="/assets/img/bigrating-4.png" width="60" alt="">
+								{{ event.review_stats.reviews_count }} Reviews, {{ event.review_stats.ratings_count }} Ratings
+							</div>
+						</div>
+						</div>
+						</div>
+					{% endfor %}
+					{% else %}
+						No sporting event found.
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?sensor=FALSE"></script>
+
+    <script type="text/javascript">
+			$(document).ready(function() {
+				HomeApp.initSearch();
+			});      
+    </script>
+
+{% endblock %}
+

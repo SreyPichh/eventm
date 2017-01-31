@@ -1,0 +1,35 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container min-height">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>{{ title }} Datas from File</h3>
+		</div>
+		<div class="panel-body">			
+			<form id="form_import" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+		    	<div class="form-body">
+		        <fieldset>
+		             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+		            {{ macros.field(form.linenum, placeholder=("Enter Line Number"), class="form-control") }}		            
+		            {{ macros.field(form.importfile, placeholder=("Select Import file")) }}		            
+		            <div class="form-actions fluid">
+		               <div class="col-md-offset-3 col-md-9">
+		                  <button type="submit" class="btn blue">Submit</button>
+		               </div>
+		            </div>
+		        </fieldset>
+		        </div>
+		    </form>			
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDashboard();
+		}); 
+	</script>
+{% endblock %}

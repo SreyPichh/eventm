@@ -1,0 +1,702 @@
+{% extends "home/base_others.html" %}
+
+{% block page_css %}
+<style type="text/css">
+	/*a.editable-click {
+	  color: green;
+	  border-color: green;
+	} 
+	a.editable-click.editable-disabled {
+	  color: black;  
+	  border-bottom: none;
+	}
+	a.editable-empty {
+	  color: gray;
+	  font-style: italic;
+	}
+	a.editable-empty:hover {
+	  color: green;	  
+	}*/
+	.edit-button{
+		display: none;
+	}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-top">&nbsp; </div>
+<div class="container min-height">
+	<h3 class="mt50 yellow strong">&nbsp;</h3>	
+	<div class="col-md-3">
+		<div style="margin: 20px auto" id="image-upload-wrapper">
+			<form id="form_user" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+				<input type="hidden" name="user_id" value="{{ owner_info.key.id() }}">
+				<input type="file" name="file" id="file" />
+				{% if current_image %}
+					<img src="{{ current_image }}" style="max-width: 100%; height: auto;" />
+				{% else %}
+					<img src="/assets/img/default_profile.jpg" />
+				{% endif %}
+			</form>
+			<div class="overlay">Click to Change New Image<br />image dimention: 250x250</div>
+		</div>  
+    		
+		<ul class="nav nav-tabs nav-stacked">
+			<li class="active">
+				<a class="h5 strong grey" href="#tab-profile" data-toggle="tab"><i class="fa fa-cog fa-lg">&nbsp;</i>&nbsp; My Profile<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>
+			<li>
+				<a class="h5 strong grey" href="#tab-teams" data-toggle="tab"><i class="fa fa-users">&nbsp;</i>&nbsp; My Teams<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>
+			<li>
+				<a class="h5 strong grey" href="#tab-events" data-toggle="tab"><i class="fa fa-cogs fa-lg fa-rotate-90 mleftn5">&nbsp;</i>&nbsp; My Events<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>
+			<li>
+				<a class="h5 strong grey" href="#tab-favorite" data-toggle="tab"><i class="fa fa-heart">&nbsp;</i>&nbsp; Favorites<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>
+			<li>
+				<a class="h5 strong grey" href="#tab-gallery" data-toggle="tab"><i class="fa fa-picture-o">&nbsp;</i>&nbsp; Gallery<i class="fa fa-plus blue fright">&nbsp;</i></a>
+			</li>					
+		</ul>				
+	</div>	
+		
+	<div class="fleft p20"><h3 class="yellow strong">{{ user_info.email }}'s profile</h3></div>
+	<div class="fright p20">
+		<h3 class="yellow strong">0 Events Attended</h3><br />
+		<h3 class="white">{% if recommend_events %}{{ recommend_events|length }}{% else %}0{% endif%} Events Created</h3>
+	</div>			
+	<div class="col-md-9">					
+		<div class="tab-content">				  
+		  <div class="tab-pane row fade in active" id="tab-profile">
+		  	<div class="db-panel panel-info" style="min-height: 350px">					  	
+				  <div class="panel-heading">
+				  	<h3>My Profile 
+				  		{% if user_type[0]=='facebook' %}
+				  			<a href="#" onclick="javascript:return friendsInvite(); return false;" class="btn btn-primary fright p5">&nbsp;&nbsp;<i class="fa fa-envelope">&nbsp;</i>&nbsp; Invite Friends&nbsp;&nbsp;</a>
+				  		{% else %}
+				  			<a href="{{ uri_for('invite-friends') }}" class="btn btn-primary fright p5">&nbsp;&nbsp;<i class="fa fa-envelope">&nbsp;</i>&nbsp; Invite Friends&nbsp;&nbsp;</a>
+				  		{% endif %}
+				  		</h3>
+				  	</div>
+						<div class="p10 h6 grey btm-border">BASIC INFORMATION</div>
+						<ul class="list-content list-unstyled">
+							{% if owner_info %}
+									<li><strong><span class="col-md-offset-1 col-md-2">Name :</span><a href="#" id='name' name='name' data-type="text" data-url="/edit/user/name" data-pk="{{ owner_info.key.id() }}">{% if owner_info.name %}{{ owner_info.name|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+									<li><strong><span class="col-md-offset-1 col-md-2">Gender :</span><a href="#" id='gender' name='gender' data-type="select2" data-url="/edit/user/gender" data-pk="{{ owner_info.key.id() }}">{% if owner_info.gender %}{{ owner_info.gender|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+									<li><strong><span class="col-md-offset-1 col-md-2">Date of Birth :</span><a href="#" id='dob' name='dob' data-type="combodate" data-url="/edit/user/dob" data-pk="{{ owner_info.key.id() }}">{% if owner_info.dob %}{{ owner_info.dob.strftime('%d-%m-%Y') }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>																																						
+									<li><strong><span class="col-md-offset-1 col-md-2">Mobile :</span><a href="#" id='phone' name='phone' data-type="text" data-url="/edit/user/phone" data-pk="{{ owner_info.key.id() }}">{% if owner_info.phone %}{{ owner_info.phone }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+									<li><strong><span class="col-md-offset-1 col-md-2">Profession :</span><a href="#" id='profession' name='profession' data-type="text" data-url="/edit/user/profession" data-pk="{{ owner_info.key.id() }}">{% if owner_info.profession %}{{ owner_info.profession|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+							{% endif %}
+						</ul>
+						<div class="p10 h6 grey btm-border">LOCATION</div>
+						<ul class="list-content list-unstyled">
+							{% if owner_info %}
+									<li><strong><span class="col-md-offset-1 col-md-2">Locality :</span><a href="#" id='locality' name='locality' data-type="text" data-url="/edit/user/locality" data-pk="{{ owner_info.key.id() }}">{% if owner_info.locality %}{{ owner_info.locality|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+									<li><strong><span class="col-md-offset-1 col-md-2">City :</span><a href="#" id='city' name='city' data-type="text" data-url="/edit/user/city" data-pk="{{ owner_info.key.id() }}">{% if owner_info.city %}{{ owner_info.city|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+							{% endif %}
+						</ul>
+						<div class="p10 h6 grey btm-border">PREFERENCES</div>
+						<ul class="list-content list-unstyled">
+							{% if owner_info %}									
+									<li><strong><span class="col-md-offset-1 col-md-2">Favorite Sport :</span><a href="#" id="sports" name='sports' data-type="select2" data-url="/edit/user/sport" data-pk="{{ owner_info.key.id() }}">{% if owner_info.sport %}{{ owner_info.sport|title }}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+									<li><strong><span class="col-md-offset-1 col-md-2">My Interest :</span><a href="#" id='i_want' name='i_want' data-type="select2" data-url="/edit/user/status" data-pk="{{ owner_info.key.id() }}">{% if owner_info.i_want %}{% for key, value in want_dict %}{% if value == owner_info.i_want %}{{ value }}{% endif %}{% endfor %}{% endif %}</a><a class="edit-button fright" href="#">Edit</a></strong></li>
+							{% endif %}
+						</ul><br /><br />
+						<!--<br />&nbsp;&nbsp;<a class="btn blue" href="{{ uri_for('invite-friends') }}">Invite Friends</a>-->
+						
+				</div>
+			</div>
+			
+			<div class="tab-pane row fade in" id="tab-teams">
+				<div class="db-panel panel-info" style="min-height: 350px">
+					<div class="panel-heading"><h3>My Teams<a class="h5" href="{{ uri_for('create-team') }}"><input type="button" class="btn-sm fright" value="+ Add Team" /></a></h3></div>
+					<div class="home-section pg bg-white">
+						<div class="row mix-grid thumbnails">			
+							{% if owner_teams %}  									
+								{% for team in owner_teams %}
+									<div class="col-md-3">
+										<div class="mix-inner pg-item">											
+											<a href="{{ uri_for('view-team', team_id=team.key.id()) }}">
+											<div class="pg-item-image">													
+												{% if team.logo_url %}
+													<img src="{{ team.logo_url }}" class="fhimg" style="max-width: 100%; height: auto;" />
+												{% else %}
+													<img src="/assets/img/default_team_logo.jpg" class="fhimg" style="max-width: 100%; height: auto;" />
+												{% endif %}
+											</div>											
+											<div class="pg-item-text bg-white">
+												<div class="title black">
+													<h4>{% if team.name | length < 21 %}{{ team.name|title }}{% else %}{{ team.name [:18] | title }}...{% endif %}</h4>													
+												</div>
+												<div class="sub-title">
+														<small>Sport:</small> {{ team.sport|title }}															
+												</div>
+											</div>													
+											</a>
+										</div>												
+										<!--<div class="div-overlay">
+											<a href="{{ uri_for('view-team', team_id=team.key.id()) }}" class="mybutton sbtn strong">View</a>											
+										</div>-->																						
+									</div>																					
+								{% endfor %}										
+							{% endif %}
+						</div>								
+					</div>
+					<span class="p10"><i class="fa fa-info-circle blue">&nbsp;</i> Add Team/Players to Register for Events</span>
+				</div>
+			</div>
+			<div class="tab-pane row fade in" id="tab-favorite">
+				<div class="db-panel panel-info" style="min-height: 350px">					  	
+					<div class="panel-heading"><h3>Favorites</h3></div>							
+			 </div>
+			</div>					
+			<div class="tab-pane row fade in" id="tab-gallery">
+				<div class="db-panel panel-info" style="min-height: 350px">					  	
+					<div class="panel-heading">
+						<h3>Image Gallery
+							<div class="fileUpload btn btn-primary fright p5">
+								<form id="upload_gallery_images" action="{{ upload_gallery_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+									<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+									<input type="hidden" name="user_id" value="{{ owner_info.key.id() }}">
+									<span>&nbsp;&nbsp;<i class="fa fa-cloud-upload fa-lg">&nbsp;</i> Upload Images&nbsp;&nbsp;</span>
+									<input type="file" name="gallery_images" id="gallery_images" multiple="multiple" class="upload" />
+								</form>
+							</div>
+						</h3>
+					</div>
+					<div class="home-section pg bg-white">
+						<div class="row mix-grid thumbnails">
+							{% if profile_gallery %}
+								{% for images in profile_gallery %}								
+									<div class="col-md-3">
+										<div class="mix-inner pg-item">											
+											<div class="pg-item-image" id="links">
+												{% if images.url %}
+													<a href="{{ images.url }}" title="{% if images.name %}{{ images.name }}{% endif %}" data-gallery ><img src="{{ images.url }}" class="fhimg" alt="{{ images.name }}" style="max-width: 100%;height: auto;" /></a>
+												{% else %}
+													<img src="/assets/img/default_profile.jpg" class="fhimg" style="max-width: 100%;height: auto;" />
+												{% endif %}
+											</div>									
+										</div>								
+									</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+			 </div>
+			</div>	
+			{% include 'snippet/home/gallery_modal_dialog.html' %}
+
+			<div class="tab-pane row fade in" id="tab-events">						
+				<div class="db-panel panel-info" style="min-height: 350px">
+					<div class="panel-heading"><h3>My Events <a href="{{ uri_for('event-home') }}"><input type="button" class="btn-sm fright mlr10" value="> more" /></a>&nbsp;&nbsp;<a href="{{ uri_for('create-event', business_id='user') }}"><input type="button" class="btn-sm fright" value="+ Add Event" /></a></h3></div>
+					<div class="home-section pg bg-white">
+						<div class="row mix-grid thumbnails">			
+							{% if recommend_events %}									
+								{% for event in recommend_events %}
+									<div class="col-md-3">
+										<div class="mix-inner pg-item">
+											<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+												<div class="pg-item-image">
+													{% if event_media %}
+														<img src="{{ event_media.get(event.key) }}" class="fhimg">
+													{% endif %}
+												</div>
+											</a>
+											<div class="pg-item-text bg-white">
+												<div class="title black">
+													<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+														 <h4>{% if event.name | length < 21 %}{{ event.name|title }}{% else %}{{ event.name [:18] | title }}...{% endif %}</h4> 
+													</a>
+												</div>
+												<div class="sub-title">
+														<small>Sport:</small> {{ event.sport|title }}<br>
+														<i class="fa fa-calendar">&nbsp;</i>&nbsp; {{ event.start_datetime.strftime('%B %d, %Y') }}
+												</div>
+											</div>
+										</div>
+									  <!--<div class="div-overlay">
+											<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" class="mybutton btn1">Click to View</a>
+											<a href="{{ uri_for('edit-event', event_id=event.key.id(), business_id=event.business_id.id()) }}" class="mybutton btn2">Click to Edit</a>
+										</div>-->
+									</div>
+								{% endfor %}										
+							{% endif %}
+						</div>								
+					</div>
+				</div>
+			</div>					
+		</div>		
+	</div>
+					
+	<div class="col-md-9 col-md-offset-3">			
+		<div class="section row p10">			  
+		  <div class="section-header bg-tblue">
+		  	<h3>Recommended Events
+		  		<a href="{{ uri_for('event-home') }}"><input type="button" class="btn-sm fright mlr10" value="> more" /></a>
+		  		{% if is_admin_user or is_business_user %}
+		  			<a href="{{ uri_for('select-for-event') }}"><input type="button" class="btn-sm fright" value="+ Add Event" /></a>
+		  		{% else %}
+		  			<a href="{{ uri_for('create-event', business_id='user') }}"><input type="button" class="btn-sm fright" value="+ Add Event" /></a>
+		  		{% endif %}
+		  	</h3>
+		  </div>
+		  <div class="navbar navbar-centered bg-white">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#tab-upcoming"  data-toggle="tab">Upcoming</a>
+					</li>
+					<li>
+						<a href="#tab-participated"  data-toggle="tab">Participated</a>
+					</li>
+					<li>
+						<a href="#tab-featured"  data-toggle="tab">Featured</a>
+					</li>													
+				</ul>
+			</div>
+			
+			<div class="home-section pg bg-white">
+				<div class="row mix-grid thumbnails">						
+					{% if recommend_events %}
+						{% for event in recommend_events %}
+							<div class="col-md-3">
+								<div class="mix-inner pg-item">											
+									<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+										<div class="pg-item-image">
+											{% if event_media %}
+												<img src="{{ event_media.get(event.key) }}" class="fhimg">
+											{% endif %}
+										</div>
+									</a>
+									<div class="pg-item-text bg-white">
+										<div class="title black">
+											<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >
+												 <h4>{% if event.name | length < 21 %}{{ event.name|title }}{% else %}{{ event.name [:18] | title }}...{% endif %}</h4> 
+											</a>
+										</div>
+										<div class="sub-title">
+												<small>Sport:</small> {{ event.sport|title }}<br>													
+												<i class="fa fa-calendar">&nbsp;</i>&nbsp; {{ event.start_datetime.strftime('%B %d, %Y') }}
+										</div>
+									</div>										  
+								</div>
+								<div class="div-overlay"><a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" class="mybutton sbtn h5"><i class="fa fa-plus">&nbsp;</i>Join</a></div>
+							</div>									
+						{% endfor %}								
+					{% else %}
+					  <h5>No more Recommendations...</h5>
+					{% endif %}
+				</div>						
+			</div>
+		</div>
+		
+		<div class="section row p10">
+			<div class="section-header bg-tblue"><h3>Featured Playgrounds <a href="{{ uri_for('pg-city-home', city_name=city_name) }}"><input type="button" class="btn-sm fright mlr10" value="> more" /></a><a href="{{ uri_for('create-playground') }}"><input type="button" class="btn-sm fright" value="+ Add Playground" /></a></h3></div>	
+			<div class="home-section pg bg-white">
+				<div class="row mix-grid thumbnails">
+					{% if recommend_playgrounds %}
+						{% for playground in recommend_playgrounds %}
+							<div class="col-md-3">
+								<div class="mix-inner pg-item">											
+									<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >
+										<div class="pg-item-image">
+											{% if playground_media %}
+												<img src="{{ playground_media.get(playground.key) }}" class="fhimg">
+											{% endif %}
+										</div>
+									</a>				
+									<div class="pg-item-text bg-white">
+										<div class="title black">
+											<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >
+												 <h4>{% if playground.name | length < 21 %}{{ playground.name|title }}{% else %}{{ playground.name [:18] | title }}...{% endif %}</h4> </a>
+										</div>
+										<div class="sub-title">
+											<h5><i class="fa fa-map-marker">&nbsp;</i>
+												{% set address = playground.address.locality + ', ' + playground.address.city %}
+												{% if address | length < 22 %}
+													{{  address | title }}
+												{% else %}
+													{{ address [:20] | title }}...
+												{% endif %}
+											</h5>
+											<i>Sport: </i>{{ playground.sport|title }}
+										</div>
+									</div>											
+								</div>										
+								<div class="div-overlay">
+									<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" class="mybutton sbtn">View</a>
+								</div>
+							</div>
+						{% endfor %}
+					{% else %}
+					  <h5>No more Recommendations...</h5>
+					{% endif %}
+				</div>						
+			</div>													
+		</div>
+			
+		<div class="section row p10">
+			<div class="section-header bg-tblue">
+				<h3>Featured Training Centers
+					<a href="{{ uri_for('tc-city-home', city_name=city_name) }}"><input type="button" class="btn-sm fright mlr10" value="> more" /></a>
+					{% if is_admin_user or is_business_user %}
+						<a href="{{ uri_for('select-for-trainingcentre') }}"><input type="button" class="btn-sm fright" value="+ Add Training Center" /></a>
+					{% else %}
+						<a href="{{ uri_for('create-trainingcentre', business_id='user') }}"><input type="button" class="btn-sm fright" value="+ Add Training Center" /></a>
+					{% endif %}						
+				</h3>
+			</div>					
+			<div class="home-section pg bg-white">
+				<div class="row mix-grid thumbnails">
+					{% if recommend_trainingcentres %}
+						{% for tc in recommend_trainingcentres %}
+							<div class="col-md-3">
+								<div class="mix-inner pg-item">											
+									<a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}" >
+										<div class="pg-item-image">
+											{% if trainingcentre_media %}
+												<img src="{{ trainingcentre_media.get(tc.key) }}" class="fhimg">
+											{% endif %}
+										</div>
+									</a>											
+									<div class="pg-item-text bg-white">
+										<div class="title black">
+											<a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}" >
+												 <h4>{% if tc.name | length < 21 %}{{ tc.name|title }}{% else %}{{ tc.name [:18] | title }}...{% endif %}</h4> </a>
+										</div>
+										<div class="sub-title">
+											<h5><i class="fa fa-map-marker">&nbsp;</i>
+												{% set address = tc.address.locality + ', ' + tc.address.city %}
+												{% if address | length < 22 %}
+													{{  address | title }}
+												{% else %}
+													{{ address [:20] | title }}...
+												{% endif %}
+											</h5>
+											<i>Sport: </i>{{ tc.sport|title }}
+										</div>
+									</div>											
+								</div>
+								<div class="div-overlay"><a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}" class="mybutton sbtn">View</a></div>
+							</div>
+						{% endfor %}
+					{% else %}
+					  <h5>No more Recommendations...</h5>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+			
+	{% if not is_admin_user and not is_business_user %}
+		<div class="col-md-4">
+			<div class="db-panel panel-info">
+				<div class="panel-heading"><h4>My Events</h4></div>
+				<div class="panel-body scroller" style="max-height: 250px">						
+					{% if owner_events %}
+					<ul class="list-content list-unstyled">
+						{% for event in owner_events %}
+							{% if event.business_id is not none %}
+							<li>
+								{{ event.name|title }} |
+								<a href="{{ uri_for('event-details', city_name=city_name, entity_id=event.key.id(), entity_alias=event.alias) }}" >View</a> |
+								<a href="{{ uri_for('edit-event', event_id=event.key.id(), business_id=event.business_id.id()) }}" >Edit</a>
+							</li>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<h5>No Events added by you.</h5>
+					</ul>
+					{% endif %}						
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-4">
+			<div class="db-panel panel-info">
+				<div class="panel-heading"><h4>My Playgrounds</h4></div>
+				<div class="panel-body scroller" style="max-height: 250px">						
+					{% if owner_playgrounds %}
+					<ul class="list-content list-unstyled">
+						{% for playground in owner_playgrounds %}
+						<li>
+							{{ playground.name|title }} |
+							<a href="{{ uri_for('pg-details', city_name=playground.address.city, locality_name=playground.address.locality, entity_id=playground.key.id(), entity_alias=playground.alias) }}" >View</a> |
+							<a href="{{ uri_for('edit-playground', playground_id=playground.key.id()) }}" >Edit</a>
+						</li>
+						{% endfor %}
+					{% else %}
+						<h5>No Playgrounds added by you.</h5>
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-4">
+			<div class="db-panel panel-info">
+				<div class="panel-heading"><h4>My Training Centres</h4></div>
+				<div class="panel-body scroller" style="max-height: 250px">						
+					{% if owner_trainingcentres %}
+					<ul class="list-content list-unstyled">
+						{% for tc in owner_trainingcentres %}
+						<li>
+							{{ tc.name|title }} |
+							<a href="{{ uri_for('tc-details', city_name=tc.address.city, locality_name=tc.address.locality, entity_id=tc.key.id(), entity_alias=tc.alias) }}" >View</a> |
+							<a href="{{ uri_for('edit-trainingcentre', trainingcentre_id=tc.key.id(), business_id=tc.business_id.id()) }}" >Edit</a>
+						</li>
+						{% endfor %}
+					{% else %}
+						<h5>No Training Centres added by you.</h5>
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	</div>
+</div>		
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">
+  
+  var $file = $('#file');
+  var $form = $('#image-upload-wrapper').find('form');
+  $file.on('change', function() { 
+  		$form.submit();
+  });
+  
+  var $upload_file = $('#gallery_images');
+  var $upload_form = $('#tab-gallery').find('form');
+  $upload_file.on('change', function() { 
+  		$upload_form.submit();
+  });
+  
+  FB.init({            
+    appId  : "{{ fb_app_id }}",
+    status : true,
+    oauth  : true,
+    frictionlessRequests : true
+  });
+
+  function friendsInvite() {      
+    FB.ui({method: 'apprequests',
+    		title: 'sportIndia App Invite',                           
+        message: 'Sport with Pride and Enjoi the Game on sportindia'
+    }, callback);
+  }	  
+	
+	function callback(response) {
+	   console.log(response);
+	}
+	
+	$(function(){		
+		HomeApp.initDashboard();
+    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editableform.buttons = 
+  		'<button type="submit" class="btn btn-primary editable-submit">save</i></button>' +
+ 			'<button type="button" class="btn btn-default editable-cancel">cancel</i></button>';
+		$('#name').editable({
+	      send: 'always',
+	      title: 'Change your name',
+	      emptytext: '+ Add your name',
+	      placement: 'top',
+	      inputclass: 'autosave',
+	      placeholder: 'Enter your name',
+	      showbuttons: false,
+	      validate: function(value) {
+            if($.trim(value) == '')
+                return 'Required field!';
+            if($.trim(value).length > 27)
+                return 'Not Allowed! More than 27 characters.';
+	      }
+	  });
+	   
+	  $('#gender').editable({
+    		send: 'always',
+	      title: 'Select Gender',
+	      value: '{{ owner_info.gender }}',
+    		emptytext: '+ Add your gender',
+    		placement: 'top',	      
+	      placeholder: 'Select Gender',
+        showbuttons: false,
+        source: [        			
+              {value: 'male', text: 'Male'},
+              {value: 'female', text: 'Female'}              
+           ],        
+	      select2: {
+        	 width: "150px",
+           multiple: false    			 
+        }
+		});
+     
+	  $('#dob').editable({
+        send: 'always',
+	      title: 'Select Date of Birth',
+        format: 'YYYY-MM-DD',
+        template: 'D / MMMM / YYYY',
+        emptytext: '+ Add your date of birth',
+        placement: 'top',	      
+        viewformat: 'DD-MM-YYYY',
+        combodate: {
+            firstItem: 'name'
+        }
+    });    
+    
+    $('#profession').editable({
+        send: 'always',
+	      title: 'Enter your Profession',	      
+	      emptytext: '+ Add your profession',
+	      placement: 'top',
+	      inputclass: 'autosave',
+	      placeholder: 'Enter your profession',	      
+	      showbuttons: false,
+	      validate: function(value) {  
+            if($.trim(value).length > 27)
+                return 'Not Allowed! More than 27 characters.';
+	      }
+	  }); 	
+ 	
+	  var isMobile = /^[0-9-()+]+$/;
+	  $('#phone').editable({
+	   	  send: 'always',
+	      title: 'Change your Mobile',
+	      emptytext: '+ Add your mobile',
+	      placement: 'top',
+	      inputclass: 'autosave',
+	      placeholder: 'Mobile/Phone',
+	      showbuttons: false,
+	      validate: function(value) {
+            if($.trim(value) == '')
+            		return ;
+            if(!isMobile.test(value))
+                return 'Not a Valid Phone Number!';
+            if($.trim(value).length > 20)
+                return 'Not Allowed! More than 20 digits.';
+	      }
+		});
+	   
+		$('#locality').editable({
+		 	  send: 'always',
+		    title: 'Change your Locality',
+		    emptytext: '+ Add your locality',
+		    placement: 'top',		    
+		    inputclass: 'autosave',
+		    placeholder: 'Area/Locality',
+		    showbuttons: false,
+		    validate: function(value) {              
+		        if($.trim(value).length > 27)
+		            return 'Not Allowed! More than 27 characters.';
+		    },
+		    ajaxOptions: {
+		    	success: function(status, index) {
+		    		//location.reload();
+		      },
+		      error: function(status, index) {
+		          alert(index);
+		      }
+		    }
+		});
+	   
+	  $('#city').editable({
+	   	  send: 'always',
+	      title: 'Change your City',
+	      emptytext: '+ Add your city',
+	      placement: 'top',	      
+	      inputclass: 'autosave',
+	      placeholder: 'City Name',
+	      showbuttons: false,
+	      validate: function(value) {              
+            if($.trim(value).length > 27)
+                return 'Not Allowed! More than 27 characters.';
+	      },
+	      ajaxOptions: {
+	      	success: function(status, index) {
+	      		//location.reload();
+          },
+          error: function(status, index) {
+              alert(index);
+          }
+	      }
+	  });
+	    
+	  var want_list = [
+    	{% for key, value in want_dict %} {
+      	value: "{{ key }}",	text: "{{ value }}"
+      },
+    	{% endfor %}
+    ];
+     
+	  $('#i_want').editable({
+	      send: 'always',
+	      title: 'Select your interest',
+	      value: '{{ owner_info.i_want }}',
+	      source: want_list,
+	      emptytext: '+ Choose your interest',
+	      placement: 'top',	      
+	      placeholder: 'Choose your interest',
+	      showbuttons: false,
+	      select2: {
+        	 width: "280px",
+           multiple: false,
+           allowClear: true
+        }
+	  });
+	   
+    var sports = [
+      {% for key, value in sports_list %} {
+       	value: "{{ key }}", text: "{{ value }}"
+      },
+      {% endfor %}
+    ];
+    
+    $('#sports').editable({
+	   	  send: 'always',
+	   	  title: 'Select your Sports',
+	   	  value: '{{ owner_info.sport }}',
+	   	  source: sports,
+	   	  emptytext: '+ Add your sports',
+	   	  placement: 'top',
+	   	  placeholder: 'Favorite Sports',
+        select2: {
+        	 width: "200px",
+           multiple: true
+        },
+        ajaxOptions: {
+	      	success: function(status, index) {
+	      		//location.reload();
+          },
+          error: function(status, index) {
+              alert(index);
+          }
+	      }
+     });  	
+ 	}); 	
+	
+	$(document).on('change','.autosave',function(){
+	   $(this).trigger("submit");
+	});
+	
+	$('.pg-item').contenthover({    
+    overlay_background:'#000',
+    overlay_opacity:0.8
+	});
+	
+	$('.edit-button').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $field = $(this).closest('li').find('.editable');
+      $field.editable('toggle');
+      $(this).hide();       
+  });
+  
+	$(document).on('mouseenter', 'ul li', function () {
+      $(this).find(".edit-button").show();
+  }).on('mouseleave', 'ul li', function () {
+      $(this).find(".edit-button").hide();
+  });
+    
+</script>
+{% endblock %}

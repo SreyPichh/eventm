@@ -1,0 +1,46 @@
+<!-- BEGIN HEADER -->
+<div class="header navbar">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="header-inner">
+    	<div class="row">
+    		<div class="col-md-2">
+		        <!-- BEGIN LOGO -->
+		        <a class="navbar-brand logo-v1" href="/home">
+		        <img src="/assets/img/logo.png" alt="logo">
+		        </a>
+		        <!-- END LOGO -->
+    		</div>
+    		<div class="col-md-5 col-md-offset-1">
+				<!-- BEGIN HORIZANTAL MENU -->              
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="index.html">Engagement</a></li>
+					<li><a href="index.html">CRM</a></li>
+					<li><a href="index.html">Ads</a></li>
+				</ul>
+				<!-- END HORIZANTAL MENU -->		
+				<!-- BEGIN RESPONSIVE MENU TOGGLER ?? not used as of now --> 
+				<a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<img src="/assets/thirdparty/admin/img/menu-toggler.png" alt="" />
+				</a> 
+				<!-- END RESPONSIVE MENU TOGGLER -->		
+    		</div>
+    		<div class="col-md-2 col-md-offset-2">
+				<ul class="nav navbar-nav pull-right">
+		            <!-- BEGIN USER LOGIN DROPDOWN -->
+					<li>
+						<a href="#" class="dropdown-toggle no-border" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+						<img src="{{ user.profile_image_url }}"/>
+						{{ user.name }}
+						<i class="fa fa-gear"></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/settings">Settings</a></li>
+							<li><a href="/logout">Log Out</a></li>
+						</ul>
+					</li>
+					<!-- END USER LOGIN DROPDOWN -->
+				</ul> 
+    		</div>
+    	</div>
+    </div>
+</div>

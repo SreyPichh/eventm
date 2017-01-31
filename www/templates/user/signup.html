@@ -1,0 +1,76 @@
+{% extends "home/base_home.html" %}
+
+{% block content %}
+<div class="login margin-50" ng-app="HomeApp">
+	<div class="container padding-50 white" ng-controller="AdwordsSignupController">
+
+		<!-- BEGIN REGISTRATION FORM -->
+		<div class="portlet-body form">
+			<!-- BEGIN FORM-->
+			<!--
+			<form class="form-horizontal" novalidate name="demoForm"  ng-submit="submitForm(demoForm.$valid)" >
+			<div class="form-body" ng-hide="request_success">
+			<div class="form-group">
+			<input type="text" class="form-control" placeholder="Your Name"  ng-model="formData.name" name="name" required>
+			<p ng-show="(formData.name.$invalid && !formData.name.$pristine) || errors.name" class="help-block">You name is required.</p>
+			</div>
+			<div class="form-group">
+			<input type="email" class="form-control" placeholder="Email Address"  ng-model="formData.email" name="email" required>
+			<p ng-show="(formData.email.$invalid && !formData.email.$pristine) || errors.email" class="help-block">Enter a valid email.</p>
+			</div>
+			<div class="form-group">
+			<input type="text" class="form-control" placeholder="Brand/Agency you represent"  ng-model="formData.company" name="company"  required>
+			<p ng-show="(formData.company.$invalid && !formData.company.$pristine) || errors.company" class="help-block">Brand/Agency name is required.</p>
+			</div>
+			<div class="form-group">
+			<button class="btn yellow btn-block big" type="submit">Request Demo <i class="fa fa-arrow-circle-o-right"></i></button>
+			</div>
+			</div>
+			<div class="form-group" ng-show="request_success">
+			<p class="success-block">{{ success_msg }}</p>
+			<div ng-include="tracking_url"></div>
+			</div>
+			</form>
+			-->
+			<!-- END FORM-->
+		</div>
+
+	
+		<div class="row twitter_connect min-height {% if authorized %}hide{% endif %}">
+			<div class="col-md-6 col-md-offset-3">
+			<form class="form-horizontal" novalidate method="post" action="/adwords-signup-step2">
+				<div class="form-group">
+					<button class="btn yellow btn-block big" type="submit">
+						Connect with Google Adwords <i class="fa fa-arrow-circle-o-right"></i>
+					</button>
+				</div>
+				<h5>You will temporarily be redirected to Google Adwords to authorize this application.</h5>
+			</form>
+			</div>
+		</div>
+	
+	
+		<div class="row twitter_connect min-height {% if not authorized %}hide{% endif %}">
+			<div class="col-md-6 col-md-offset-3">
+			<form class="form-horizontal" novalidate method="post" action="/adwords-signup-step3">
+				<div class="form-group">
+					<input type="email" class="form-control" placeholder="Email Address" name="email">
+					<p>Email Address that will be associated with your Wootstream Account</p>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Adwords Customer Id" name="customer_id">
+					<p>Customer Id of the Google Adwords account that Wootstream will manage</p>
+				</div>
+				<div class="form-group">
+					<button class="btn yellow btn-block big" type="submit">
+						Signup <i class="fa fa-arrow-circle-o-right"></i>
+					</button>
+				</div>
+			</form>
+			</div>
+		</div>
+
+		<!-- END REGISTRATION FORM -->
+	</div>
+</div>
+{% endblock %} 

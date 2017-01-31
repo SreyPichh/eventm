@@ -1,0 +1,9 @@
+<p>Hi {{ user_name }},</p>
+		<p>you have enquire the following {{ type }} {{ type_name }} at {{ date_time }}. the {{ type }} owner confirm your enquiry soon.  
+	<p>kindly follow the enquiry at {{ email }}</p>
+
+<p>If you have contact {{ app_name }} support by clicking this link:</p>
+{{ support_url }}
+
+<p>Sincerely,<br>
+{{ app_name }} Team

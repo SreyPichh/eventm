@@ -1,0 +1,93 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="cms-panel panel-info">
+		<div class="panel-heading">
+			<h3>Create/Update Team</h3>
+			{% if is_admin_user or is_business_user %}
+			<div class="right-div">
+				<form id="form_import" action="{{ import_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+					<input type="hidden" name="continue" value="{{ continue_url }}">
+					{{ macros.field(form.importfile, placeholder=("Select Import file")) }}
+					<div class="col-md-offset-4"><span class="h5">[ Excel format: Type*|Name*|Sport ]<br /> Note: doesn't change the format and not empty the mandatory (*) fields</span></div>
+					<div class="col-md-offset-4"><button type="submit" class="btn blue">Import</button></div>										
+				</form>
+			</div>
+			{% endif %}
+		</div>
+		<div class="panel-body">
+			<form id="form_team" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+				<div class="form-body">
+					
+					<fieldset>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+						{{ macros.field(form.name, placeholder=("Enter Team")+" "+("Name"), class="form-control") }}
+						{{ macros.field(form.sport, placeholder=("Select a Sport"), class="form-control") }}						
+						{{ macros.field(form.category, placeholder=("Select a Category"), class="form-control") }}
+						{% if current_logo %}
+						<div class="col-md-8 col-md-offset-4">
+							<img src="{{ current_logo }}" style="width: 150px;height: 150px;">
+						</div>
+						{{ macros.field(form.logo, label=("Logo [replace]"), placeholder=("Change the logo"), class="form-control focused") }}
+						{% else %}
+						{{ macros.field(form.logo, label=("Logo"), placeholder=("Upload a logo"), class="form-control focused") }}
+						{% endif %}						
+						
+						<div class="form-group">
+				    	<div class="col-md-offset-2 col-md-2">
+				    		<label>Players</label>
+				    	</div>
+				    	<div class="col-md-6">
+				        <select id="player" name="player" multiple="multiple">
+				            {% for player in players %}					            	
+											<option value="{{ player.key.id() }}" {% if player.key.id() in sel_players %} selected="selected" {% endif %} >{{ player.name|title }}</option>
+										{% endfor %}											
+				        </select>
+				      </div>
+				      <!--<div class="col-md-3 control-label"><a href="{{ uri_for('create-player', **{'continue': continue_url}) }}">Add New Player</a></div>-->
+				  	</div>
+					  	
+				  	<div class="form-group" id="items">
+					    <input type="hidden" id="itemCounter" name="itemCounter" value="0">
+					    <div class="item">
+								{{ macros.field(form.new_player, label_visible=false) }}								
+							</div>
+						</div>
+						<div class="col-md-offset-10 col-md-1">
+								<input type="button" id="add" value="+" class="btn btn-info" title="Add New Player" />									
+						</div><br />
+							
+						<div class="form-actions fluid">
+							<div class="col-md-offset-4 col-md-8">
+								<button type="submit" class="btn blue">
+									Submit
+								</button>
+							</div>
+						</div>
+					</fieldset>					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+	$(function() {
+		HomeApp.initDashboard();
+	  $("#player").multipleSelect({
+	  		width: 230,
+	  		placeholder: "Select Player(s)",
+	      filter: true,
+	      multiple: true,
+	      multipleWidth: 200
+	  });
+	  $("table th").addClass("text-right plr10");
+	  $('#new_player').attr('type', 'none');
+	  $('label[for=new_player-0]').remove();
+	});
+</script>
+{% endblock %}

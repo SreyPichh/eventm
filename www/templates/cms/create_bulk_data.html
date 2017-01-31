@@ -1,0 +1,150 @@
+{% extends "home/base_others.html" %}
+
+{% block content %}
+<div class="container">
+<div class="cms-panel panel-info">
+	<div class="panel-heading"><h3>Create/Update Bulk Data</h3></div>
+    <div class="panel-body">
+			
+    	<form id="form_ground_save" action="{{ media_upload_url }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+    		<div class="form-body">
+        	<fieldset>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">            
+            <div class="tab-content">
+							<!--<div class="tab-pane row fade in active" id="tab-1">-->
+								<div class="col-md-offset-1 ptb20"><h3 class="blue">Playground Info</h3></div>
+								{{ form.locality_id }}
+	            	{{ macros.field(form.pg_name, placeholder=("Enter Playground")+" "+("Name"), class="form-control") }}
+								{{ macros.field(form.sport, placeholder=("Select a Sport"), class="form-control") }}
+								
+								{{ macros.field(form.address, label_visible=false) }}								
+								
+								{{ macros.field(form.public, placeholder=("Open?"), class="form-control") }}
+	            	{{ macros.field(form.booking_days, placeholder=("Enter Public")+" "+("Booking Days"), class="form-control") }}
+	            	
+	            	<!--<div class="form-group">
+						    	<div class="col-md-offset-2 col-md-2">
+						    		<label>Booking Days</label>
+						    	</div>
+						    	<div class="col-md-6">
+						        <select id="bk_days" name="bk_days" multiple="multiple">
+						            {% for days in weekdays %}
+													<option value="{{ days }}">{{ days|title }}</option>
+												{% endfor %}
+						        </select>
+						      </div>						      
+						  	</div>-->
+						  	
+	            	{{ macros.field(form.regular_time, placeholder=("Enter Regular Timings"), class="form-control") }}	            	
+	            	{# macros.field(form.exist_event, placeholder=("Existing Event"), class="form-control") #}	            	
+	            	{{ macros.field(form.ground_type, placeholder=("Select a Ground Type"), class="form-control") }}
+	            	{{ macros.field(form.surface_type, placeholder=("Enter Surface Type"), class="form-control") }}
+	            	{{ macros.field(form.tot_fields, placeholder=("Enter No.of Courts"), class="form-control") }}
+	            	{{ macros.field(form.ground_rules, placeholder=("Enter Ground")+" "+("Rules"), class="form-control summernote") }}
+	            	
+	            	<div class="col-md-offset-2 ptb20"><h3 class="blue">Playground Contact</h3></div>
+	            	{{ macros.field(form.contact_pg, label_visible=false) }}
+	            	
+	            	<div class="col-md-offset-1 ptb20"><h3 class="blue">Training Centre Info</h3></div>
+	            	{{ macros.field(form.tc_name, placeholder=("Enter Centre Name"), class="form-control") }}
+	            	{{ macros.field(form.tc_open_days, placeholder=("Select Centre Open Days"), class="form-control") }}
+	            	
+	            	<!--<div class="form-group">
+						    	<div class="col-md-offset-2 col-md-2">
+						    		<label>Open Days</label>
+						    	</div>
+						    	<div class="col-md-6">
+						        <select id="open_days" name="open_days" multiple="multiple">
+						            {% for days in weekdays %}
+													<option value="{{ days }}">{{ days|title }}</option>
+												{% endfor %}
+						        </select>
+						      </div>						      
+						  	</div>-->
+						  	
+	            	{{ macros.field(form.age_limit, placeholder=("Enter Age Limits"), class="form-control") }}
+	            	{{ macros.field(form.tc_participants, placeholder=("Enter No.of Participants"), class="form-control summernote") }}
+	            	
+	            	<div class="col-md-offset-2 ptb20"><h3 class="blue">Coach Details</h3></div>
+	            	{{ macros.field(form.contact_tc, label_visible=false) }}
+	            	
+	            	<div class="col-md-offset-1 ptb20"><h3 class="blue">Event Info</h3></div>
+	            	{{ macros.field(form.se_name, placeholder=("Enter Event Name"), class="form-control") }}
+	            	{{ macros.field(form.start_datetime, placeholder=("Enter Event Start date"), class="form-control", autocomplete="off") }}
+	            	{{ macros.field(form.end_datetime, placeholder=("Enter Event End date"), class="form-control", autocomplete="off") }}
+	            	
+	            		<script type="text/javascript">										
+										var nowTemp = new Date();
+										var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+										
+										var startdate = $('#start_datetime').datepicker({										    
+										    format: 'yyyy-mm-d',
+										    orientation: "top auto",
+										    todayHighlight: true,
+										    autoclose: true
+										}).on('changeDate', function (ev) {
+										    if (ev.date.valueOf() > enddate.datepicker("getDate").valueOf() || !enddate.datepicker("getDate").valueOf()) {										
+										        var newDate = new Date(ev.date);
+										        newDate.setDate(newDate.getDate() + 1);
+										        enddate.datepicker("update", newDate);										
+										    }
+										    $('#end_datetime')[0].focus();
+										});										
+										
+										var enddate = $('#end_datetime').datepicker({										    
+										    format: 'yyyy-mm-d',
+										    orientation: "top auto",
+										    todayHighlight: true,
+										    autoclose: true
+										}).on('changeDate', function (ev) {});
+							    </script>
+							    
+	            	<div class="col-md-offset-2 ptb20"><h3 class="blue">Event Organiser</h3></div>
+	            	{{ macros.field(form.contact_se, label_visible=false) }}
+	            		            	
+		            <div class="col-md-offset-6 col-md-6">
+		            	<div class="form-actions fluid">										
+										<button type="submit" name="save" value="save" class="btn blue">Finish</button>
+										<!--<input type="button" name="save" value="Finish" class="btn blue" />-->
+									</div>
+								</div>		          
+	        	</div>
+        	</fieldset>
+        	
+        </div>
+    	</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			HomeApp.initDashboard();
+			
+			/*CKEDITOR.replace( 'ground_rules',
+			{
+				toolbar : Custom
+			});*/			
+			
+			$("table th").css("width", "23%");
+			
+			$("#bk_days").multipleSelect({
+	  		width: 230,
+	  		placeholder: "Select Booking Day(s)",
+	      filter: true,
+	      multiple: true,
+	      multipleWidth: 200
+	  	});
+	  	
+	  	$("#open_days").multipleSelect({
+	  		width: 230,
+	  		placeholder: "Select Club Open Day(s)",
+	      filter: true,
+	      multiple: true,
+	      multipleWidth: 200
+	  	});
+		});
+  </script>    
+{% endblock %}
