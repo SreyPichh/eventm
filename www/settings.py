@@ -42,7 +42,7 @@ config = {
     # callback url must be: http://[YOUR DOMAIN]/login/facebook/complete
     # 'fb_api_key': 1608914109337384,
     # 'fb_secret': 'a3f33e363bb7e79c346102a5a5608c66',
-     'fb_api_key': 588186611367815,
+    'fb_api_key': 588186611367815,
     'fb_secret': '090dd23d69edc0e42939c795dee71d50',
     
     #SMS Gateway    
