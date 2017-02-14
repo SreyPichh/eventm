@@ -54,7 +54,8 @@ cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/pytz $TGTDIR/buildww
 cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/httplib2 $TGTDIR/buildwww/httplib2
 cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/httpagentparser $TGTDIR/buildwww/httpagentparser
 cd $HOME/.eventm/google_appengine/
-./appcfg.py -A sport-cambodia -V uno update $TGTDIR/buildwww/ --no_cookies date
+#./appcfg.py -A sport-cambodia -V uno update $TGTDIR/buildwww/ --no_cookies date
+./appcfg.py -A sport-khmer -V uno update $TGTDIR/buildwww/ --no_cookies date
 # cd ..
 
 # appc update $TGTDIR/buildwww/app.yaml
