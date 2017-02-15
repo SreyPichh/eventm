@@ -16,6 +16,7 @@
 			</div>
 			{% if not user_info %}
 				<div class="connect">
+				  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
 					<a href="{{ uri_for('social-login', provider_name = 'facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i>&nbsp;|&nbsp;Connect with Facebook</a>
 				</div>
 			{% else %}
