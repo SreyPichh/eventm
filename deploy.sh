@@ -5,9 +5,9 @@ if [ $# -ne 1 ]; then
 fi
 
 
-export TGTDIR=/home/pich/Desktop/eventm
+export TGTDIR=$HOME/Desktop/eventm
 
-rm -f -r $TGTDIR
+rm -fr $TGTDIR
 if [ -d "$TGTDIR" ]; then
 	cd $TGTDIR
 	echo "$TGTDIR already exists. Pulling latest source from git ... "
@@ -33,7 +33,7 @@ do
 	echo "Wrote $out from $file"
 done
 
-rm -f -r $TGTDIR/buildwww
+rm -fr $TGTDIR/buildwww
 cp -r $TGTDIR/www $TGTDIR/buildwww
 
 find $TGTDIR/buildwww -name \*.less | xargs rm
