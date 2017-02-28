@@ -1,5 +1,5 @@
 application: localapp
-version: 1
+version: uno
 runtime: python27
 api_version: 1
 module: default

@@ -5,9 +5,9 @@ if [ $# -ne 1 ]; then
 fi
 
 
-export TGTDIR=$HOME/.eventm
+export TGTDIR=/home/pich/Desktop/eventm
 
-#rm -fr $TGTDIR
+rm -f -r $TGTDIR
 if [ -d "$TGTDIR" ]; then
 	cd $TGTDIR
 	echo "$TGTDIR already exists. Pulling latest source from git ... "
@@ -33,33 +33,33 @@ do
 	echo "Wrote $out from $file"
 done
 
-rm -fr $TGTDIR/buildwww
+rm -f -r $TGTDIR/buildwww
 cp -r $TGTDIR/www $TGTDIR/buildwww
 
 find $TGTDIR/buildwww -name \*.less | xargs rm
 echo "Deleting .less files"
 
-# Instagram Pack
-#python $TGTDIR/pack-js.py  -i $TGTDIR/www/templates/dashboard/instagram/ig-dashboard.html   -o $TGTDIR/buildwww/templates/dashboard/instagram/ig-dashboard.html -m instagram_dashboard
-#diff -w  $TGTDIR/www/templates/dashboard/instagram/ig-dashboard.html   $TGTDIR/buildwww/templates/dashboard/instagram/ig-dashboard.html
+# # Instagram Pack
+# #python $TGTDIR/pack-js.py  -i $TGTDIR/www/templates/dashboard/instagram/ig-dashboard.html   -o $TGTDIR/buildwww/templates/dashboard/instagram/ig-dashboard.html -m instagram_dashboard
+# #diff -w  $TGTDIR/www/templates/dashboard/instagram/ig-dashboard.html   $TGTDIR/buildwww/templates/dashboard/instagram/ig-dashboard.html
 echo "**************** End of Diff *****************"
 
-#Manually creating soft links for external libraries that appengine doesnt understand
-cp -r $HOME/.virtualenvs/eventm/local/lib/python2.5/site-packages/wtforms $TGTDIR/buildwww/wtforms
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/linkedin $TGTDIR/buildwww/linkedin
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/requests $TGTDIR/buildwww/requests
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/requests_oauthlib $TGTDIR/buildwww/requests_oauthlib
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/babel $TGTDIR/buildwww/babel
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/pytz $TGTDIR/buildwww/pytz
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/httplib2 $TGTDIR/buildwww/httplib2
-cp -r $HOME/.virtualenvs/eventm/lib/python2.5/site-packages/httpagentparser $TGTDIR/buildwww/httpagentparser
-cd $HOME/.eventm/google_appengine/
-#./appcfg.py -A sport-cambodia -V uno update $TGTDIR/buildwww/ --no_cookies date
-./appcfg.py -A sport-cambodia -V 1 update $TGTDIR/buildwww/ --no_cookies date
+# #Manually creating soft links for external libraries that appengine doesnt understand
+cp -r $HOME/.virtualenvs/eventm/local/lib/python2.7/site-packages/wtforms $TGTDIR/buildwww/wtforms
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/linkedin $TGTDIR/buildwww/linkedin
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/requests $TGTDIR/buildwww/requests
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/requests_oauthlib $TGTDIR/buildwww/requests_oauthlib
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/babel $TGTDIR/buildwww/babel
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/pytz $TGTDIR/buildwww/pytz
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/httplib2 $TGTDIR/buildwww/httplib2
+cp -r $HOME/.virtualenvs/eventm/lib/python2.7/site-packages/httpagentparser $TGTDIR/buildwww/httpagentparser
+cd $HOME/eventm/google_appengine/
+./appcfg.py -A sport-cambodia -V uno update $TGTDIR/buildwww/ --no_cookies date
 
-# cd ..
 
-# appc update $TGTDIR/buildwww/app.yaml
-# appcfg.py update_dispatch $TGTDIR/buildwww
-# appcfg.py update_indexes $TGTDIR/buildwww
-# datefg.py
+# # cd ..
+
+# # appc update $TGTDIR/buildwww/app.yamln
+# # appcfg.py update_dispatch $TGTDIR/buildwww
+# # appcfg.py update_indexes $TGTDIR/buildwww
+# # datefg.py
