@@ -1,3 +1,4 @@
-entrypoint: ./deploy.sh dev
+# entrypoint: ./deploy.sh dev
+entrypoint: gunicorn -b :$PORT main:app
 env: flex
 runtime: python

@@ -42,8 +42,8 @@ config = {
     # callback url must be: http://[YOUR DOMAIN]/login/facebook/complete
     # 'fb_api_key': 1608914109337384,
     # 'fb_secret': 'a3f33e363bb7e79c346102a5a5608c66',
-    'fb_api_key': 588186611367815,
-    'fb_secret': '090dd23d69edc0e42939c795dee71d50',
+    'fb_api_key': 1472831406080528,
+    'fb_secret': '090dd23d69edc0e42939c795dee71d50c',
     
     #SMS Gateway    
     'sms_url': 'http://alerts.solutionsinfini.com/api/v3/index.php',
@@ -129,9 +129,11 @@ ROLE_FLAG_DICT = { 'basic':1, 'business':2, 'admin':4}
 
 STATUS_DICT = {'pending_creation':0, 'pending_approval':1, 'approved':2}
 
-GOOGLE_GEOENCODE_API_KEY = 'AIzaSyBjY5Qr_thE9YBgKCIQTj5bmBejOVScVWw'
+GOOGLE_GEOENCODE_API_KEY = 'AIzaSyDE5PfQMoyvNXlkE_js5dbUB1UjgYu124M'
 #GOOGLE_MAPS_API_KEY = 'AIzaSyCa8ZkxYvy8RTATSXhyvbh0Wy1t4ogotTU'
-GOOGLE_MAPS_API_KEY = 'AIzaSyDwDbVI4aakERW_vW0iwUXW7qReWbEwEN8'
+# GOOGLE_MAPS_API_KEY = 'AIzaSyDwDbVI4aakERW_vW0iwUXW7qReWbEwEN8'
+###GOOGLE_MAPS_API_KEY = 'AIzaSyDXEuIXbVm6WWkOLZlS4RT4W1EcQNopatI'
+GOOGLE_MAPS_API_KEY = 'AIzaSyBP9gN4_RbSOcDemacAYVLu6x2Zx7zLUV0 '
 
 DEFAULT_CITY = 'phnom penh'
 
