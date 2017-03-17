@@ -40,10 +40,8 @@ config = {
     # get your own consumer key and consumer secret by registering at https://developers.facebook.com/apps
     #Very Important: set the site_url= your domain in the application settings in the facebook app settings page
     # callback url must be: http://[YOUR DOMAIN]/login/facebook/complete
-    # 'fb_api_key': 1608914109337384,
-    # 'fb_secret': 'a3f33e363bb7e79c346102a5a5608c66',
-    'fb_api_key': 1472831406080528,
-    'fb_secret': '090dd23d69edc0e42939c795dee71d50c',
+    'fb_api_key': 1608914109337384,
+    'fb_secret': 'a3f33e363bb7e79c346102a5a5608c66',
     
     #SMS Gateway    
     'sms_url': 'http://alerts.solutionsinfini.com/api/v3/index.php',
@@ -69,11 +67,8 @@ config = {
     'github_client_secret': 'GITHUB_CLIENT_SECRET',
 
     # get your own recaptcha keys by registering at http://www.google.com/recaptcha/
-    #'captcha_public_key': "6LcYVQkTAAAAAJNFJIxRbmGWdGJhrkpebiS33owm",
-    #'captcha_private_key': "6LcYVQkTAAAAAAyn9eSic5bOEkE7OUmNPhsM4Xw1",
-
-    'captcha_public_key': "6LflphMUAAAAAG2JC78JsG9PQpw_kjUji0-AMcC5",
-    'captcha_private_key': "6LflphMUAAAAAMQBegp1o2E3PavZZLyrJ-6-aNhT",
+    'captcha_public_key': "6LcYVQkTAAAAAJNFJIxRbmGWdGJhrkpebiS33owm",
+    'captcha_private_key': "6LcYVQkTAAAAAAyn9eSic5bOEkE7OUmNPhsM4Xw1",
 
     # Use a complete Google Analytics code, no just the Tracking ID
     # In config/boilerplate.py there is an example to fill out this value
@@ -129,13 +124,11 @@ ROLE_FLAG_DICT = { 'basic':1, 'business':2, 'admin':4}
 
 STATUS_DICT = {'pending_creation':0, 'pending_approval':1, 'approved':2}
 
-GOOGLE_GEOENCODE_API_KEY = 'AIzaSyDE5PfQMoyvNXlkE_js5dbUB1UjgYu124M'
-#GOOGLE_MAPS_API_KEY = 'AIzaSyCa8ZkxYvy8RTATSXhyvbh0Wy1t4ogotTU'
-# GOOGLE_MAPS_API_KEY = 'AIzaSyDwDbVI4aakERW_vW0iwUXW7qReWbEwEN8'
-###GOOGLE_MAPS_API_KEY = 'AIzaSyDXEuIXbVm6WWkOLZlS4RT4W1EcQNopatI'
-GOOGLE_MAPS_API_KEY = 'AIzaSyBP9gN4_RbSOcDemacAYVLu6x2Zx7zLUV0 '
+GOOGLE_GEOENCODE_API_KEY = 'AIzaSyBjY5Qr_thE9YBgKCIQTj5bmBejOVScVWw'
+# GOOGLE_MAPS_API_KEY = 'AIzaSyCa8ZkxYvy8RTATSXhyvbh0Wy1t4ogotTU'
+GOOGLE_MAPS_API_KEY = 'AIzaSyCPbHMAEYbtgQ0G09Vt7E4onLKpCKAhfbI'
 
-DEFAULT_CITY = 'phnom penh'
+DEFAULT_CITY = 'Phnom Penh'
 
 ENABLE_GZIP=False
 

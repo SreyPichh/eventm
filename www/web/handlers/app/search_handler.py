@@ -243,7 +243,7 @@ class TrainingCentreSearchHandler(BaseHandler):
     params['trainingcenters_media'] = tc_media
     params['title'] = constants.TRAINING_CENTRE
     #logger.debug('Param Results: ' + str(params))
-    return self.render_template('/app/search_results.html', **params)
+    return self.render_template('/app/search_results.html', **params) 
 
 class EventSearchHandler(BaseHandler):
 
