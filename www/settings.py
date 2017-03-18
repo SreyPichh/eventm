@@ -122,9 +122,9 @@ FLAG_ADMIN=4 # Bit 2  - Admin User
 ROLE_ADMIN=FLAG_BASIC | FLAG_BUSINESS  | FLAG_ADMIN #7
 ROLE_FLAG_DICT = { 'basic':1, 'business':2, 'admin':4}
 
-STATUS_DICT = {'pending_creation':0, 'pending_approval':1, 'approved':2}
+STATUS_DICT = {'pending_creation':0, 'pending_approval':1, 'approved':3}
 
-GOOGLE_GEOENCODE_API_KEY = 'AIzaSyBjY5Qr_thE9YBgKCIQTj5bmBejOVScVWw'
+GOOGLE_GEOENCODE_API_KEY = 'AIzaSyCa57Etp8hWcec6H3I0ifJXvOPrMsCP2uQ'
 # GOOGLE_MAPS_API_KEY = 'AIzaSyCa8ZkxYvy8RTATSXhyvbh0Wy1t4ogotTU'
 GOOGLE_MAPS_API_KEY = 'AIzaSyCPbHMAEYbtgQ0G09Vt7E4onLKpCKAhfbI'
 
