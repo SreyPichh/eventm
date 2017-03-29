@@ -40,8 +40,8 @@ config = {
     # get your own consumer key and consumer secret by registering at https://developers.facebook.com/apps
     #Very Important: set the site_url= your domain in the application settings in the facebook app settings page
     # callback url must be: http://[YOUR DOMAIN]/login/facebook/complete
-    'fb_api_key': 1608914109337384,
-    'fb_secret': 'a3f33e363bb7e79c346102a5a5608c66',
+    'fb_api_key': 1472831406080528,
+    'fb_secret': '727899f3ae520e1e4705b8589020c08b',
     
     #SMS Gateway    
     'sms_url': 'http://alerts.solutionsinfini.com/api/v3/index.php',
@@ -113,6 +113,7 @@ config = {
 
     # ----> ADD MORE CONFIGURATION OPTIONS HERE <----
     'send_mails': False
+    
 }
 
 FLAG_BASIC=1 # Bit 0 - Basic
@@ -126,7 +127,7 @@ FLAG_ADMIN=4 # Bit 2  - Admin User
 ROLE_ADMIN=FLAG_BASIC | FLAG_BUSINESS  | FLAG_ADMIN #7
 ROLE_FLAG_DICT = { 'basic':1, 'business':2, 'admin':4}
 
-STATUS_DICT = {'pending_creation':0, 'pending_approval':1, 'approved':3}
+STATUS_DICT = {'pending_creation':0, 'pending_approval':1, 'approved':2}
 
 GOOGLE_GEOENCODE_API_KEY = 'AIzaSyCa57Etp8hWcec6H3I0ifJXvOPrMsCP2uQ'
 # GOOGLE_MAPS_API_KEY = 'AIzaSyCa8ZkxYvy8RTATSXhyvbh0Wy1t4ogotTU'
