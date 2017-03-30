@@ -81,7 +81,7 @@ class ManagePlaygroundHandler(blobstore_handlers.BlobstoreUploadHandler, BaseHan
     
     save = self.request.get('save')
     next_fill = self.request.get('next')
-    next_tab = next_fill if next != '' else save
+    next_tab = next if next_fill != '' else save
     locality_id = self.request.get('locality_id')
     
     playground = self.form_to_dao(playground_id)
