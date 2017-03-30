@@ -97,7 +97,7 @@ class ManageTrainingCentreHandler(blobstore_handlers.BlobstoreUploadHandler, Bas
     
     save = self.request.get('save')
     next_fill = self.request.get('next')
-    next_tab = next_fill if next_fill != '' else save
+    next_tab = next_fill if next != '' else save
     locality_id = self.request.get('locality_id')
     
     trainingcentre = self.form_to_dao(trainingcentre_id)
