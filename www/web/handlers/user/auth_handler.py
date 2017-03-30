@@ -327,8 +327,7 @@ class CallbackSocialLoginHandler(BaseHandler):
                     self.redirect_to('profile')
             else:
                 # login with Facebook
-                social_user = models.SocialUser.get_by_provider_and_uid('facebook',
-                                                                        str(user_data['id']))
+                social_user = models.SocialUser.get_by_provider_and_uid('facebook', str(user_data['id']))
                 if social_user:
                     # Social user exists. Need authenticate related site account
                     user = social_user.user.get()

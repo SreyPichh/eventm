@@ -17,8 +17,8 @@ class CityHomeHandler(BaseHandler):
   def get(self, city_name=None, sport=None):
     params = {}
     logger.debug('home for city %s, and sport %s ' % (city_name, sport))
-    if city_name is None:
-      city_name = get_default_city()
+    # if city_name is None:
+    #   city_name = get_default_city()
     # if sport is not None and sport != 'None' and sport != '':
     #     return self.render_template('/cms/dashboard.html')
     recent_playgrounds = self.playgroundDao.get_recent(city_name, sport)  
@@ -67,7 +67,10 @@ class CityHomeHandler(BaseHandler):
     params['recent_trainingcentres'] = recent_trainingcentres
     params['featured_trainingcentres'] = featured_trainingcentres
     params['popular_trainingcentres'] = popular_trainingcentres
-    params['trainingcentre_media'] = trainingcentre_media
+    params['trainingcentre_media'] = trainingcentre_media 
+
+    if city_name is None:
+        city_name = get_default_city()
     
     params['city_name'] = city_name
     params['sport'] = sport

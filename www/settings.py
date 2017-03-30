@@ -40,7 +40,7 @@ config = {
     # get your own consumer key and consumer secret by registering at https://developers.facebook.com/apps
     #Very Important: set the site_url= your domain in the application settings in the facebook app settings page
     # callback url must be: http://[YOUR DOMAIN]/login/facebook/complete
-    'fb_api_key': '1472831406080528',
+    'fb_api_key': 1472831406080528,
     'fb_secret': '727899f3ae520e1e4705b8589020c08b',
     
     #SMS Gateway    
