@@ -97,10 +97,11 @@ class ManageTrainingCentreHandler(blobstore_handlers.BlobstoreUploadHandler, Bas
     
     save = self.request.get('save')
     next_fill = self.request.get('next')
-    next_tab = next if next_fill != '' else save
+    next_tab = next_fill if next_fill != '' else save
     locality_id = self.request.get('locality_id')
     
     trainingcentre = self.form_to_dao(trainingcentre_id)
+    logger.info('This is debugging for %s' %trainingcentre)
     
     if locality_id is not None:
       logger.info('Locality Id: %s ' % locality_id)
@@ -128,7 +129,9 @@ class ManageTrainingCentreHandler(blobstore_handlers.BlobstoreUploadHandler, Bas
         self.add_message(message, 'success')
         if next_tab is not None:
           if next_tab != 'save':
+            
             redirect_url = self.uri_for('edit-trainingcentre', business_id = trainingcentre.business_id.id(), trainingcentre_id = key.id())
+            logger.debug('this is redirect value: %s' % redirect_url)
             redirect_url = redirect_url + next_tab
             logger.info('Redirect Url %s' % redirect_url)
             return self.redirect(redirect_url)
