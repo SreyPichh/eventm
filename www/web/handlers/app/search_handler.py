@@ -37,6 +37,7 @@ class PlaygroundSearchHandler(BaseHandler):
   def get(self, city_name=None, locality_name=None):
     return self.post(city_name, locality_name)
     
+    
   def post(self, city_name=None, locality_name=None):
     city_str = str(self.request.get('city-name'))
     locality_nav = str(self.request.get('nav-locality'))
